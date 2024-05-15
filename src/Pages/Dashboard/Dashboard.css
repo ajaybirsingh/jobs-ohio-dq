@@ -1,0 +1,35 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+.child-section-of-everypage {
+    padding: 35px;
+    height: 100%;
+    background-color: rgb(243,244,249);
+    text-transform: capitalize;
+}
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+    .child-section-of-everypage {
+        padding: 10px;
+    }   
+    .child-section-of-everypage {
+        width: 100% !important;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .inner-cards-container {
+        display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+        /* display: grid !important;
+        gap: 20px;
+        flex-wrap: wrap;
+        grid-template-columns: auto auto !important; */
+    }
+    .child-section-of-everypage {
+        padding: 28px;
+        height: 100%;
+        background-color: rgb(243, 244, 249);
+        text-transform: capitalize;
+    }
+}

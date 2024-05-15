@@ -1,0 +1,22 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+.set-tabs-ai-section {
+  padding-top: 9px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.details-table-form-page {
+  display: flex !important;
+  gap: 25px !important;
+  padding-top: 20px !important;
+  width: 100%;
+}
+.details-table-page {
+  width: 68%;
+}
+.details-form-page {
+  width: 32%;
+}

@@ -1,0 +1,86 @@
+{
+   "0": {
+       "source": 10463,
+       "target": 163488,
+       "bestPathInfor": {
+           "nodes": [
+               {
+                   "uid": "10463",
+                   "type": "Person",
+                   "name": "amit rateria",
+                   "company": "jobsohio",
+                   "email": "amit@consultant.jobsohio.com"
+               },
+               {
+                   "uid": "83647",
+                   "type": "Person",
+                   "name": "pranjal paliwal",
+                   "company": "jobsohio",
+                   "email": "paliwal@consultant.jobsohio.com"
+               },
+               {
+                   "uid": "163488",
+                   "type": "Person",
+                   "name": "lance mcinnes",
+                   "company": "boomerang's foods",
+                   "email": "lance@boomerangspies.com"
+               }
+           ],
+           "edges": [
+               {
+                   "source": "10463",
+                   "target": "83647",
+                   "weight": 5,
+                   "relation": "Email, LinkedIn ,Company"
+               },
+               {
+                   "source": "83647",
+                   "target": "163488",
+                   "weight": 5,
+                   "relation": "Email"
+               }
+           ],
+           "message": "Have Path"
+       },
+       "shortestPath": {
+           "nodes": [
+               {
+                   "uid": "10463",
+                   "type": "Person",
+                   "name": "amit rateria",
+                   "company": "jobsohio",
+                   "email": "amit@consultant.jobsohio.com"
+               },
+               {
+                   "uid": "83647",
+                   "type": "Person",
+                   "name": "pranjal paliwal",
+                   "company": "jobsohio",
+                   "email": "paliwal@consultant.jobsohio.com"
+               },
+               {
+                   "uid": "163488",
+                   "type": "Person",
+                   "name": "lance mcinnes",
+                   "company": "boomerang's foods",
+                   "email": "lance@boomerangspies.com"
+               }
+           ],
+           "edges": [
+               {
+                   "source": "10463",
+                   "target": "83647",
+                   "weight": 5,
+                   "relation": "Email, LinkedIn"
+               },
+               {
+                   "source": "83647",
+                   "target": "163488",
+                   "weight": 5,
+                   "relation": "Email"
+               }
+           ],
+           "message": "Have Path"
+       }
+   }
+}

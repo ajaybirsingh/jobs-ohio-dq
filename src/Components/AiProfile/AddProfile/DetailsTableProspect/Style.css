@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+.ai-profile-table-main {
+  width: 100% !important;
+}
+.details-perposal-text p {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #000000;
+}
+.question-markimage p {
+  width: 15px;
+  height: 15px;
+}
+.question-markimage {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  width: 20px;
+}
+.border-change {
+  border: 2px solid #ebedf5 !important;
+  color: #003057;
+  width: 46px;
+  height: 46px;
+  background-color: #f5f6fa;
+  border-radius: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: 16px;
+}
+.Limit-people-per-company {
+  width: 100% !important;
+  height: 40px !important;
+  border: #dedfe5;
+  margin: 0px !important;
+}
+.gourav .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 0px 0px 0px 13px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.horizontal-line-form {
+  border: 0.5px solid #dedfe5;
+  margin: 10px 0px !important;
+  width: 100%;
+}
+.Show-result-button-form {
+  width: 96%;
+  height: 48px !important;
+  background-color: #da291c !important;
+}
+.ai-leads-table-empty {
+  justify-content: center !important;
+  text-align: center !important;
+  align-items: center !important;
+  display: flex !important;
+  text-align: center !important;
+}
+.no-result-found-empty {
+  text-align: center !important;
+  color: #000000;
+  font-family: inter;
+  font-weight: 600;
+  font-size: 14px;
+  padding-top: 7px;
+}
+.add-filter-empty {
+  font-family: Inter;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 0.5;
+  padding-top: 4px;
+}
+.aiprofile-table-container {
+  text-transform: capitalize;
+  box-shadow: none !important;
+  border-radius: 14px !important;
+}
+.empty-container-div-main {
+  width: 184px;
+  height: 133px;
+}
+.empty-icon-div {
+  width: 80px;
+  height: 80px;
+  left: 52px;
+  opacity: 0.1;
+  background-color: #da291c !important;
+  border-radius: 50px;
+}
+.empty-container-div-main {
+  position: relative;
+}
+.empty-icon-image {
+  position: absolute;
+  color: #da291c !important;
+  top: 25px;
+  left: 75px;
+}
+.icon-and-backgroundimage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.DecisionMaker-table-main-profile {
+  /* height: 74vh; */
+  height: 100%;
+  box-shadow: none !important;
+  overflow: unset !important;
+}
+/* .DecisionMaker-table-main-profile {
+  height: 74vh;
+  box-shadow: none !important;
+} */
+.row-in-prospect-table-aiprofile {
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  position: relative;
+}
+.DecisionmakerScore-prospect {
+  background-color: #0eb93e;
+  color: white;
+  padding: 4px, 8px, 4px, 8px;
+  border-radius: 26px;
+  width: 35px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: Inter;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.Decisions-row-table {
+  text-align: center;
+  width: 18%;
+}
+.Decisions-row-table-company {
+  width: 18%;
+}
+.Decisions-row-table-detaial {
+  width: 18%;
+}
+.tCell-table-outer-main {
+  border-bottom: none !important;
+}
+.Front-name {
+  text-transform: uppercase;
+}
+.company-classname-prospects {
+  text-align: center;
+}
+.company-classname-prospects-Details {
+  text-align: left;
+  /* padding-right: 16px; */
+}
+.Contact-details-prospects-inner-prefilled {
+  text-align: center;
+  /* padding-right: 154px; */
+}
+.decisionMakerImage-prospect-details {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  position: absolute;
+  top: -9px;
+  left: 27px;
+}
+.DecisionMaker-table .Decisions-row-table-new {
+  padding: 0px 0px 0px 15px !important;
+  width: 1% !important;
+  position: relative;
+}
+.Decisions-row-table-new-added{
+  padding: 0px 0px 0px 15px !important;
+  width: 1% !important;
+  position: relative !important;
+}
+.Decision-maker-user-name {
+  position: relative;
+}
+.table-cell-of-contact-details-dropdown-thss {
+  display: flex !important;
+  justify-content: center !important;
+}

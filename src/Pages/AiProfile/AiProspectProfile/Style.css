@@ -1,0 +1,352 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.ai-leads-table .MuiTableCell-head {
+  text-align: center;
+  text-transform: capitalize;
+  color: #202224;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left !important;
+  padding: 12.3px !important;
+}
+
+.ai-leads-table-main {
+  overflow: hidden !important;
+  border: 0.6px solid #D5D5D5;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  font-family: Inter;
+}
+
+.checkbox-row-table {
+  width: 5% !important;
+}
+
+.score-row-table {
+  width: 8%;
+}
+
+.checkbox-row-table input {
+  height: 16px;
+  color: #DEDFFB !important;
+  background-color: #DEDFE5 !important;
+  border: 2px solid #DEDFE5 !important;
+  width: 16px;
+}
+
+.employee-row-table,
+.annual-row-table,
+.industry-row-table,
+.prospects-row-table {
+  width: 15%;
+}
+
+.company-row-table {
+  width: 20% !important;
+}
+
+.ai-leads-table thead tr {
+  background-color: #fcfdfd;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+
+.company-name-country {
+  text-transform: capitalize;
+  font-size: 14px;
+  font-weight: 500;
+  color: #202224;
+  line-height: 24px;
+}
+
+.after-company-name-country {
+  display: flex;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px; 
+  color: #202224;
+  opacity: 0.5;
+}
+
+.employee-size-table {
+  font-size: 14px;
+  color: #202224;
+  line-height: 16.94px;
+  font-weight: 400;
+  margin-right: 10px;
+}
+
+.ai-leads-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root {
+  text-transform: capitalize  ;
+  border-bottom: none !important;
+}
+
+/* .ai-leads-table .MuiTableBody-root .MuiTableRow-root {
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+} */
+
+.section-employee-size {
+  display: flex;
+  align-items: center;
+}
+
+.section-employee-size svg {
+  font-size: large;
+  color: #00b69b;
+}
+
+.annual-revenue-table {
+  font-size: 14px;
+  text-transform: capitalize;
+  font-weight: 400;
+  line-height: 16.94px;
+  color: #202224;
+}
+
+.industry-sector-table {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.94px;
+  color: #202224;
+  text-transform: capitalize;
+}
+
+.prospects-table {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16.94px;
+  color: #202224;
+}
+
+.icon-collapse-table {
+  color: #da291c;
+  font-size: 22px;
+}
+
+.button-collapse-table {
+  border: 1px solid #d5d5d5 !important;
+  border-radius: 9px !important;
+  width: 36px;
+  height: 36px;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.ai-leads-table-inner {
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  height: 300px;
+  overflow: auto;
+}
+
+.ai-leads-table-inner .ai-leads-table .MuiTableHead-root {
+  background: #fcfdfd;
+}
+
+.score-row-table-inner {
+  width: 9% !important;
+}
+
+.employee-row-table-inner {
+  width: 12%;
+}
+
+.annual-row-table-inner {
+  width: 15%;
+}
+
+.checkbox-row-table-inner {
+  width: 5%;
+}
+
+.checkbox-collapse-inner-table {
+  width: 16px;
+  height: 16px;
+}
+
+.create-name-img {
+  position: relative;
+  float: left;
+  width: 46px;
+  height: 46px;
+  border: 2px solid #ebedf5;
+  background-color: #f5f6fa;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #003057;
+  font-weight: 500;
+}
+
+.relation-section-inner {
+  width: 100%;
+  position: relative;
+}
+
+.relation-section-inner img {
+  position: absolute;
+  top: -4px;
+  left: 24px;
+  width: 30px;
+  height: 25px;
+}
+
+.row-head {
+  border: 1px solid #d5d5d5 !important;
+}
+
+.name-and-designation {
+  height: 46px;
+  text-align: center;
+  display: grid;
+  align-items: center;
+  padding-left: 13px;
+}
+
+.designation-in-acordian {
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #202224;
+
+  opacity: 0.5;
+}
+
+.name-in-acordian {
+  color: #202224;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.industry-sector-in-acordian {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.email-in-accordian {
+  text-transform: lowercase;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+
+.number-in-accordian {
+  font-family: Inter;
+  text-transform: lowercase;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: center;
+}
+
+.arrow-down-of-suspect {
+  color: #da291c !important;
+}
+
+.arrow-down-of-suspect-select {
+  color: #da291c !important;
+}
+
+.suspect-and-arrow-in-accordian {
+  justify-content: flex-start;
+  display: flex;
+  gap: 7px;
+}
+
+.email-number-accordian-div {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.email-and-other-info {
+  position: absolute !important;
+  display: flex;
+  gap: 32px;
+}
+
+.select-icon-arrow {
+  color: #003057;
+  width: 15px;
+  height: 15px;
+  border: 2px;
+}
+
+.email-id-only-accordian {
+  text-transform: lowercase;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.maked-component-of-dropdown {
+  width: 100% !important;
+}
+
+.table-cell-of-contact-details-dropdown-th {
+  position: absolute !important;
+}
+
+.arrow-model-open-th {
+  padding-right: 44px !important;
+  justify-content: flex-end !important;
+}
+
+.button-right-sidebar {
+  margin-left: 200px !important;
+}
+
+.industry-sector-table-main {
+  padding: 12px !important;
+}
+
+.ai-score-background {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 26px;
+  padding: 4px 8px 4px 8px;
+  width: 35px !important;
+  height: 25px !important;
+}
+
+.collapse-expand-main-header {
+  /* display: flex !important;
+  justify-content: flex-end !important;
+  margin-right: 20px; */
+  display: table-cell !important;
+  justify-content: flex-end !important;
+  margin-right: 30px;
+}
+
+.arrow-model-open-th {
+  padding-right: 8px !important;
+}

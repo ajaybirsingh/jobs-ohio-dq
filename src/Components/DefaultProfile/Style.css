@@ -1,0 +1,67 @@
+.lists-of-add-search-star {
+  background: #f5f6fa;
+  height: auto;
+  border-radius: 8px;
+}
+
+.default-profile-star-functionality {
+  width: 216px;
+  height: 159px;
+  gap: 11px;
+  margin: 0px 12px;
+}
+
+.default-profile-text-sidebar {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #000000;
+}
+
+.shortcut-profile-text-sidebar {
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #000000;
+  opacity: 0.5;
+}
+
+.text-for-start-functionality-icon {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.start-function-icon {
+  width: 30px !important;
+  min-width: 30px !important;
+  color: #da291c !important;
+}
+
+.star-funciton-list-item-button {
+  padding: 0px !important;
+
+}
+
+.star-functionality-text {
+  white-space: normal;
+  font-family: Inter !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 17px !important;
+  letter-spacing: 0px !important;
+}
+
+.list-main-for-add-star-item {
+  padding: 0px 5px !important;
+}
+
+.list-sidebar-leads-prospect {
+  padding: 11px 0px !important;
+}

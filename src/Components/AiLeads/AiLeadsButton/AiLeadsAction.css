@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+.Leades-filter-drop-down-button-main-container {
+  text-transform: capitalize;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  background: #F3F4F9;
+  z-index: 99;
+  top: 72px;
+  left: 242px;
+  right: -13px;
+  padding: 20px 37px;
+}
+.AI_DECISION_MAKERnoSticky{
+  text-transform: capitalize;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ 
+}
+.Leades-filter-drop-down-button-main-container p {
+  text-transform: capitalize;
+  font-family: Inter !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 19px !important;
+  letter-spacing: 0px !important;
+  text-align: left !important;
+  color: #101820 !important;
+  opacity: 0.5 !important;
+}
+.Leades-filter-inner-container button {
+  display: flex;
+  gap: 10px;
+  background-color: #DA291C;
+  font-size: 14px;
+  font-family: Inter;
+  font-weight: 600;
+  width: 110px;
+  height: 47px;
+  text-transform: none;
+  line-height: 27px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.Leades-filter-inner-container button:hover {
+  background-color: #BB291E !important;
+  font-family: Inter;
+}
+.AI-Leads-button-drop-down-up {
+  line-height: 16px !important;
+  color: #101820 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  padding: 8px !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  font-family: Inter !important;
+  padding-left: 25px !important;
+  border-bottom: 0.5px solid #dedfe5 !important;
+  height: 49px !important;
+}
+.AI-Leads-button-drop-down {
+  line-height: 16px !important;
+  color: #101820 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  padding: 8px !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  font-family: Inter !important;
+  padding-left: 25px !important;
+  height: 49px !important;
+}
+.showing-leads-head h3 {
+  text-transform: capitalize;
+  color: #101820;
+}
+.showing-leads-head p {
+  color: #101820;
+  opacity: 0.5;
+}
+.AI-Leads-button-drop-down-up:hover {
+  background-color: #ffffff !important;
+}
+.AI-Leads-button-drop-down:hover {
+  background-color: #ffffff !important;
+}
+.push-to-slaesforce-in-button {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+}

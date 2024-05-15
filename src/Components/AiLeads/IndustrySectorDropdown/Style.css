@@ -1,0 +1,63 @@
+.industry-detail-dropdowntext{
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0px;
+    text-align: left;
+    color:#202224;
+}
+/* .industry-text-dropdown-head-main{
+    text-align: center;
+    text-transform: capitalize;
+    width: 150px!important;
+} */
+.ContactDetailList-dropdown-industry{
+    width: 150px !important;
+    position: absolute;
+    /* top: 20px; */
+}
+.industry-text-dropdown-head-main-propect{
+    text-align: center;
+    text-transform: capitalize;
+    width: 109px;
+}
+.ContactDetailList-dropdown
+.css-1mcnwpj-MuiList-root{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-top: 0px;
+    padding-bottom: 8px;
+    width: 100%;
+    max-width: 360px;
+    background-color: #fff;
+}
+.ContactDetailList-dropdown-industry .css-1mcnwpj-MuiList-root{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-top: 0px !important;
+    padding-bottom: 8px;
+    width: 100%;
+    max-width: 360px;
+    background-color: #fff;
+}
+.ContactDetailList-dropdown-industry  nav{
+    position: absolute !important;
+    top: -13px !important;
+    padding: 0 !important;
+}
+.ContactDetailList-dropdown .css-1mcnwpj-MuiList-root {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding-top: 0px;
+    padding-bottom: 0%;
+    width: 100%;
+    max-width: 360px;
+    background-color: #fff;
+}

@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+.stack-form-button {
+  border-radius: 0px 0px 10px 10px !important;
+  position: absolute;
+  bottom: 0;
+  height: 64px !important;
+  width: 100% !important;
+  background-color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0px 0px 8px 0px #00000033 !important;
+}
+.form-data-typeable {
+  overflow-y: scroll;
+  height: 73vh;
+}
+.ai-profile-form-main {
+  padding-bottom: 10px !important;
+  width: 100% !important;
+  border-radius: 14px !important;
+  background-color: #FFFFFF !important;
+  margin: 0px !important;
+  text-transform: capitalize;
+}
+.ai-prospect-details-form {
+  padding: 22px !important;
+}
+.ai-profile-form {
+  width: 100% !important;
+}
+.full-searchbar-ai-profile {
+  width: 100% !important;
+  border: 1px solid #bcbdc2;
+  background-color: #f4f5f9 !important;
+  border-radius: 5px;
+  padding: 2px 5px !important;
+  height: 38px;
+  box-shadow: none !important;
+  position: relative;
+}
+.Autocompletedropdowna-aiprofile {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  width: 100%;
+  left: 33px;
+  max-height: 48vh;
+  min-height: 2vh !important;
+  overflow-y: scroll;
+}
+.nodatafound{
+  width: 100%;
+  text-transform: capitalize;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 5px 12px;
+}
+.nodatafoundnew{
+  background-color: white !important;
+  border-radius: 5px;
+  width: 100% !important;
+  padding: 2px 12px !important;}
+.full-searchbarnewaiprofile {
+  border: 1px solid #bcbdc2;
+  background-color: #f4f5f9 !important;
+  border-radius: 5px;
+  width: 100% !important;
+  padding: 2px 12px !important;
+  height: 44px;
+  box-shadow: none !important;
+}
+.PrimaryOrganization-data {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  width: 100%;
+  max-height: 48vh;
+  min-height: 2vh !important;
+  overflow-y: scroll;
+}
+.PrimaryOrganizationoutter {
+  position: absolute;
+  z-index: 999;
+  top: 38px;
+  width: 100%;
+}
+.setpositionaitable {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  width: 100%;
+  max-height: 48vh;
+  min-height: 2vh !important;
+  overflow-y: scroll;
+  position: absolute;
+  z-index: 999;
+  top: 30px;
+}
+.heading-of-prospect-details {
+  margin-bottom: 12px;
+  justify-content: space-between;
+  display: flex;
+}
+.prospect-text-and-questionmark {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stack-inner-button-for-showresult {
+  width: 100% !important;
+}
+.details-perposal-text-last p {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #000000;
+}
+.label-form-prospect-div-head {
+  padding-bottom: 12px;
+}
+.select-dropdown-decisionmaker {
+  padding: 0px 0px 0px 0px !important;
+  background-color: #f4f5f9 !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.placeholder-heading-new {
+  font-family: Inter !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+  letter-spacing: -0.01em !important;
+  text-align: left !important;
+  font-style: unset !important;
+}
+.listing-select-data {
+  border: 0.5px solid #dedfe5 !important;
+  font-family: Inter !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 17px !important;
+  letter-spacing: 0px !important;
+  text-align: left !important;
+  height: 41px !important;
+}
+.heading-placeholder {
+  color: black !important;
+  opacity: unset !important;
+  font-family: Inter !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 17px !important;
+  letter-spacing: 0px !important;
+  text-align: left !important;
+  height: 41px !important;
+}
+.label-form-prospect-div-head .MuiFormControl-root .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #DA291C !important;
+}
+/* .Limit-people-per-company .css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper   {
+  margin-top: 10px !important;
+} */
+.showicons{
+  cursor: pointer;
+  color: #707072;
+  font-size: 17px !important;
+}
+.cross-icon-prospect{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 7px;
+}
+.search-inner-textai-profile {
+  color: #000000 !important;
+  font-family: Inter !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+  letter-spacing: -0.01em !important;
+  text-align: left !important;
+  font-style: unset !important;
+}
+.reloardformimages{
+  cursor: pointer;
+}

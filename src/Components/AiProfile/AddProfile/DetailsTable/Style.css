@@ -1,0 +1,159 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.ai-profile-table-main {
+  width: 100% !important;
+  text-transform: capitalize;
+}
+.details-perposal-text p {
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #000000;
+}
+.question-markimage p {
+  width: 15px; 
+  height: 15px;
+}
+.after-company-name-country {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 15.73px;
+  color: #202224;
+}
+.question-markimage {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  width: 20px;
+}
+.Limit-people-per-company {
+  width: 100% !important;
+  height: 40px !important;
+  border: #dedfe5;
+  margin: 0px !important;
+}
+.gourav
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 0px 0px 0px 13px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.horizontal-line-form {
+  border: 0.5px solid #dedfe5;
+  margin: 10px 0px !important;
+  width: 100%;
+}
+.Show-result-button-form {
+  width: 100%;
+  height: 48px !important;
+  background-color: #da291c !important;
+}
+.ai-leads-table-empty {
+    text-align: center !important;
+  height: 74vh !important;
+  justify-content: center !important;
+  text-align: center !important;
+  align-items: center !important;
+  display: flex !important;
+}
+.no-result-found-empty {
+  text-align: center !important;
+  color: #000000;
+  font-family: inter;
+  font-weight: 600;
+  font-size: 14px;
+  padding-top: 7px;
+}
+.add-filter-empty {
+  text-align: center;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 0.5;
+  padding-top: 4px;
+}
+.aiprofile-table-container {
+  text-transform: capitalize;
+  box-shadow: none !important;
+  border-radius: 14px !important;
+}
+.empty-container-div-main {
+  width: 184px;
+  height: 133px;
+}
+.empty-icon-div {
+  width: 80px;
+  height: 80px;
+  left: 52px;
+  opacity: 0.1;
+  background-color: #da291c !important;
+  border-radius: 50px;
+}
+.empty-container-div-main {
+  position: relative;
+}
+
+.empty-icon-image {
+  position: absolute;
+  color: #da291c !important;
+  top: 25px;
+  left: 75px;
+}
+.icon-and-backgroundimage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.prospects-table {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 26px;
+  padding: 4px 8px 4px 8px;
+  width: 35px !important;
+  height: 25px !important;
+  background-color: #0eb93e !important;
+}
+.employee-count {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #202224;
+}
+.tCell-table-outer-main{
+  border-bottom: none !important;
+}
+.abc{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.ai-score-background-main{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
