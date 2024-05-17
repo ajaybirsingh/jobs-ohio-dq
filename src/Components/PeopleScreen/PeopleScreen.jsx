@@ -17,10 +17,10 @@ import axios from "axios";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useLocation } from "react-router-dom";
+import { APIUrlFour } from "../../Utils/Utils";
 export default function PeopleScreen() {
   const location = useLocation();
   const peopleData = location?.state;
-  console.log(peopleData, 'peopleData23');
   const [PeopleDetails, setPeopleDetails] = React.useState({
     firstName: "",
     lastName: "",
@@ -38,10 +38,11 @@ export default function PeopleScreen() {
     Orglinkedin: "",
     PositionEndDate: "",
     Status: "",
+    UserId: "",
   });
 
   React.useEffect(() => {
-    if (peopleData?.id) {
+    if (peopleData?.first_name) {
       setPeopleDetails({
         firstName: peopleData?.first_name,
         lastName: peopleData?.last_name,
@@ -57,11 +58,11 @@ export default function PeopleScreen() {
         Zip: peopleData?.zip_code,
         Orglinkedin: peopleData?.organization_linkedin_username,
         PositionEndDate: peopleData?.position_end_date,
-        Comments: peopleData?.comments
+        Comments: peopleData?.comments,
+        validation_status: peopleData?.status
       })
     }
   }, [peopleData])
-  console.log(PeopleDetails, 'PeopleDetails44');
 
   const [loading, setLoading] = React.useState();
   const style = {
@@ -142,6 +143,10 @@ export default function PeopleScreen() {
       toast.error("Please Enter Organization");
       return false;
     }
+    if (!PeopleDetails?.Status) {
+      toast.error("Please Select Status");
+      return false
+    }
     // if (!PeopleDetails?.SourceDescription) {
     //   toast.error("Please Enter Source Description");
     //   return false;
@@ -159,7 +164,8 @@ export default function PeopleScreen() {
     const data = {
       records: [
         {
-          // person_id: 0,
+          person_id: null,
+          user_id: null,
           first_name: PeopleDetails?.firstName,
           last_name: PeopleDetails?.lastName,
           email: PeopleDetails?.email,
@@ -180,8 +186,8 @@ export default function PeopleScreen() {
           updated_at: new Date().toISOString().slice(0, 10),
           name: "",
           source: "",
-          validation_status: "",
-          action: "add",
+          validation_status: PeopleDetails?.Status,
+          action: "",
         },
       ],
     };
@@ -192,45 +198,112 @@ export default function PeopleScreen() {
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      url: "http://172.214.83.217:8003/v1/add_record_people",
+      url: `${APIUrlFour()}/v1/add_record_people`,
       data: JSON.stringify(data),
     };
     axios(option)
       .then((e) => {
         setLoading(false);
-        setPeopleDetails({
-          // firstName: "",
-          // lastName: "",
-          // email: "",
-          // PhoneNo: "",
-          // Linkedin: "",
-          // JobTitle: "",
-          // Oraganization: "",
-          // SourceDescription: "",
-          // Comments: "",
-          firstName: "",
-          lastName: "",
-          email: "",
-          PhoneNo: "",
-          Linkedin: "",
-          JobTitle: "",
-          Oraganization: "",
-          SourceDescription: "",
-          City: "",
-          Comments: "",
-          State: "",
-          Zip: "",
-          Country: "",
-          Orglinkedin: "",
-          PositionEndDate: "",
-          Status: "",
-        });
+        if (e?.status === 200) {
+          toast.success(e?.data?.message);
+          setPeopleDetails({
+            firstName: "",
+            lastName: "",
+            email: "",
+            PhoneNo: "",
+            Linkedin: "",
+            JobTitle: "",
+            Oraganization: "",
+            SourceDescription: "",
+            City: "",
+            Comments: "",
+            State: "",
+            Zip: "",
+            Country: "",
+            Orglinkedin: "",
+            PositionEndDate: "",
+            Status: "",
+          });
+        }
       })
       .catch((err) => {
         setLoading(false);
         toast.error(err?.response?.data?.message);
       });
   };
+
+  const handleEditRecords = () => {
+    if (!validateFields()) return;
+    setLoading(true);
+    const data = {
+      records: [
+        {
+          first_name: PeopleDetails?.firstName,
+          last_name: PeopleDetails?.lastName,
+          linkedin: PeopleDetails?.Linkedin,
+          primary_job_title: PeopleDetails?.JobTitle,
+          primary_organization: PeopleDetails?.Oraganization,
+          organization_linkedin_username: PeopleDetails?.Orglinkedin ? PeopleDetails?.Orglinkedin : "",
+          person_id: peopleData?.person_id,
+          org_permalink: "",
+          middle_name: "",
+          email: PeopleDetails?.email,
+          phone_no: PeopleDetails?.PhoneNo,
+          city: PeopleDetails?.City,
+          state: PeopleDetails?.State ? PeopleDetails?.State : "",
+          country: PeopleDetails?.Country,
+          zip_code: PeopleDetails?.Zip,
+          position_end_date: PeopleDetails?.PositionEndDate,
+          comments: PeopleDetails?.Comments,
+          source: "",
+          source_description: PeopleDetails?.SourceDescription,
+          validation_status: PeopleDetails?.Status,
+          action: "",
+          user_id: null,
+          updated_at: new Date().toISOString().slice(0, 10),
+        }
+      ],
+    };
+
+    const option = {
+      method: "POST",
+      headers: {
+        "access-control-allow-origin": "*",
+        "content-type": "application/json",
+      },
+      url: `${APIUrlFour()}/v1/update_record_people`,
+      data: JSON.stringify(data),
+    };
+    axios(option)
+      .then((e) => {
+        setLoading(false);
+        if (e?.status === 200) {
+          toast.success(e?.data?.message);
+          setPeopleDetails({
+            firstName: "",
+            lastName: "",
+            email: "",
+            PhoneNo: "",
+            Linkedin: "",
+            JobTitle: "",
+            Oraganization: "",
+            SourceDescription: "",
+            City: "",
+            Comments: "",
+            State: "",
+            Zip: "",
+            Country: "",
+            Orglinkedin: "",
+            PositionEndDate: "",
+            Status: "",
+          });
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err?.response?.data?.message);
+      });
+  }
   const dateFromHandler = (date) => {
     const formattedDate = date.format("YYYY-MM-DD");
     setPeopleDetails({
@@ -611,6 +684,7 @@ export default function PeopleScreen() {
                 <label className="PeopleScreen-lables" htmlFor="">
                   Status
                 </label>
+                <span className="PeopleMandatoryfields">*</span>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <Select
                     placeholder="Select Status"
@@ -722,25 +796,26 @@ export default function PeopleScreen() {
             </div> */}
             <div className="SUBMITbutton-div">
               {
-                peopleData?.id ? 
-                <Stack spacing={2} direction="row">
-                <Button
-                  className="People-SUBMIT-button"
-                  variant="contained"
-                >
-                  <SaveAltTwoToneIcon />
-                  Update
-                </Button>
-              </Stack> : <Stack spacing={2} direction="row">
-                <Button
-                  className="People-SUBMIT-button"
-                  variant="contained"
-                  onClick={handelApplyRecords}
-                >
-                  <SaveAltTwoToneIcon />
-                  SUBMIT
-                </Button>
-              </Stack>
+                peopleData?.first_name ?
+                  <Stack spacing={2} direction="row">
+                    <Button
+                      className="People-SUBMIT-button"
+                      variant="contained"
+                      onClick={handleEditRecords}
+                    >
+                      <SaveAltTwoToneIcon />
+                      Update
+                    </Button>
+                  </Stack> : <Stack spacing={2} direction="row">
+                    <Button
+                      className="People-SUBMIT-button"
+                      variant="contained"
+                      onClick={handelApplyRecords}
+                    >
+                      <SaveAltTwoToneIcon />
+                      SUBMIT
+                    </Button>
+                  </Stack>
               }
             </div>
           </div>
