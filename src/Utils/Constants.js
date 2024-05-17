@@ -1,7 +1,7 @@
 export const LOGIN = "/dashboard";
-export const DASHBOARD = "/";
+export const DASHBOARD = "/dashboard";
 export const TWITTER_FEED = '/twitterfeed';
-export const AI_DECISION_MAKER = '/people';
+export const AI_DECISION_MAKER = '/';
 export const AI_LEADS = "/organization";
 export const AI_PATH = '/aipath';
 export const AI_PROFILE = '/aiprofile';

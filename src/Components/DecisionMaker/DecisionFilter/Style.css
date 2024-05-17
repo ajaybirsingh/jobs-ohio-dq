@@ -4,14 +4,14 @@
   align-items: center;
   border: 0.6px solid #D5D5D5;
   border-radius: 10px;
-  width: 70%;
+  width: 15% !important;
   background-color: #F9F9FB;
   color: #D5D5D5;
   height: 70px;
   font-family: Inter;
 }
-.AILeads-Filter1st {
-  width: 10%;
+.Search-filter-icons {
+  width: 25% ;
   border-right: 1px solid #d5d5d5;
   height: 70px;
   display: flex;
@@ -45,21 +45,21 @@
   text-align: left;
   cursor: pointer;
 }
-.Leads-Filter-1stdrop-down .MuiFormControl-root .MuiInputBase-root fieldset {
+.IndustyFilter-Drop-down .MuiFormControl-root .MuiInputBase-root fieldset {
   border: none !important;
 }
 .hidedata {
   display: none !important;
 }
-.Leads-Filter-1stdrop-down {
-  width: 30% !important;
-  border-right: 1px solid #d5d5d5;
+.IndustyFilter-Drop-down {
+  width: 80% !important;
+  /* border-right: 1px solid #d5d5d5; */
   height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.Leads-Filter-1stdrop-down div {
+.IndustyFilter-Drop-down div {
   margin: 0 !important;
 }
 .AILeads-Filter2nddrop-down div {
@@ -71,13 +71,13 @@
 .AILeads-Filter2nddrop-down .MuiFormControl-root .MuiInputBase-root fieldset {
   border: none !important;
 }
-.Leads-Filter-1stdrop-down em {
+.IndustyFilter-Drop-down em {
   font-weight: 600;
   font-family: Inter;
   font-size: 14px;
   font-style: unset !important;
 }
-.Leads-Filter-1stdrop-down p {
+.IndustyFilter-Drop-down p {
   font-weight: 400;
   font-family: Inter;
   font-size: 12px;
@@ -209,7 +209,6 @@
   height: 16px;
   width: 16px;
   margin-left: 10px;
-
 }
 .AI-Leadsfilter-items {
   padding: 4px 15px;

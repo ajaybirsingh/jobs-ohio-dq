@@ -4,22 +4,18 @@
   box-shadow: none !important;
   font-family: Inter;
 }
-
 .DecisionMaker-table thead tr {
   background-color: #fcfdfd;
   border-bottom: 1px solid rgba(224, 224, 224, 1);
 }
-
 .DecisionMaker-table .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root {
   /* padding-left: 40px; */
   border-bottom: none !important;
   text-align: center;
 }
-
 .DecisionMakecheckbox-row-table {
   width: 5% !important;
 }
-
 .DecisionstableStrength,
 .prospects-row-tableDetails {
   text-transform: capitalize;
@@ -27,28 +23,22 @@
   text-align: center !important;
   width: 16%;
 }
-
 .employee-row-tableCompany {
   width: 10% !important;
   text-align: center !important;
-
 }
-
 .Decisions-row-tableName {
   width: 10%;
   text-align: center !important;
 }
-
 .industry-row-tableStatus {
   width: 12% !important;
   text-align: center !important;
 }
-
 .DecisionstableStrengthnewclass {
   width: 10% !important;
   text-align: center !important;
 }
-
 /* .prospects-row-tableDetailsLast-TH-of-decisionmaker{
   text-transform: capitalize;
   width: 5% !important;
@@ -59,13 +49,11 @@
   display: flex;
   justify-content: center;
 }
-
 .DecisionstableStrength-strength {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-
 /* .table-cellhandleRightsidebar {
   margin: 20px 0 0 80px;
 } */
@@ -82,7 +70,6 @@
   font-weight: 700;
   font-size: 14px;
 }
-
 /* .company-name-countrylastname{
   float: left;
 } */
@@ -90,17 +77,14 @@
   min-width: 12rem;
   /* position: relative; */
 }
-
 .Decision-maker-user-name-main-container {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-
 .letter-heading {
   text-transform: uppercase !important;
 }
-
 .Decision-maker-user-name {
   position: relative;
   text-transform: capitalize;
@@ -116,7 +100,6 @@
   font-weight: 500;
   font-size: 16px;
 }
-
 .decisionMakerImageAi-Decisionmaker {
   height: 25px;
   border-radius: 50%;
@@ -124,39 +107,32 @@
   top: -7px;
   left: 28px;
 }
-
 .email-and-other-info-for-Prospects {
   position: absolute !important;
   display: flex;
   top: 23px !important;
   gap: 32px;
 }
-
 .button-collapse-table svg {
   font-size: 1rem;
   font-weight: 700;
 }
-
 .DecisionMaker-table-main tr {
   border-bottom: 0.6px solid #dedfe5;
 }
-
 .Suspect-table-data {
   text-transform: capitalize;
   display: flex;
   justify-content: center;
 }
-
 .Suspect-table-data svg {
   color: #da291c;
 }
-
 .DecisionMakercheckbox-row-table input {
   height: 16px;
   width: 16px;
   border: 1px solid red;
 }
-
 .score-pera-tag {
   font-family: Inter;
   font-size: 14px;
@@ -165,15 +141,12 @@
   letter-spacing: 0px;
   text-align: left;
 }
-
 .DecisionMaker-table .MuiTable-root .MuiTableBody-root .MuiTableRow-root:last-child {
   border-bottom: unset;
 }
-
 .DecisionMaker-table .MuiTableBody-root .MuiTableRow-root:last-child {
   border: none !important;
 }
-
 .Decision-maker-user-namenoborder {
   color: #003057;
   width: 46px;
@@ -186,35 +159,28 @@
   font-weight: 500;
   font-size: 16px;
 }
-
 .hide-image {
   display: none;
 }
-
 .Decisionstable {
   text-transform: capitalize;
   width: 12%;
 }
-
 .name-and-title-text {
   width: 100%;
 }
-
 .fullnameofuser {
   display: flex;
   gap: 5px;
 }
-
 .annual-revenue-table {
   text-transform: capitalize;
   text-align: left;
 }
-
 .joi-strength-control {
   display: flex;
   justify-content: center;
 }
-
 .after-company-name-country-fordecisionmaker {
   display: flex;
   text-transform: capitalize;
@@ -224,12 +190,10 @@
   color: #202224;
   opacity: 0.5;
 }
-
 .prospect-Name-and-Title-propect {
   text-align: left;
   /* padding-left: 21px; */
 }
-
 .table-cell-of-contact-details-dropdown-th-prospect {
   text-align: center;
   position: unset !important;
@@ -239,33 +203,27 @@
   width: 16%;
   /* width: 50%; */
 }
-
 .industry-text-dropdown-head-main-prospect {
   text-align: center;
   text-transform: capitalize;
   width: 109px !important;
 }
-
 .prospects-row-tableDetailsLast-TH-of-decisionmaker {
   width: 10%;
 }
-
 .prospects-row-tableDetails-cd {
   width: 20% !important;
 }
-
 .Com-details-prospect {
   text-align: center;
   display: flex;
   justify-content: center;
 }
-
 .DecisionMaker-table .Decisions-row-tableName-prospect {
   padding: 0px 0px 0px 15px !important;
   position: relative;
   width: 1% !important;
 }
-
 .email-and-other-info-prospect {
   position: absolute !important;
   display: flex;
@@ -273,12 +231,10 @@
   top: -20px;
   bottom: 0;
 }
-
 .annual-row-tableIndustry {
   width: 12% !important;
   text-align: center !important;
 }
-
 .button-collapse-table-propect {
   width: 10%;
   margin-left: 0px !important;
@@ -290,22 +246,18 @@
   justify-content: center !important;
   align-items: center !important;
 }
-
 .button-collapse-table-propect svg {
   font-size: 1rem;
   font-weight: 700;
 }
-
 .table-cellhandleRightsidebar-prospect {
   width: 10%;
 }
-
 .action-icons-people-edit {
   font-size: 20px !important;
   cursor: pointer;
   color: #a7a8a9;
 }
-
 .action-icons-people-delete {
   font-size: 20px !important;
   cursor: pointer;
@@ -314,4 +266,29 @@
 .linkedin-url-tooltip{
   color: #fff !important;
   text-decoration: none;
+}
+.Delete-Confirmation .MuiDialog-container .MuiPaper-root {
+  width: 40% !important;
+  /* height: 30vh !important; */
+  
+}
+.Decisionmaker-Reasonteaxt-area-lable{
+  color: #DA291C;
+  font-size: 14px ;
+}
+.CancelDelete-Confirmation{
+  background-color: #DA291C !important;
+  font-size: 14px !important;
+  color: white !important;
+  width: 100px !important;
+  padding: 5px !important;
+  text-transform: capitalize !important;
+}
+.DecisionmakerModalButton{
+  border: 1px solid #da291c !important;
+color: #da291c !important;
+font-size: 14px !important;
+width: 100px !important;
+padding: 5px !important;
+text-transform: capitalize !important;
 }
