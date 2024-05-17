@@ -1,0 +1,81 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+.main-box-tabs .MuiBox-root .MuiTabs-root {
+  background-color: #fff;
+}
+
+.main-tabs-decision-makers {
+  height: 64px;
+  padding: 0px 30px;
+}
+
+.main-tabs-decision-makers .MuiTabs-scroller .MuiTabs-flexContainer {
+  height: 64px;
+}
+
+.main-tabs-decision-makers
+  .MuiTabs-scroller
+  .MuiTabs-flexContainer
+  .Mui-selected {
+  color: #000000;
+}
+
+.main-tabs-decision-makers
+  .MuiTabs-scroller
+  .MuiTabs-flexContainer
+  .MuiTab-textColorPrimary {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16.94px;
+  text-transform: none;
+  font-family: Inter;
+}
+
+.section-new-ai-lead {
+  display: grid !important;
+  justify-content: end;
+  width: 100%;
+  align-items: center;
+}
+.new-ai-lead-button-section-button {
+  padding: 10px 17px 10px 17px !important;
+  background-color: #e32726 !important;
+  color: #fff !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.new-ai-lead-button-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+}
+
+.new-ai-lead-button-section p {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: Inter;
+}
+
+.new-ai-lead-button-section svg {
+  margin-right: 5px;
+}
+.inner-box-tabs {
+  margin-top: 9px !important;
+  text-transform: capitalize;
+}
+.text-ai-lead-button-section {
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 27px;
+  letter-spacing: 0px;
+  text-align: left;
+  width: auto;
+}

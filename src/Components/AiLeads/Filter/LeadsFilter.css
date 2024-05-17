@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+.Leads-Filter-main-container {
+    display: flex !important;
+    align-items: center;
+    border: 0.6px solid #D5D5D5;
+    border-radius: 10px;
+    width: 50%;
+    color: #D5D5D5;
+    height: 70px;
+    font-family: Inter;
+}
+.AILeads-Filter1st {
+    width: 10%;
+    border-right: 1px solid #D5D5D5;
+    height: 70px;
+}
+.Reset-filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    color: #EA0234;
+    height: 70px;
+    width: 10%;
+    /* border-left: 0.3px solid #D5D5D5; */
+}
+.reset-filter-icon {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+.Reset-filter-container div {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.Reset-filter-container p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0px;
+    text-align: left;
+    cursor: pointer;
+}
+.Leads-Filter-1stdrop-down .MuiFormControl-root .MuiInputBase-root fieldset {
+    border: none !important;
+}
+.hidedata {
+    display: none !important;
+}
+.Leads-Filter-1stdrop-down {
+    width: 18%;
+    border-right: 1px solid #d5d5d5;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Leads-Filter-1stdrop-down div {
+    padding: 0px 8px !important;
+    margin: 0 !important;
+    width: 100%;
+}
+.AILeads-Filter2nddrop-down div {
+    padding: 0px 8px !important;
+    margin: 0 !important;
+    width: 100%;
+}
+.Leads-Filter-Laststdrop-down div {
+    padding: 0px 8px !important;
+    margin: 0 !important;
+    width: 100%;
+}
+.AILeads-Filter2nddrop-down .MuiFormControl-root .MuiInputBase-root fieldset {
+    border: none !important;
+}
+.Leads-Filter-1stdrop-down em {
+    font-weight: 600;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: unset !important;
+}
+.Leads-Filter-1stdrop-down p {
+    font-weight: 400;
+    font-family: Inter;
+    font-size: 12px;
+    opacity: 0.5;
+}
+.AILeads-Filter2nddrop-down em {
+    font-weight: 600;
+    font-size: 14px;
+    font-family: Inter;
+    font-style: unset !important;
+}
+.AILeads-Filter2nddrop-down p {
+    font-weight: 400;
+    font-size: 12px;
+    font-family: Inter;
+    opacity: 0.5;
+}
+.Leads-Filter-Laststdrop-down p {
+    font-weight: 400;
+    font-size: 12px;
+    font-family: Inter;
+    opacity: 0.5;
+}
+.Leads-Filter-Laststdrop-down em {
+    font-size: 14px;
+    font-weight: 600;
+    font-family: Inter;
+    font-style: unset !important;
+}
+.AILeads-Filter2nddrop-down {
+    width: 30%;
+    border-right: 0.3px solid #D5D5D5;
+    height: 70px;
+}
+.JScoreContainer {
+    width: 30% !important;
+    border-left: 0.3px solid #D5D5D5;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+.JScoreContainer .css-1869usk-MuiFormControl-root {
+    width: 100% !important;
+}
+.JScoreContainer .MuiFormControl-root .MuiInputBase-root fieldset {
+    border: none !important;
+}
+.JScoreContainer em {
+    font-weight: 600;
+    font-size: 14px;
+    font-family: Inter;
+    font-style: unset !important;
+}
+.JScoreContainer p {
+    font-weight: 400;
+    font-size: 12px;
+    font-family: Inter;
+    opacity: 0.5;
+}
+.Leads-Filter-Laststdrop-down .MuiFormControl-root .MuiInputBase-root fieldset {
+    border: none !important;
+}
+.Leads-Filter-Laststdrop-down {
+    width: 30%;
+    height: 70px;
+}
+.AiLeads-filter-icons {
+    height: 10px;
+}
+.reduce-the-margin {
+    margin: 2px !important;
+}
+.AI-leade-checkbox-and-data-list {
+    border-bottom: 1px solid #D5D5D5;
+    display: flex;
+    padding: 0 3px;
+    min-width: 180px;
+}
+.AI-leade-checkbox-and-data-list:hover {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+}
+.AI-leade-checkbox-and-data-list-outter {
+    top: 238px !important;
+    left: 454px !important;
+    overflow-y: scroll;
+    min-height: 5vh;
+    max-height: 50vh !important;
+    margin-right: 4px;
+}
+.AI-leade-checkbox-and-data-list-outter::-webkit-scrollbar {
+    width: 8px;
+}
+.AI-leade-checkbox-and-data-list-outter::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+.AI-leade-checkbox-and-data-list-outter::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+.menuitems {
+    padding: 0px !important;
+    font-size: 13px !important;
+    font-weight: 400;
+    font-family: Inter !important;
+    line-height: 156px
+}
+.AI-Leadsfilter-items {
+    font-size: 13px !important;
+    font-weight: 400;
+    font-family: Inter;
+    line-height: 156px;
+}
+.AIcheckbox {
+    width: 10px;
+    color: green !important;
+    background-color: green !important;
+}
+.AI-leade-checkbox-and-data-list svg {
+    /* font-size: 15px !important; */
+    height: 16px;
+    width: 16px;
+    margin-left: 10px;
+}
+.AI-Leadsfilter-items {
+    padding: 4px 15px;
+}
+.css-6hp17o-MuiList-root-MuiMenu-list {
+    padding: 0px !important;
+}
+.menuitems:hover {
+    background-color: unset !important;
+}
+.JScoreContainer div {
+    padding: 0px 8px !important;
+    margin: 0 !important;
+    width: 100%;
+}
+.inner-reset-filter {
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    line-height: 27px;
+    letter-spacing: 0px;
+    text-align: left;
+    background-color: rgba(218, 41, 28, 0.12);
+    color: #DA291C;
+    border: none;
+    width: 100% !important;
+    height: 47px;
+    font-family: Inter;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.apply-hit-button {
+    justify-content: center;
+    width: 12% !important;
+    margin: 0px 10px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+.apply-hit-button div {
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+    margin: 0 !important;
+    width: 100%;
+}
+.inner-apply-button-container {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: #DA291C !important;
+    width: 95%;
+    height: 47px;
+    border-radius: 4px;
+}
+.AileadsFilter-Apply-button {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0px;
+    text-align: left;
+    cursor: pointer;
+    text-transform: none !important;
+    border: none;
+    color: #ffffff;
+    width: auto;
+    font-family: Inter;
+}
+.apply-tick-icon {
+    font-size: 14px !important;
+    color: #ffffff;
+    font-weight: 500;
+}
+.outer-main-for-filtersand-buttons {
+    text-transform: capitalize;
+    margin-top: 1rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    padding-top: 50px;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .apply-hit-button {
+        justify-content: center;
+        width: 13% !important;
+        margin: 0px 10px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+    }
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .apply-hit-button {
+        justify-content: center;
+        width: 22% !important;
+        margin: 0px 10px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        float: left;
+    }
+    .outer-main-for-filtersand-buttons {
+        text-transform: capitalize;
+        margin-top: 1rem;
+        margin-bottom: 8px;
+        display: block;
+        align-items: center;
+        padding-top: 50px;
+    }
+}

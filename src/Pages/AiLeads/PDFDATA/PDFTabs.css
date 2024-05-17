@@ -1,0 +1,57 @@
+.CompanyProfileTabs-heading{
+    color:  #000000 !important;
+    font-size: 14px  !important;
+    font-weight: 600 !important;
+    line-height: 16.94px !important;
+  }
+  .Companydata .MuiTabs-scroller .MuiTabs-indicator {
+    background-color: #DA291C !important;
+  }
+  .Companydata 
+  .MuiTabs-flexContainer
+  .Mui-selected {
+  color: #000000;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16.94px;
+  height: 45px;
+  text-transform: none;
+  font-family: Inter !important;
+  }
+  .Companydata 
+  .MuiTabs-scroller
+  .MuiTabs-flexContainer
+  .MuiTab-root {
+  text-transform: none;
+  font-family: Inter !important;
+  }
+  .Companydata.MuiTabs-scroller  .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected{
+    color: black !important;
+  }
+  .company-profile-main-tabs-data #simple-tabpanel-0{
+    background-color: #F5F6FA !important;
+    padding: 0 10px;
+  }
+  .company-profile-main-tabs-data .MuiBox-root{
+    padding-left: 20px;
+  }
+  .Leades-filter-inner-container-forCompanyProfileTabs{
+    display: flex;
+    justify-content: end;
+    padding-right: 10px;
+  }
+  .Leades-filter-inner-container-forCompanyProfileTabs button{
+    background-color: #DA291C;
+    font-size: 11px;
+    font-family: Inter;
+    font-weight: 600;
+    width: 100px !important;
+    height: 47px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px, 17px, 10px, 17px;
+  }
+  .Leades-filter-inner-container-forCompanyProfileTabs button:hover {
+    background-color: #BB291E ;
+    font-family: Inter;
+  }

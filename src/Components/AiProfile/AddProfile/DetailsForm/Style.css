@@ -1,0 +1,143 @@
+.stack-form-button {
+  position: absolute;
+  bottom: 0;
+  border-radius: 0px 0px 10px 10px !important;
+  height: 64px !important;
+  width: 100% !important;
+  background-color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0px 0px 8px 0px #00000033 !important;
+}
+.form-data-typeable {
+  overflow-y: scroll;
+  height: 73vh;
+}
+.ai-profile-form-main {
+  padding-bottom: 10px !important;
+  width: 100% !important;
+  border-radius: 14px !important;
+  background-color: #FFFFFF !important;
+  margin: 0px !important;
+  text-transform: capitalize;
+}
+.ai-profile-form {
+  width: 100% !important;
+}
+.heading-of-prospect-details {
+  margin-bottom: 12px;
+  justify-content: space-between;
+  display: flex;
+}
+.prospect-text-and-questionmark {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stack-inner-button-for-showresult {
+  width: 100% !important;
+}
+.ai-prospect-details-form {
+  margin-bottom: 46px;
+  padding: 22px !important;
+}
+.inner-main-object-select {
+  padding-bottom: 12px;
+}
+.select-dropdown-leads {
+  padding: 0px 0px 0px 0px !important;
+  background-color: #f4f5f9 !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.placeholder-heading {
+  font-family: Inter !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+  letter-spacing: -0.01em !important;
+  text-align: left !important;
+  font-style: unset !important;
+}
+.listing-select-data-leads {
+  border: 0.5px solid #dedfe5 !important;
+  font-family: Inter !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 17px !important;
+  letter-spacing: 0px !important;
+  text-align: left !important;
+  height: 41px !important;
+}
+.MuiInputBase-root
+  .MuiOutlinedInput-root
+  .MuiInputBase-colorPrimary
+  .Mui-focused
+  .MuiInputBase-formControl
+  .select-dropdown-leads
+  .css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.last-funding-date-pick {
+  width: 100% !important;
+  height: 40px !important;
+  overflow: hidden !important;
+  background-color: #f4f5f9 !important;
+  padding: 0px !important;
+}
+.last-funding-date-pick .MuiInputBase-formControl input {
+  padding: 8.5px !important;
+}
+.inner-main-object-select
+  .MuiFormControl-root
+  .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #DA291C !important;
+}
+.heading-placeholder {
+  color: black !important;
+  opacity: unset !important;
+}
+.Limit-people-per-company-date {
+  width: 100% !important;
+  height: 40px !important;
+  border: #dedfe5;
+  background-color: #f4f5f9;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+.Limit-people-per-company-date .MuiInputBase-root {
+  background-color: #f4f5f9;
+  font-size: 10px !important;
+}
+.form-date-picker {
+  height: 40px;
+  width: 100%;
+  background-color: #f4f5f9 !important;
+  border-radius: 5px !important;
+}
+.form-date-picker input {
+  padding: 11px 14px !important;
+  font-family: Inter !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+  letter-spacing: -0.01em !important;
+  text-align: left !important;
+  font-style: unset !important;
+}
+.form-date-picker .css-1laqsz7-MuiInputAdornment-root button svg{
+  width: 16px !important;
+  height: 16px !important;
+}
+.mandatoryainputs{
+  color: red;
+  font-size: 14px;
+}
+.EmptyInputsImage{
+  cursor: pointer;
+}
