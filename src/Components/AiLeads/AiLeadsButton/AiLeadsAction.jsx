@@ -83,29 +83,29 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
           {
             currentLeadsLength && !statsCount && location === "/organization" ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
+                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
                 <p>Out of {location === "/organization" || "/organization" ? statsData?.generated_leads.toLocaleString() || '-' : null}</p>
               </> : null
           }
           {
             statsCount ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
+                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
                 <p>Out of {location === "/organization" || "/organization" ? statsCount : null}</p>
               </> : null
           }
           {
-            currentLeadsLength && !statsCount && location === "/people" && !statsCountDecisionMaker ?
+            currentLeadsLength && !statsCount && location === "/" && !statsCountDecisionMaker ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
-                <p>Out of {location === "/people" ? statsData?.decisionmaker_count.toLocaleString() || '-' : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
+                <p>Out of {location === "/" ? statsData?.decisionmaker_count.toLocaleString() || '-' : null}</p>
               </> : null
           }
           {
             statsCountDecisionMaker ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
-                <p>Out of {location === "/people" ? statsCountDecisionMaker || '-' : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
+                <p>Out of {location === "/" ? statsCountDecisionMaker || '-' : null}</p>
               </> : null
           }
         </div>

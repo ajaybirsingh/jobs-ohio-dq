@@ -249,16 +249,16 @@ export default function Sidebar({
         setLoading(false);
       });
   };
-  React.useEffect(() => {
-    if (isLoadProfile) {
-      if (userId || refState) {
-        LeadsProfile();
-      }
-    } else {
-      setIsLoadProfile(true);
-    }
+  // React.useEffect(() => {
+  //   if (isLoadProfile) {
+  //     if (userId || refState) {
+  //       LeadsProfile();
+  //     }
+  //   } else {
+  //     setIsLoadProfile(true);
+  //   }
 
-  }, [userId, refState, isLoadProfile]);
+  // }, [userId, refState, isLoadProfile]);
   const decisionMakerProfile = () => {
     setLoading(true);
     const option = {
@@ -279,15 +279,15 @@ export default function Sidebar({
         setLoading(false);
       });
   };
-  React.useEffect(() => {
-    if (isStateNew) {
-      if (userId || refStatenew) {
-        decisionMakerProfile();
-      }
-    } else {
-      setIsStateNew(true);
-    }
-  }, [userId, refStatenew, isStateNew]);
+  // React.useEffect(() => {
+  //   if (isStateNew) {
+  //     if (userId || refStatenew) {
+  //       decisionMakerProfile();
+  //     }
+  //   } else {
+  //     setIsStateNew(true);
+  //   }
+  // }, [userId, refStatenew, isStateNew]);
 
   const loggingOut = async () => {
     await oktaAuth.signOut({
@@ -520,7 +520,7 @@ export default function Sidebar({
                 </ListItemButton>
               </ListItem>
             </List> */}
-            <List>
+            {/* <List>
               <ListItem
                 disablePadding
                 sx={{ display: "block" }}
@@ -555,7 +555,7 @@ export default function Sidebar({
                   />
                 </ListItemButton>
               </ListItem>
-            </List>
+            </List> */}
             <List>
               <ListItem
                 disablePadding

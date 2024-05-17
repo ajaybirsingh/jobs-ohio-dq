@@ -7,28 +7,23 @@
     padding: 20px;
     border-radius: 14px;
 }
-
 .PeopleScreen-main-container {
     height: 100%;
 }
-
 .Pepole-flex-container {
     display: flex;
     gap: 20px;
     width: 100%;
     padding-bottom: 10px;
 }
-
 .People-screencontainer-outter {
     padding-top: 18px;
     height: 100%;
 }
-
 .box-contactus-modal:focus-visible {
     outline: none !important;
     border: none !important;
 }
-
 .modal-img-section {
     display: flex;
     justify-content: center;
@@ -36,19 +31,16 @@
     flex-direction: column;
     height: 100%;
 }
-
 .modal-img-section img {
     height: 224px;
     width: 220px;
     margin-bottom: 20px;
 }
-
 .content-modal-contactus {
     font-size: 36px !important;
     font-weight: bold !important;
     margin-bottom: 35px !important;
 }
-
 .button-modal-contactUs {
     width: 202px;
     height: 50px;
@@ -59,28 +51,64 @@
     font-size: 16px;
     cursor: pointer;
 }
-
 /* .lkihygfds{
     background-color: #da291c !important;
   } */
 .ContactUsScreen-dropdown {
     width: 100%;
 }
-
 .People-child-container .MuiFormControl-root {
     margin: 0;
     width: 100%
 }
-
 .People-child-container .MuiFormControl-root .MuiInputBase-root .MuiSelect-select {
     padding: 8px !important;
     font-size: inherit !important;
 }
-
 .People-child-container {
     width: 50%;
 }
-
+.People-child-container-forOrganization .MuiFormControl-root {
+    margin: 0;
+    width: 100%
+}
+.SetCoustom-drop-down{
+    width: 50%;
+    position: relative;
+}
+.Dropdown-forPeople-screen{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    background-color: white;
+   position: absolute;
+   width: 100%;
+    max-height: 40vh;
+    z-index: 999;
+    min-height: 2vh !important;
+    overflow-y: scroll;
+    overflow-x:hidden ;
+}
+.Not-Available-Drop-Down{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    background-color: white;
+   position: absolute;
+   width: 40%;
+    max-height: 40vh;
+    text-align: center;
+    padding: 5px;
+    z-index: 999;
+    min-height: 2vh !important;
+    overflow-y: scroll;
+}
+.People-child-container-forOrganization .MuiFormControl-root .MuiInputBase-root .MuiSelect-select {
+    padding: 8px !important;
+    font-size: inherit !important;
+}
+.People-child-container-forOrganization{
+    width: 100%;
+    position: relative;
+}
 .PeopleScreen-lables {
     font-family: Inter;
     font-size: 12px;
@@ -89,47 +117,38 @@
     letter-spacing: -0.01em;
     text-align: left;
 }
-
 .muifile-uploder {
     width: 100%;
 }
-
 .PeopleTextarea {
     width: 100%;
     padding-bottom: 40px;
     padding-right: 8px;
 }
-
 .PeopleTextarea Textarea {
     box-shadow: none !important;
     width: 100%;
 }
-
 .PeopleTextarea textarea:focus {
     border-color: #000000;
 }
-
 .PeopleTextarea textarea:hover {
     border-color: #000000;
 }
-
 .muifile-uploder .MuiInputBase-root input {
     padding: 8px;
 }
-
 .SelectAction-css {
     font-size: 13px !important;
     font-weight: 400 !important;
     font-style: unset !important;
 }
-
 .People-SUBMIT-button {
     background: #da291c !important;
     color: white;
     height: 39px !important;
     width: 188px !important;
 }
-
 .Peoplescreen-heading p {
     font-weight: 500 !important;
     line-height: 19px !important;
@@ -139,32 +158,26 @@
     font-size: 16px !important;
     opacity: 0.5 !important;
 }
-
 .Peoplescreen-heading h3 {
     font-size: 20px;
     color: #101820;
 }
-
 .SUBMITbutton-div {
     width: 100%;
 }
-
 .SUBMITbutton-div .MuiStack-root button {
     width: 15% !important;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .People-SUBMIT-button {
     width: 20%;
 }
-
 .file-uploader {
     position: relative;
     height: 40px;
 }
-
 .file-uploader i {
     position: absolute;
     font-size: 40px;
@@ -173,11 +186,9 @@
     color: white;
     transition: all .2s ease-in-out;
 }
-
 .file-uploader input {
     width: 100%;
 }
-
 .custom-file-upload {
     /* padding: 16px 0 20px 80px; */
     display: block;
@@ -195,14 +206,12 @@
     border-radius: 4px;
     z-index: 1;
 }
-
 .BrowseFilesdiv {
     display: flex;
     justify-content: end;
     align-items: center;
     height: 40px;
 }
-
 .BrowseFilesdiv button {
     height: 40px;
     background-color: #FBE8E6;
@@ -213,17 +222,14 @@
     justify-content: center;
     align-items: center;
 }
-
 .SUBMITbutton-div svg {
     transform: rotate(270deg);
     /* padding-right: 10px; */
     font-size: 20px;
 }
-
 .SUBMITbutton-div button {
     gap: 25px;
 }
-
 input[type=file] {
     cursor: pointer;
     position: absolute;
@@ -236,24 +242,20 @@ input[type=file] {
     top: 0;
     font-family: 'Open Sans', sans-serif;
 }
-
 input[type=file]:focus,
 input[type=file]:active {
     outline: transparent;
 }
-
 input[type=file]:focus~label i,
 input[type=file]:hover~label i {
     transform: scale(1.05);
 }
-
 @media screen and (min--moz-device-pixel-ratio:0) {
     input[type=file] {
         left: 80px;
         padding-top: 30px;
     }
 }
-
 @supports (-ms-ime-align:auto) {
     input[type=file] {
         padding-top: 0;
@@ -264,11 +266,9 @@ input[type=file]:hover~label i {
         text-indent: inherit;
     }
 }
-
 .uploderinput {
     width: 50%;
 }
-
 .chooseFileOpenUpload {
     height: 40px;
     background-color: #FBE8E6;
@@ -279,7 +279,6 @@ input[type=file]:hover~label i {
     justify-content: center;
     align-items: center;
 }
-
 .Choose-file-btn {
     border: none;
     background: none !important;
@@ -291,24 +290,25 @@ input[type=file]:hover~label i {
     padding-left: 10px;
     font-size: inherit;
 }
-
 .Choose-file-btn span {
     font-size: 12px;
     color: black;
 }
-
 .PeopleMandatoryfields {
     color: red;
     font-size: 14px;
 }
-
 .Position-end-date {
     height: 40px;
     width: 100%;
     /* background-color: #f4f5f9 !important; */
     border-radius: 5px !important;
 }
-
+.handelEmtyData_icon{
+    position: absolute;
+    top: 33px;
+    right: 6px;
+}
 .Position-end-date input {
     padding: 11px 14px !important;
     font-family: Inter !important;
@@ -319,7 +319,6 @@ input[type=file]:hover~label i {
     text-align: left !important;
     font-style: unset !important;
 }
-
 .Position-end-date .css-1laqsz7-MuiInputAdornment-root button svg {
     width: 16px !important;
     height: 16px !important;

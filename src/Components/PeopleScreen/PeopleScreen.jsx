@@ -16,11 +16,16 @@ import Loader from "../Loader/Loader";
 import axios from "axios";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useLocation } from "react-router-dom";
-import { APIUrlFour } from "../../Utils/Utils";
+import { useLocation, useNavigate } from "react-router-dom";
+import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
+import CloseIcon from '@mui/icons-material/Close';
 export default function PeopleScreen() {
   const location = useLocation();
+  const navigate = useNavigate();
   const peopleData = location?.state;
+  const [showSearchdata, setshowSearchdata] = React.useState(false);
+  const [responseData, setResponseData] = React.useState(null);
+  const [selectedOrganization, setSelectedOrganization] = React.useState('');
   const [PeopleDetails, setPeopleDetails] = React.useState({
     firstName: "",
     lastName: "",
@@ -40,6 +45,7 @@ export default function PeopleScreen() {
     Status: "",
     UserId: "",
   });
+
 
   React.useEffect(() => {
     if (peopleData?.first_name) {
@@ -112,25 +118,6 @@ export default function PeopleScreen() {
       toast.error("Please Enter Last Name");
       return false;
     }
-    // if (!PeopleDetails?.email || PeopleDetails?.email?.trim() === "") {
-    //   toast.error("Please Enter Email ");
-    //   return false;
-    // }
-    // if (!isValidEmail(PeopleDetails?.email)) {
-    //   toast.error("Please Enter Valid Email");
-    //   return false;
-    // }
-    // if (
-    //   !isValidEmail(PeopleDetails?.email) ||
-    //   PeopleDetails?.email?.trim() === ""
-    // ) {
-    //   toast.error("Please Enter Email Address");
-    //   return false;
-    // }
-    // if (!PeopleDetails?.PhoneNo) {
-    //   toast.error("Please Enter Phone No ");
-    //   return false;
-    // }
     if (!PeopleDetails?.Linkedin) {
       toast.error("Please Enter Linkedin");
       return false;
@@ -139,22 +126,18 @@ export default function PeopleScreen() {
       toast.error("Please Enter JobTitle");
       return false;
     }
-    if (!PeopleDetails?.Oraganization) {
-      toast.error("Please Enter Organization");
+    // if (!selectedOrganization?.org_name || !PeopleDetails?.Oraganization) {
+    //   toast.error("Please Select Organization");
+    //   return false;
+    // }
+    if (!selectedOrganization?.org_name && !PeopleDetails?.Oraganization) {
+      toast.error("Please Select Organization");
       return false;
     }
     if (!PeopleDetails?.Status) {
       toast.error("Please Select Status");
       return false
     }
-    // if (!PeopleDetails?.SourceDescription) {
-    //   toast.error("Please Enter Source Description");
-    //   return false;
-    // }
-    // if (!PeopleDetails?.Comments) {
-    //   toast.error("Please Enter  Comment");
-    //   return false;
-    // }
     return true;
   };
 
@@ -172,7 +155,7 @@ export default function PeopleScreen() {
           phone_no: PeopleDetails?.PhoneNo,
           linkedin: PeopleDetails?.Linkedin,
           primary_job_title: PeopleDetails?.JobTitle,
-          primary_organization: PeopleDetails?.Oraganization,
+          primary_organization: selectedOrganization?.org_name,
           source_description: PeopleDetails?.SourceDescription,
           city: PeopleDetails?.City,
           state: PeopleDetails?.State,
@@ -224,6 +207,7 @@ export default function PeopleScreen() {
             PositionEndDate: "",
             Status: "",
           });
+          navigate('/');
         }
       })
       .catch((err) => {
@@ -242,7 +226,7 @@ export default function PeopleScreen() {
           last_name: PeopleDetails?.lastName,
           linkedin: PeopleDetails?.Linkedin,
           primary_job_title: PeopleDetails?.JobTitle,
-          primary_organization: PeopleDetails?.Oraganization,
+          primary_organization: selectedOrganization?.org_name ? selectedOrganization?.org_name : "",
           organization_linkedin_username: PeopleDetails?.Orglinkedin ? PeopleDetails?.Orglinkedin : "",
           person_id: peopleData?.person_id,
           org_permalink: "",
@@ -297,6 +281,7 @@ export default function PeopleScreen() {
             PositionEndDate: "",
             Status: "",
           });
+          navigate('/');
         }
       })
       .catch((err) => {
@@ -332,6 +317,59 @@ export default function PeopleScreen() {
     "format ",
     "error",
   ];
+
+  const OrgSearch = () => {
+    setLoading(true)
+    const data = { org_name: PeopleDetails.Oraganization };
+    axios
+      .post(`${APIUrlOne()}/v1/org_search`, data, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        setLoading(false)
+        if (response.status === 200) {
+          setshowSearchdata(true);
+          setResponseData(response.data);
+          toast.success(response.data.message);
+        } else {
+          setshowSearchdata(false);
+        }
+      })
+      .catch((error) => {
+        setLoading(false)
+        toast.error(error.response.data.message);
+      });
+  };
+  React.useEffect(() => {
+    let timer;
+    if (PeopleDetails.Oraganization?.length > 2) {
+      timer = setTimeout(() => {
+        OrgSearch();
+      }, 1000);
+      setshowSearchdata(false)
+    }
+    return () => clearTimeout(timer);
+  }, [PeopleDetails.Oraganization]);
+  const handelselectdata = (item) => {
+    setSelectedOrganization(item);
+    setshowSearchdata(false)
+    setPeopleDetails(prevState => ({
+      ...prevState,
+      Oraganization: item?.org_name || ""
+    }));
+    setshowSearchdata(false)
+  };
+
+  const handelEmtyData = () => {
+    setPeopleDetails(prevState => ({
+      ...prevState,
+      Oraganization: ""
+    }));
+    setSelectedOrganization('');
+  }
 
   return (
     <>
@@ -447,7 +485,7 @@ export default function PeopleScreen() {
               </div>
             </div>
 
-            <div className="Pepole-flex-container">
+            {/* <div className="Pepole-flex-container">
               <div className="People-child-container">
                 <label htmlFor="" className="PeopleScreen-lables">
                   Organization
@@ -468,8 +506,74 @@ export default function PeopleScreen() {
                 <label className="PeopleScreen-lables" htmlFor="">
                   Source Description
                 </label>
-                {/* <span className="PeopleMandatoryfields">*</span> */}
 
+                <LabelInput
+                  onChange={(e) => {
+                    const inputvalue = e?.target?.value;
+                    setPeopleDetails({
+                      ...PeopleDetails,
+                      SourceDescription: inputvalue,
+                    });
+                  }}
+                  value={PeopleDetails?.SourceDescription}
+                />
+              </div>
+            </div> */}
+
+            <div className="Pepole-flex-container">
+              <div className="SetCoustom-drop-down">
+
+                <div className="People-child-container-forOrganization">
+                  <label htmlFor="" className="PeopleScreen-lables">
+                    Organization
+                  </label>
+                  <span className="PeopleMandatoryfields">*</span>
+                  <LabelInput
+                    onChange={(e) => {
+                      const inputvalue = e?.target?.value;
+                      setPeopleDetails({
+                        ...PeopleDetails,
+                        Oraganization: inputvalue,
+                      });
+                    }}
+                    value={PeopleDetails?.Oraganization}
+                  />
+                  <div className="handelEmtyData_icon" onClick={handelEmtyData}>
+                    {PeopleDetails.Oraganization && (
+                      <CloseIcon className='showicons-search' />
+                    )}
+                  </div>
+                </div>
+                {PeopleDetails.Oraganization && (
+                  <div className={responseData && responseData.length ? "Dropdown-forPeople-screen" : ""}
+                  >
+                    {responseData?.length > 0 ? (
+                      responseData?.map((item) => {
+                        return (
+                          <div className='outterAutocompletedropdown' key={item.id}>
+                            <div
+                              onClick={() => handelselectdata(item)} className='useralldata'
+                            >
+                              {item?.org_name}
+                            </div>
+                            <div className='separatorline'></div>
+                          </div>
+                        )
+                      }
+                      )
+                    ) : (
+                      <div>
+                        {!showSearchdata && <div className='Not-Available-Drop-Down'>Not Available</div>}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+              <div className="uploderinput">
+                <label className="PeopleScreen-lables" htmlFor="">
+                  Source Description
+                </label>
+                {/* <span className="PeopleMandatoryfields">*</span> */}
                 <LabelInput
                   onChange={(e) => {
                     const inputvalue = e?.target?.value;

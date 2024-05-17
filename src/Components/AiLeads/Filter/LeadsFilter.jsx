@@ -42,14 +42,14 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
       })
       .catch(() => { });
   };
-  React.useEffect(() => {
-    if (isLoadFilters) {
-      LeadsFilters();
-    } else {
-      setIsLoadFilters(true);
-    }
+  // React.useEffect(() => {
+  //   if (isLoadFilters) {
+  //     LeadsFilters();
+  //   } else {
+  //     setIsLoadFilters(true);
+  //   }
 
-  }, [isLoadFilters]);
+  // }, [isLoadFilters]);
   const handleIndustryChange = (event) => {
     const value = event.target.value;
     setSelectedIndustry(value);

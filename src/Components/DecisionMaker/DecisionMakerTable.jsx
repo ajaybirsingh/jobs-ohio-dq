@@ -1,7 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import "../DecisionMaker/DecisionMakerTable.css";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,202 +9,233 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import decisionMakerImage from "../../Assets/Cloudfigma.svg";
-import ContactDetailList from "../../Components/AiLeads/ContactDetailList/ContactDetailList";
-import RightSidebar from "../RightSiderbar/RightSiderbar";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-import { APIUrlFour, APIUrlOne, APIUrlTwo, GetUserId } from "../../Utils/Utils";
-import IndustryDropdown from "../AiLeads/IndustrySectorDropdown/Index";
+import { APIUrlFour, APIUrlTwo, GetUserId } from "../../Utils/Utils";
 import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as XLSX from 'xlsx';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Tooltip } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { PEOPLE_RECORDS } from "../../Utils/Constants";
-function Row({ row, connectionStrength }) {
-  const [openSidebar, setOpenSidebar] = React.useState(false);
-  const [dataShortestPath, setDataShortestPath] = React.useState();
-  const loggedInUserId = GetUserId();
-  const [userDetails, setUserDeatils] = React.useState();
+import Textarea from '@mui/joy/Textarea';
+function Row({ row }) {
+  const [loading, setLoading] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [modalTeaxtArea, setModalTeaxtArea] = React.useState("")
   const linkedInUrl = row?.linkedin ? row?.linkedin : 'Not Available';
-  // const handleRightsidebar = (event) => {
-  //   const data = {};
-  //   data.source_uid = Number(loggedInUserId);
-  //   data.target_uid = Number(event?.person_id);
-  //   const option = {
-  //     method: "POST",
-  //     headers: {
-  //       "access-control-allow-origin": "*",
-  //       "content-type": "application/json",
-  //     },
-  //     data: data,
-  //     url: `${APIUrlTwo()}/v1/shortest-path`,
-  //   };
-  //   axios(option)
-  //     .then((response) => {
-  //       if (response?.status === 200) {
-  //         const data = Object.values(response.data);
-  //         setDataShortestPath(data);
-  //         setOpenSidebar(true);
-  //         setUserDeatils(event)
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err?.response?.data?.message);
-  //     });
-  // };
   const navigate = useNavigate();
   const EditPeople = (row) => {
     navigate(PEOPLE_RECORDS, { state: row })
   }
+
+  const [deleteData, setDeleteData] = React.useState('');
+  const DeletePeople = (row) => {
+    setDeleteData(row)
+    setOpen(true);
+  };
+  const handleClose = (row) => {
+    setOpen(false);
+  };
+  const validateFields = () => {
+    if (modalTeaxtArea === "") {
+      toast.error("Please Enter Reason")
+      return false
+    }
+    return true
+  }
+  const handleDeleteCase = () => {
+    if (!validateFields()) return
+
+    setLoading(true);
+    const data = {
+      records: [
+        {
+          first_name: deleteData?.first_name,
+          last_name: deleteData?.last_name,
+          linkedin: deleteData?.linkedin,
+          primary_job_title: deleteData?.primary_job_title,
+          primary_organization: deleteData?.primary_organization,
+          organization_linkedin_username: deleteData?.organization_linkedin_username,
+          person_id: deleteData?.person_id,
+          org_permalink: deleteData?.org_permalink,
+          middle_name: "",
+          email: deleteData?.email,
+          phone_no: deleteData?.phone_no,
+          city: null,
+          state: null,
+          country: null,
+          zip_code: null,
+          position_end_date: deleteData?.position_end_date,
+          comments: modalTeaxtArea,
+          source: deleteData?.source,
+          source_description: deleteData?.source_description,
+          validation_status: "verified",
+          action: "delete",
+          user_id: null,
+          updated_at: new Date().toISOString().slice(0, 10),
+        }
+      ]
+    };
+
+    const option = {
+      method: "POST",
+      headers: {
+        "access-control-allow-origin": "*",
+        "content-type": "application/json",
+      },
+      url: `${APIUrlFour()}/v1/delete_record_people`,
+      data: JSON.stringify(data),
+    };
+    axios(option)
+      .then((e) => {
+        setLoading(false);
+        if (e?.status === 200) {
+          toast.success(e?.data?.message);
+          setModalTeaxtArea('');
+          handleClose();
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err?.response?.data?.message);
+      });
+  }
   return (
-    <TableRow className="juyds" sx={{ "& > *": { borderBottom: "unset" } }}>
-      <>
-        <TableCell className="Decisions-row-tableName-prospect" align="left">
 
-          <div
-            className={
-              row?.decision_maker === true
-                ? "Decision-maker-user-name"
-                : "Decision-maker-user-noborder create-name-img"
-            }
-          >
-            <img
-              className={
-                row?.suspect_status === null ? "hide-image" : "decisionMakerImageAi-Decisionmaker"
-              }
-              src={decisionMakerImage}
-              alt=""
-            />
-            <p className="letter-heading">{row?.first_name ? row?.first_name?.split(" ")?.find(item => !item.includes('('))?.charAt(0) : ""}{row?.last_name ? row?.last_name?.split(" ")?.find(item => !item.includes('('))?.charAt(0) : ""}</p>
-          </div>
-        </TableCell>
-        <TableCell className="Decision-maker-userTeblesell" align="left">
-          <div className="Decision-maker-user-name-main-container">
+    <React.Fragment>
+      {
+        loading ? <Loader /> : null
+      }
+      <TableRow className="juyds" sx={{ "& > *": { borderBottom: "unset" } }}>
+        <>
+          <TableCell className="Decisions-row-tableName-prospect" align="left">
 
-            <div className="name-and-title-text">
-              <div className="fullnameofuser">
-                <h3 className="company-name-country">{row?.first_name ? row?.first_name : "-"} {row?.last_name ? row?.last_name : "-"}</h3>
-              </div>
-              <p className="after-company-name-country-fordecisionmaker">
-                {row?.primary_job_title?.substring(0, 22) +
-                  (row?.primary_job_title?.length > 25 ? "...." : "")}
-              </p>
-            </div>
-
-          </div>
-        </TableCell>
-        {/* <TableCell component="th" scope="row">
-          <p className="joi-strength-control">{row?.strengthData?.strength ? row?.strengthData?.strength : "-"}</p>
-        </TableCell> */}
-        <TableCell align="left">
-          <h3 className="annual-revenue-table">{row.primary_organization ? row.primary_organization : "-"}</h3>
-        </TableCell>
-        {/* <TableCell
-          align="left"
-          className="table-cell-of-contact-details-dropdown-th"
-        >
-          <div
-            className="Set-dropdown-ofIndustry"
-            style={{ position: "relative" }}
-          >
-            <div className="email-andrelative-other-info">
-              <div className="maked-component-of-dropdown-forai-leads">
-                <IndustryDropdown row={row} />
-              </div>
-            </div>
-          </div>
-        </TableCell> */}
-        {/* <TableCell align="left">
-          <div className="Suspect-table-data">
-            <h3 className="industry-sector-table">
-              {row?.suspect_status ? row.suspect_status : "-"}
-            </h3>
-          </div>
-        </TableCell> */}
-        <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
-          <Tooltip title={
-            linkedInUrl !== 'Not Available' ?
-              <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{linkedInUrl}</a>
-              : 'Not Available'
-          }>
             <div
-              className="Set-dropdown-ofContactDetailList"
-              style={{ position: "relative" }}
+              className={
+                row?.decision_maker === true
+                  ? "Decision-maker-user-name"
+                  : "Decision-maker-user-noborder create-name-img"
+              }
             >
-              {/* <div className="email-and-other-infodc">
-              <div className="maked-component-of-dropdown">
-                <ContactDetailList item={row} />
+              <img
+                className={
+                  row?.suspect_status === null ? "hide-image" : "decisionMakerImageAi-Decisionmaker"
+                }
+                src={decisionMakerImage}
+                alt=""
+              />
+              <p className="letter-heading">{row?.first_name ? row?.first_name?.split(" ")?.find(item => !item.includes('('))?.charAt(0) : ""}{row?.last_name ? row?.last_name?.split(" ")?.find(item => !item.includes('('))?.charAt(0) : ""}</p>
+            </div>
+          </TableCell>
+          <TableCell className="Decision-maker-userTeblesell" align="left">
+            <div className="Decision-maker-user-name-main-container">
+
+              <div className="name-and-title-text">
+                <div className="fullnameofuser">
+                  <h3 className="company-name-country">{row?.first_name ? row?.first_name : "-"} {row?.last_name ? row?.last_name : "-"}</h3>
+                </div>
+                <p className="after-company-name-country-fordecisionmaker">
+                  {row?.primary_job_title?.substring(0, 22) +
+                    (row?.primary_job_title?.length > 25 ? "...." : "")}
+                </p>
               </div>
-            </div> */}
-              <p className="email-in-accordian">
-                {row?.linkedin
-                  ? row?.linkedin.length > 28
-                    ? row?.linkedin.substr(28, 28) ||
-                    row?.linkedin.length > 20 + "..."
-                    : row?.linkedin
+
+            </div>
+          </TableCell>
+          <TableCell align="left">
+            <h3 className="annual-revenue-table">{row.primary_organization ? row.primary_organization : "-"}</h3>
+          </TableCell>
+          <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
+            <Tooltip title={
+              linkedInUrl !== 'Not Available' ?
+                <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{linkedInUrl}</a>
+                : 'Not Available'
+            }>
+              <div
+                className="Set-dropdown-ofContactDetailList"
+                style={{ position: "relative" }}
+              >
+                
+                <p className="email-in-accordian">
+                  {row?.linkedin
+                    ? row?.linkedin.length > 28
+                      ? row?.linkedin.substr(28, 28) ||
+                      row?.linkedin.length > 20 + "..."
+                      : row?.linkedin
+                    : "Not Available"}
+                </p>
+              </div>
+            </Tooltip>
+          </TableCell>
+
+          {/* email */}
+          <TableCell align="left">
+            <Tooltip title={row?.email ? row?.email : 'Not Available'}>
+              <div className="Suspect-table-data">
+                <h3 className="industry-sector-table">
+                  {row?.email
+                    ? row?.email.length > 26
+                      ? row?.email.substr(0, 26) + "..."
+                      : row?.email
+                    : "Not Available"}
+                </h3>
+              </div>
+            </Tooltip>
+          </TableCell>
+
+          {/* phone no. */}
+          <TableCell align="left">
+            <Tooltip title={row?.phone_no ? row?.phone_no : 'Not Available'}>
+              <div className="Suspect-table-data">
+                {row?.phone_no
+                  ? row?.phone_no.length > 14
+                    ? row?.phone_no.substr(0, 14) + "..."
+                    : row?.phone_no
                   : "Not Available"}
-              </p>
-            </div>
-          </Tooltip>
+              </div>
+            </Tooltip>
+          </TableCell>
+        </>
+        <TableCell className="table-cellhandleRightsidebar-prospect">
+          <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+            
+            <Tooltip title="Edit">
+              <EditIcon className="action-icons-people-edit" onClick={() => EditPeople(row)} />
+            </Tooltip>
+
+            <Tooltip title="Delete">
+              <DeleteIcon onClick={() => DeletePeople(row)} className="action-icons-people-delete" />
+            </Tooltip>
+
+          </div>
         </TableCell>
-
-        {/* email */}
-        <TableCell align="left">
-          <Tooltip title={row?.email ? row?.email : 'Not Available'}>
-            <div className="Suspect-table-data">
-              <h3 className="industry-sector-table">
-                {row?.email
-                  ? row?.email.length > 26
-                    ? row?.email.substr(0, 26) + "..."
-                    : row?.email
-                  : "Not Available"}
-              </h3>
-            </div>
-          </Tooltip>
-        </TableCell>
-
-        {/* phone no. */}
-        <TableCell align="left">
-          <Tooltip title={row?.phone_no ? row?.phone_no : 'Not Available'}>
-            <div className="Suspect-table-data">
-              {row?.phone_no
-                ? row?.phone_no.length > 14
-                  ? row?.phone_no.substr(0, 14) + "..."
-                  : row?.phone_no
-                : "Not Available"}
-            </div>
-          </Tooltip>
-        </TableCell>
-      </>
-      <TableCell className="table-cellhandleRightsidebar-prospect">
-        <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-          {/* <IconButton
-            aria-label="expand row"
-            size="small"
-            className="button-collapse-table-propect"
-          >
-            <RightSidebar
-              dataShortestPath={dataShortestPath}
-              openSidebar={openSidebar}
-              userDetails={userDetails}
-              handleRightsidebar={handleRightsidebar}
-              rowid={row}
-            />
-          </IconButton> */}
-          <Tooltip title="Edit">
-            <EditIcon className="action-icons-people-edit" onClick={() => EditPeople(row)} />
-          </Tooltip>
-
-          <Tooltip title="Delete">
-            <DeleteIcon className="action-icons-people-delete" />
-          </Tooltip>
-
-        </div>
-      </TableCell>
-    </TableRow>
+      </TableRow>
+      <Dialog className="Delete-Confirmation"
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle className="deleteD-ConfirmationOutter_class" id="alert-dialog-title">
+          {"Delete Confirmation "}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <label htmlFor=""> Reason <span className="Decisionmaker-Reasonteaxt-area-lable">*</span> </label>
+            <Textarea minRows={3} value={modalTeaxtArea} onChange={(e) => setModalTeaxtArea(e.target.value)} />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button className="DecisionmakerModalButton" autoFocus onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button className="CancelDelete-Confirmation" onClick={handleDeleteCase}  >Delete</Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 }
 Row.propTypes = {
@@ -342,11 +372,11 @@ export default function DecisionMakerTable({
       setLoading(false);
     }
   }
-  React.useEffect(() => {
-    if (checkDecisionMakerData || tableCommingData) {
-      getStrength();
-    }
-  }, [checkDecisionMakerData, tableCommingData]);
+  // React.useEffect(() => {
+  //   if (checkDecisionMakerData || tableCommingData) {
+  //     getStrength();
+  //   }
+  // }, [checkDecisionMakerData, tableCommingData]);
   React.useEffect(() => {
     if (firstFilterData?.length && skip > 0) {
       handlePassSubmit();
@@ -392,18 +422,9 @@ export default function DecisionMakerTable({
                 <TableCell className="Decisions-row-tableName">
                   <p className="prospect-Name-and-Title-propect">Name & Title</p>
                 </TableCell>
-                {/* <TableCell align="left" className="DecisionstableStrengthnewclass">
-                  <p className="DecisionstableStrength-strength">JOI Strength  </p>
-                </TableCell> */}
                 <TableCell align="left" className="employee-row-tableCompany">
                   <p className="DecisionstableStrength-companynew">Organization</p>
                 </TableCell>
-                {/* <TableCell align="left" className="annual-row-tableIndustry">
-                  Industry/ Sector
-                </TableCell> */}
-                {/* <TableCell align="left" className="industry-row-tableStatus">
-                  <p className="DecisionstableStrength-strength">  JOSF Status</p>
-                </TableCell> */}
                 <TableCell
                   align="left"
                   className="prospects-row-tableDetails-cd">
