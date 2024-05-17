@@ -52,6 +52,9 @@ export const APIUrlTwo = () => {
 export const APIUrlThree = () => {
     return 'http://172.214.83.217:8002'
 }
+export const APIUrlFour = () => {
+    return 'http://172.214.83.217:8003'
+}
 // for login user
 export const SetUserId = (item, value) => {
     localStorage.setItem(item, JSON.stringify(value))

@@ -1,8 +1,8 @@
-export const LOGIN = "/";
-export const DASHBOARD = "/dashboard";
+export const LOGIN = "/dashboard";
+export const DASHBOARD = "/";
 export const TWITTER_FEED = '/twitterfeed';
-export const AI_DECISION_MAKER = '/aidecisionmakers';
-export const AI_LEADS = "/aileads";
+export const AI_DECISION_MAKER = '/people';
+export const AI_LEADS = "/organization";
 export const AI_PATH = '/aipath';
 export const AI_PROFILE = '/aiprofile';
 export const AI_PROFILE_FORM_TABLE = '/aiprofileformtable';
@@ -14,3 +14,4 @@ export const JOI_TRAINING = '/joitraning'
 export const COMING_SOON = '/comingSoon'
 export const LOGIN_CALLBACK = '/login/callback'
 export const PDF_SAMPLE = '/pdfSample'
+export const PEOPLE_RECORDS = '/peopleRecords'

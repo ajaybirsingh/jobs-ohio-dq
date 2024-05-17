@@ -46,6 +46,7 @@ export default function ContactDetailList({ item }) {
                 className="email-number-accordian-div"
                 onClick={() => handleClick(item)}
               >
+                
                 <p className="email-in-accordian">
                   {item?.linkedin
                     ? item?.linkedin.length > 28

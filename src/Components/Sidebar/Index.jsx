@@ -488,7 +488,7 @@ export default function Sidebar({
               : null
               }`}
           >
-            <List>
+            {/* <List>
               <ListItem
                 disablePadding
                 sx={{ display: "block" }}
@@ -519,7 +519,7 @@ export default function Sidebar({
                   />
                 </ListItemButton>
               </ListItem>
-            </List>
+            </List> */}
             <List>
               <ListItem
                 disablePadding
@@ -550,7 +550,7 @@ export default function Sidebar({
                     )}
                   </ListItemIcon>
                   <ListItemText
-                    primary={"AI Leads"}
+                    primary={"Organization"}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
@@ -582,13 +582,13 @@ export default function Sidebar({
                     <PeopleAltOutlinedIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={"AI Prospects "}
+                    primary={"People"}
                     sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
               </ListItem>
             </List>
-            <List>
+            {/* <List>
               <ListItem
                 disablePadding
                 sx={{ display: "block" }}
@@ -804,9 +804,9 @@ export default function Sidebar({
                   />
                 </ListItemButton>
               </ListItem>
-            </List>
+            </List> */}
           </div>
-          <div className="default-profile-box">
+          {/* <div className="default-profile-box">
             {leadsProfileData || decisionMakerData ? (
               <DefaultProfile
                 leadsProfileData={leadsProfileData}
@@ -817,7 +817,7 @@ export default function Sidebar({
                 refStatenew={refStatenew}
               />
             ) : null}
-          </div>
+          </div> */}
         </div>
       </Drawer>
     </>

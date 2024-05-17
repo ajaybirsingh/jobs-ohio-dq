@@ -144,7 +144,7 @@ export default function LeadsFilter({
               placeholder="Industry"
             />
           </div>
-          <div className="AILeads-Filter2nddrop-down">
+          {/* <div className="AILeads-Filter2nddrop-down">
             <FormControlSelect
               formControlData={{
                 value: selectedCompany,
@@ -159,8 +159,8 @@ export default function LeadsFilter({
               }}
               placeholder="Decisionmaker"
             />
-          </div>
-          <div className="Leads-Filter-Laststdrop-down">
+          </div> */}
+          {/* <div className="Leads-Filter-Laststdrop-down">
             <FormControlSelect
               formControlData={{
                 value: selectedIndustry,
@@ -174,7 +174,7 @@ export default function LeadsFilter({
               }}
               placeholder="JOSF Status"
             />
-          </div>
+          </div> */}
         </section>
         <div className="apply-hit-button">
           <div
