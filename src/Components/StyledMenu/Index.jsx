@@ -3,7 +3,7 @@ import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { AI_LEADS, COMPANY_PROFILE_SCREEN } from "../../Utils/Constants";
-export default function StyledMenuInput({ handleMenuSalesforce, anchorEl, open, handleMenuDownloadExcel,handleToPDF }) {
+export default function StyledMenuInput({ handleMenuSalesforce, anchorEl, open, handleMenuDownloadExcel, handleToPDF }) {
   const StyledMenu = styled((props) => (
     <Menu
       elevation={0}
@@ -99,23 +99,30 @@ export default function StyledMenuInput({ handleMenuSalesforce, anchorEl, open, 
                 <p className="push-to-slaesforce-in-button" >Download PDF</p>
               </MenuItem>
             </StyledMenu> :
-            
-          <StyledMenu
-          id="action-menu"
-          MenuListProps={{
-            "aria-labelledby": "action-button",
-          }}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleMenuSalesforce || handleMenuDownloadExcel}>
-          <MenuItem
-            className="AI-Leads-button-drop-down"
-            onClick={handleMenuDownloadExcel}
-            disableRipple
-          >
-            <p className="push-to-slaesforce-in-button">Download Excel</p>
-          </MenuItem>
-        </StyledMenu>
+
+            <StyledMenu
+              id="action-menu"
+              MenuListProps={{
+                "aria-labelledby": "action-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleMenuSalesforce || handleMenuDownloadExcel}>
+              <MenuItem
+                className="AI-Leads-button-drop-down"
+                onClick={handleMenuDownloadExcel}
+                disableRipple
+              >
+                <p className="push-to-slaesforce-in-button">Download Excel</p>
+              </MenuItem>
+
+              <MenuItem
+                className="AI-Leads-button-drop-down"
+                disableRipple
+              >
+                <p className="push-to-slaesforce-in-button">Add People</p>
+              </MenuItem>
+            </StyledMenu>
         }
       </div>
     </>

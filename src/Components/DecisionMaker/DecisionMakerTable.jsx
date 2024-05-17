@@ -14,42 +14,52 @@ import ContactDetailList from "../../Components/AiLeads/ContactDetailList/Contac
 import RightSidebar from "../RightSiderbar/RightSiderbar";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-import { APIUrlOne, APIUrlTwo, GetUserId } from "../../Utils/Utils";
+import { APIUrlFour, APIUrlOne, APIUrlTwo, GetUserId } from "../../Utils/Utils";
 import IndustryDropdown from "../AiLeads/IndustrySectorDropdown/Index";
 import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as XLSX from 'xlsx';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Tooltip } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { PEOPLE_RECORDS } from "../../Utils/Constants";
 function Row({ row, connectionStrength }) {
   const [openSidebar, setOpenSidebar] = React.useState(false);
   const [dataShortestPath, setDataShortestPath] = React.useState();
   const loggedInUserId = GetUserId();
   const [userDetails, setUserDeatils] = React.useState();
-  const handleRightsidebar = (event) => {
-    const data = {};
-    data.source_uid = Number(loggedInUserId);
-    data.target_uid = Number(event?.person_id);
-    const option = {
-      method: "POST",
-      headers: {
-        "access-control-allow-origin": "*",
-        "content-type": "application/json",
-      },
-      data: data,
-      url: `${APIUrlTwo()}/v1/shortest-path`,
-    };
-    axios(option)
-      .then((response) => {
-        if (response?.status === 200) {
-          const data = Object.values(response.data);
-          setDataShortestPath(data);
-          setOpenSidebar(true);
-          setUserDeatils(event)
-        }
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.message);
-      });
-  };
+  const linkedInUrl = row?.linkedin ? row?.linkedin : 'Not Available';
+  // const handleRightsidebar = (event) => {
+  //   const data = {};
+  //   data.source_uid = Number(loggedInUserId);
+  //   data.target_uid = Number(event?.person_id);
+  //   const option = {
+  //     method: "POST",
+  //     headers: {
+  //       "access-control-allow-origin": "*",
+  //       "content-type": "application/json",
+  //     },
+  //     data: data,
+  //     url: `${APIUrlTwo()}/v1/shortest-path`,
+  //   };
+  //   axios(option)
+  //     .then((response) => {
+  //       if (response?.status === 200) {
+  //         const data = Object.values(response.data);
+  //         setDataShortestPath(data);
+  //         setOpenSidebar(true);
+  //         setUserDeatils(event)
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err?.response?.data?.message);
+  //     });
+  // };
+  const navigate = useNavigate();
+  const EditPeople = (row) => {
+    navigate(PEOPLE_RECORDS, { state: row })
+  }
   return (
     <TableRow className="juyds" sx={{ "& > *": { borderBottom: "unset" } }}>
       <>
@@ -87,13 +97,13 @@ function Row({ row, connectionStrength }) {
 
           </div>
         </TableCell>
-        <TableCell component="th" scope="row">
+        {/* <TableCell component="th" scope="row">
           <p className="joi-strength-control">{row?.strengthData?.strength ? row?.strengthData?.strength : "-"}</p>
-        </TableCell>
+        </TableCell> */}
         <TableCell align="left">
           <h3 className="annual-revenue-table">{row.primary_organization ? row.primary_organization : "-"}</h3>
         </TableCell>
-        <TableCell
+        {/* <TableCell
           align="left"
           className="table-cell-of-contact-details-dropdown-th"
         >
@@ -107,30 +117,72 @@ function Row({ row, connectionStrength }) {
               </div>
             </div>
           </div>
-        </TableCell>
-        <TableCell align="left">
+        </TableCell> */}
+        {/* <TableCell align="left">
           <div className="Suspect-table-data">
             <h3 className="industry-sector-table">
               {row?.suspect_status ? row.suspect_status : "-"}
             </h3>
           </div>
-        </TableCell>
-        <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect">
-          <div
-            className="Set-dropdown-ofContactDetailList"
-            style={{ position: "relative" }}
-          >
-            <div className="email-and-other-infodc">
+        </TableCell> */}
+        <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
+          <Tooltip title={
+            linkedInUrl !== 'Not Available' ?
+              <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{linkedInUrl}</a>
+              : 'Not Available'
+          }>
+            <div
+              className="Set-dropdown-ofContactDetailList"
+              style={{ position: "relative" }}
+            >
+              {/* <div className="email-and-other-infodc">
               <div className="maked-component-of-dropdown">
                 <ContactDetailList item={row} />
               </div>
+            </div> */}
+              <p className="email-in-accordian">
+                {row?.linkedin
+                  ? row?.linkedin.length > 28
+                    ? row?.linkedin.substr(28, 28) ||
+                    row?.linkedin.length > 20 + "..."
+                    : row?.linkedin
+                  : "Not Available"}
+              </p>
             </div>
-          </div>
+          </Tooltip>
+        </TableCell>
+
+        {/* email */}
+        <TableCell align="left">
+          <Tooltip title={row?.email ? row?.email : 'Not Available'}>
+            <div className="Suspect-table-data">
+              <h3 className="industry-sector-table">
+                {row?.email
+                  ? row?.email.length > 26
+                    ? row?.email.substr(0, 26) + "..."
+                    : row?.email
+                  : "Not Available"}
+              </h3>
+            </div>
+          </Tooltip>
+        </TableCell>
+
+        {/* phone no. */}
+        <TableCell align="left">
+          <Tooltip title={row?.phone_no ? row?.phone_no : 'Not Available'}>
+            <div className="Suspect-table-data">
+              {row?.phone_no
+                ? row?.phone_no.length > 14
+                  ? row?.phone_no.substr(0, 14) + "..."
+                  : row?.phone_no
+                : "Not Available"}
+            </div>
+          </Tooltip>
         </TableCell>
       </>
       <TableCell className="table-cellhandleRightsidebar-prospect">
-        <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "flex-end" }}>
-          <IconButton
+        <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          {/* <IconButton
             aria-label="expand row"
             size="small"
             className="button-collapse-table-propect"
@@ -142,7 +194,15 @@ function Row({ row, connectionStrength }) {
               handleRightsidebar={handleRightsidebar}
               rowid={row}
             />
-          </IconButton>
+          </IconButton> */}
+          <Tooltip title="Edit">
+            <EditIcon className="action-icons-people-edit" onClick={() => EditPeople(row)} />
+          </Tooltip>
+
+          <Tooltip title="Delete">
+            <DeleteIcon className="action-icons-people-delete" />
+          </Tooltip>
+
         </div>
       </TableCell>
     </TableRow>
@@ -203,9 +263,9 @@ export default function DecisionMakerTable({
     const option = {
       method: "GET",
       headers: {
-        "content-type": "plain/text",
+        "content-type": "application/json",
       },
-      url: `${APIUrlOne()}/v1/people?limit=50&skip=${skip ? skip : 0}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
     };
     axios(option)
       .then((response) => {
@@ -231,9 +291,9 @@ export default function DecisionMakerTable({
     const option = {
       method: "GET",
       headers: {
-        "content-type": "plain/text",
+        "content-type": "application/json",
       },
-      url: `${APIUrlOne()}/v1/people?limit=50&skip=${skip ? skip : 0}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
     };
     axios(option)
       .then((response) => {
@@ -330,24 +390,38 @@ export default function DecisionMakerTable({
                 <TableCell className="Decisions-row-tableName-prospect">
                 </TableCell>
                 <TableCell className="Decisions-row-tableName">
-                  <p className="prospect-Name-and-Title-propect">  Name & Title</p>
+                  <p className="prospect-Name-and-Title-propect">Name & Title</p>
                 </TableCell>
-                <TableCell align="left" className="DecisionstableStrengthnewclass">
+                {/* <TableCell align="left" className="DecisionstableStrengthnewclass">
                   <p className="DecisionstableStrength-strength">JOI Strength  </p>
-                </TableCell>
+                </TableCell> */}
                 <TableCell align="left" className="employee-row-tableCompany">
-                  <p className="DecisionstableStrength-companynew">  Company</p>
+                  <p className="DecisionstableStrength-companynew">Organization</p>
                 </TableCell>
-                <TableCell align="left" className="annual-row-tableIndustry">
+                {/* <TableCell align="left" className="annual-row-tableIndustry">
                   Industry/ Sector
-                </TableCell>
-                <TableCell align="left" className="industry-row-tableStatus">
+                </TableCell> */}
+                {/* <TableCell align="left" className="industry-row-tableStatus">
                   <p className="DecisionstableStrength-strength">  JOSF Status</p>
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   align="left"
                   className="prospects-row-tableDetails-cd">
-                  <p className="Com-details-prospect">  Contact Details</p>
+                  <p className="Com-details-prospect">Linkedin</p>
+                </TableCell>
+
+                {/* email */}
+                <TableCell align="left" className="industry-row-tableStatus">
+                  <p className="DecisionstableStrength-strength">Email</p>
+                </TableCell>
+
+                {/* phone no. */}
+                <TableCell align="left" className="industry-row-tableStatus">
+                  <p className="DecisionstableStrength-strength">Phone no.</p>
+                </TableCell>
+
+                <TableCell align="left" className="industry-row-tableStatus">
+                  <p className="DecisionstableStrength-strength">Action</p>
                 </TableCell>
               </TableRow>
             </TableHead>

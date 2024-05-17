@@ -31,6 +31,7 @@ import {
   LOGIN,
   LOGIN_CALLBACK,
   PDF_SAMPLE,
+  PEOPLE_RECORDS,
   TWITTER_FEED,
 } from "./Utils/Constants";
 import ContactUs from "../src/Pages/ContactUs/Index";
@@ -41,6 +42,7 @@ import PDFSample from "./Components/AiLeads/CompanyProfile/PDF/Index";
 import CombinedPDFComponent from "./Pages/AiLeads/PDFDATA/CombinedData";
 import JoiTraining from "./Pages/JoiTraining/Index";
 import ReactGA from "react-ga4";
+import PeopleRecords from "./Pages/AiDecisionMakers/PeopleRecords/People";
 function App() {
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     window.location.replace(originalUri);
@@ -104,7 +106,8 @@ return (
           <Route path={LOGIN_CALLBACK} element={<LoginVerify />} />
           <Route path={PDF_SAMPLE} element={<PDFSample />} />
           <Route path={'/combinedData'} element={<CombinedPDFComponent />} />
-
+          <Route path={PEOPLE_RECORDS} element={<PeopleRecords />} />
+          
         </Routes>
       </Security>
     </Router>

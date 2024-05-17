@@ -3,10 +3,13 @@ import "./AiLeadsAction.css";
 import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import AddIcon from '@mui/icons-material/Add';
 import StyledMenuInput from "../../StyledMenu/Index";
 import { GetLeadsFilterStatsData, GetStatsData } from "../../../Utils/Utils";
+import { useNavigate } from "react-router-dom";
+import { PEOPLE_RECORDS } from "../../../Utils/Constants";
 export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigger, isSalesForceTrigger, setIsDecisionMakerExcel, statsCount, statsCountDecisionMaker }) {
+  const navigate = useNavigate();
   const StyledMenu = styled((props) => (
     <Menu
       elevation={0}
@@ -53,6 +56,7 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
+    navigate(PEOPLE_RECORDS)
   };
   const handleMenuSalesforce = () => {
     setIsSalesForceTrigger(true);
@@ -77,31 +81,31 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
       >
         <div className="showing-leads-head">
           {
-            currentLeadsLength && !statsCount && location === "/aileads" ?
+            currentLeadsLength && !statsCount && location === "/organization" ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/aidecisionmakers" ? 'Prospects ' : 'leads'}</h3>
-                <p>Out of {location === "/aileads" || "/aiLeads" ? statsData?.generated_leads.toLocaleString() || '-' : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
+                <p>Out of {location === "/organization" || "/organization" ? statsData?.generated_leads.toLocaleString() || '-' : null}</p>
               </> : null
           }
           {
             statsCount ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/aidecisionmakers" ? 'Prospects ' : 'leads'}</h3>
-                <p>Out of {location === "/aileads" || "/aiLeads" ? statsCount : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
+                <p>Out of {location === "/organization" || "/organization" ? statsCount : null}</p>
               </> : null
           }
           {
-            currentLeadsLength && !statsCount && location === "/aidecisionmakers" && !statsCountDecisionMaker ?
+            currentLeadsLength && !statsCount && location === "/people" && !statsCountDecisionMaker ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/aidecisionmakers" ? 'Prospects ' : 'leads'}</h3>
-                <p>Out of {location === "/aidecisionmakers" ? statsData?.decisionmaker_count.toLocaleString() || '-' : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
+                <p>Out of {location === "/people" ? statsData?.decisionmaker_count.toLocaleString() || '-' : null}</p>
               </> : null
           }
           {
             statsCountDecisionMaker ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/aidecisionmakers" ? 'Prospects ' : 'leads'}</h3>
-                <p>Out of {location === "/aidecisionmakers" ? statsCountDecisionMaker || '-' : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'leads'}</h3>
+                <p>Out of {location === "/people" ? statsCountDecisionMaker || '-' : null}</p>
               </> : null
           }
         </div>
@@ -115,15 +119,17 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
             variant="contained"
             disableElevation
             onClick={handleMenuClick}
-            endIcon={<KeyboardArrowDownIcon />}
+            endIcon={<AddIcon />}
           >
-            Action
+            Add People
           </Button>
-          <StyledMenuInput
+          
+          {/* <StyledMenuInput
             anchorEl={anchorEl}
             open={open}
             handleMenuSalesforce={handleMenuSalesforce}
-            handleMenuDownloadExcel={handleMenuDownloadExcel} />
+            handleMenuDownloadExcel={handleMenuDownloadExcel} /> */}
+
         </div>
       </section>
     </>
