@@ -404,7 +404,7 @@ export default function Sidebar({
                 </p>
               </div>
             </div>
-            <div className="Leades-filter-inner-container-header">
+            {/* <div className="Leades-filter-inner-container-header">
               <Button
                 style={{ textTransform: "none" }}
                 id="action-button"
@@ -445,7 +445,7 @@ export default function Sidebar({
                   </MenuItem>
                 </div>
               </StyledMenu>
-            </div>
+            </div> */}
           </div>
 
           <IconButton
@@ -520,7 +520,7 @@ export default function Sidebar({
                 </ListItemButton>
               </ListItem>
             </List> */}
-            {/* <List>
+            <List>
               <ListItem
                 disablePadding
                 sx={{ display: "block" }}
@@ -555,7 +555,7 @@ export default function Sidebar({
                   />
                 </ListItemButton>
               </ListItem>
-            </List> */}
+            </List>
             <List>
               <ListItem
                 disablePadding

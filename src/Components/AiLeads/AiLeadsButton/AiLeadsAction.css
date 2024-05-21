@@ -49,6 +49,10 @@
   text-align: left;
 }
 
+.add-organization-button button {
+  width: 185px !important;
+}
+
 .Leades-filter-inner-container button:hover {
   background-color: #BB291E !important;
   font-family: Inter;

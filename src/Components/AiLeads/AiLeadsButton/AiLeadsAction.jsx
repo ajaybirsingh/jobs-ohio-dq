@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import StyledMenuInput from "../../StyledMenu/Index";
 import { GetLeadsFilterStatsData, GetStatsData } from "../../../Utils/Utils";
 import { useNavigate } from "react-router-dom";
-import { PEOPLE_RECORDS } from "../../../Utils/Constants";
+import { ORGANIZATION_RECORDS, PEOPLE_RECORDS } from "../../../Utils/Constants";
 export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigger, isSalesForceTrigger, setIsDecisionMakerExcel, statsCount, statsCountDecisionMaker }) {
   const navigate = useNavigate();
   const StyledMenu = styled((props) => (
@@ -58,6 +58,10 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
     setAnchorEl(event.currentTarget);
     navigate(PEOPLE_RECORDS)
   };
+  const handleOrganization = (event) => {
+    setAnchorEl(event.currentTarget);
+    navigate(ORGANIZATION_RECORDS)
+  }
   const handleMenuSalesforce = () => {
     setIsSalesForceTrigger(true);
     setAnchorEl(null);
@@ -81,56 +85,69 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
       >
         <div className="showing-leads-head">
           {
-            currentLeadsLength && !statsCount && location === "/organization" ?
+            currentLeadsLength && !statsCount && location === "/" ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
                 <p>Out of {location === "/organization" || "/organization" ? statsData?.generated_leads.toLocaleString() || '-' : null}</p>
               </> : null
           }
           {
             statsCount ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
                 <p>Out of {location === "/organization" || "/organization" ? statsCount : null}</p>
               </> : null
           }
           {
-            currentLeadsLength && !statsCount && location === "/" && !statsCountDecisionMaker ?
+            currentLeadsLength && !statsCount && location === "/people" && !statsCountDecisionMaker ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
-                <p>Out of {location === "/" ? statsData?.decisionmaker_count.toLocaleString() || '-' : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
+                <p>Out of {location === "/people" ? statsData?.decisionmaker_count.toLocaleString() || '-' : null}</p>
               </> : null
           }
           {
             statsCountDecisionMaker ?
               <>
-                <h3>Showing {currentLeadsLength} {location === "/" ? 'People ' : 'leads'}</h3>
-                <p>Out of {location === "/" ? statsCountDecisionMaker || '-' : null}</p>
+                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
+                <p>Out of {location === "/people" ? statsCountDecisionMaker || '-' : null}</p>
               </> : null
           }
         </div>
-        <div className="Leades-filter-inner-container">
-          <Button
-            style={{ textTransform: "none" }}
-            id="action-button"
-            aria-controls={open ? "action-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            variant="contained"
-            disableElevation
-            onClick={handleMenuClick}
-            endIcon={<AddIcon />}
-          >
-            Add People
-          </Button>
-          
-          {/* <StyledMenuInput
-            anchorEl={anchorEl}
-            open={open}
-            handleMenuSalesforce={handleMenuSalesforce}
-            handleMenuDownloadExcel={handleMenuDownloadExcel} /> */}
+        {
+          window?.location?.pathname === '/people' ?
 
-        </div>
+            <div className="Leades-filter-inner-container">
+              <Button
+                style={{ textTransform: "none" }}
+                id="action-button"
+                aria-controls={open ? "action-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                variant="contained"
+                disableElevation
+                onClick={handleMenuClick}
+                endIcon={<AddIcon />}
+              >
+                Add People
+              </Button>
+            </div> :
+            <div className="Leades-filter-inner-container add-organization-button">
+              <Button
+                style={{ textTransform: "none" }}
+                id="action-button"
+                aria-controls={open ? "action-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                variant="contained"
+                disableElevation
+                onClick={handleOrganization}
+                endIcon={<AddIcon />}
+              >
+                Add Organization
+              </Button>
+            </div>
+        }
+
       </section>
     </>
   );

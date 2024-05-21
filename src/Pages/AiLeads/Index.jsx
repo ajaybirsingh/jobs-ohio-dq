@@ -161,7 +161,7 @@ const AILeads = () => {
             isSalesForceTrigger={isSalesForceTrigger}
             statsCount={statsCount}
           />
-          <LeadsFilter
+          {/* <LeadsFilter
             showlast={showlast}
             setShowlast={setShowlast}
             setJscore={setJscore}
@@ -177,18 +177,20 @@ const AILeads = () => {
             setIstableDataFilter={setIstableDataFilter}
             setStatsCount={setStatsCount}
             setPage={setPage}
-          />
-          <AiLeadsTable
-            handleApply={handleApply}
-            tableCommingData={tableCommingData}
-            setTableCommingData={setTableCommingData}
-            istableDataFilter={istableDataFilter}
-            setCurrentLeadsLength={setCurrentLeadsLength}
-            setIstableDataFilter={setIstableDataFilter}
-            isSalesForceTrigger={isSalesForceTrigger}
-            isDecisionMakerExcel={isDecisionMakerExcel}
-            setIsDecisionMakerExcel={setIsDecisionMakerExcel}
-          />
+          /> */}
+          <div className="leads-table-section-main-outer"> 
+            <AiLeadsTable
+              handleApply={handleApply}
+              tableCommingData={tableCommingData}
+              setTableCommingData={setTableCommingData}
+              istableDataFilter={istableDataFilter}
+              setCurrentLeadsLength={setCurrentLeadsLength}
+              setIstableDataFilter={setIstableDataFilter}
+              isSalesForceTrigger={isSalesForceTrigger}
+              isDecisionMakerExcel={isDecisionMakerExcel}
+              setIsDecisionMakerExcel={setIsDecisionMakerExcel}
+            />
+          </div>
         </div>
       </Layout>
     </>

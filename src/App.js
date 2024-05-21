@@ -30,6 +30,7 @@ import {
   JOI_TRAINING,
   LOGIN,
   LOGIN_CALLBACK,
+  ORGANIZATION_RECORDS,
   PDF_SAMPLE,
   PEOPLE_RECORDS,
   TWITTER_FEED,
@@ -43,6 +44,7 @@ import CombinedPDFComponent from "./Pages/AiLeads/PDFDATA/CombinedData";
 import JoiTraining from "./Pages/JoiTraining/Index";
 import ReactGA from "react-ga4";
 import PeopleRecords from "./Pages/AiDecisionMakers/PeopleRecords/People";
+import OrganizationRecords from "./Pages/AiLeads/OrganizationRecords/Organization";
 function App() {
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     window.location.replace(originalUri);
@@ -65,53 +67,55 @@ function App() {
     console.log("Tracking page view: ", window.location.pathname + window.location.search);
     ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search });
   }, [window.location]); // This ensures the effect is only run on location change
-return (
-  <div className="App">
-    <Router>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
-      <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-        <Routes>
-          <Route path={LOGIN} element={<Login />} />
-          <Route path={DASHBOARD} element={<Dashboard />} />
-          <Route path={TWITTER_FEED} element={<TwitterFeed />} />
-          <Route path={AI_LEADS} element={<AILeads />} />
-          <Route path={AI_DECISION_MAKER} element={<DecisionMaker />} />
-          <Route path={AI_PATH} element={<AiPath />} />
-          <Route path={AI_PROFILE} element={<AiProfile />} />
-          <Route
-            path={AI_PROFILE_FORM_TABLE}
-            element={<ProfileFormTable />}
-          />
-          <Route path={AI_PROSPECT_PROFILE} element={<ProspectProfile />} />
-          <Route
-            path={COMPANY_PROFILE_SCREEN}
-            element={<CompanyProfileScreen />}
-          />
-          <Route path={CONTACT_US} element={<ContactUs />} />
-          <Route path={FAQ_SCREEN} element={<FaqLayout />} />
-          <Route path={JOI_TRAINING} element={<JoiTraining />} />
+  return (
+    <div className="App">
+      <Router>
+        <ToastContainer
+          position="top-center"
+          autoClose={1000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+        <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+          <Routes>
+            <Route path={LOGIN} element={<Login />} />
+            <Route path={DASHBOARD} element={<Dashboard />} />
+            <Route path={TWITTER_FEED} element={<TwitterFeed />} />
+            <Route path={AI_LEADS} element={<AILeads />} />
+            <Route path={AI_DECISION_MAKER} element={<DecisionMaker />} />
+            <Route path={AI_PATH} element={<AiPath />} />
+            <Route path={AI_PROFILE} element={<AiProfile />} />
+            <Route
+              path={AI_PROFILE_FORM_TABLE}
+              element={<ProfileFormTable />}
+            />
+            <Route path={AI_PROSPECT_PROFILE} element={<ProspectProfile />} />
+            <Route
+              path={COMPANY_PROFILE_SCREEN}
+              element={<CompanyProfileScreen />}
+            />
+            <Route path={CONTACT_US} element={<ContactUs />} />
+            <Route path={FAQ_SCREEN} element={<FaqLayout />} />
+            <Route path={JOI_TRAINING} element={<JoiTraining />} />
 
-          <Route path={COMING_SOON} element={<Comingsoon />} />
-          <Route path={LOGIN_CALLBACK} element={<LoginVerify />} />
-          <Route path={PDF_SAMPLE} element={<PDFSample />} />
-          <Route path={'/combinedData'} element={<CombinedPDFComponent />} />
-          <Route path={PEOPLE_RECORDS} element={<PeopleRecords />} />
-          
-        </Routes>
-      </Security>
-    </Router>
-  </div>
-);
+            <Route path={COMING_SOON} element={<Comingsoon />} />
+            <Route path={LOGIN_CALLBACK} element={<LoginVerify />} />
+            <Route path={PDF_SAMPLE} element={<PDFSample />} />
+            <Route path={'/combinedData'} element={<CombinedPDFComponent />} />
+            <Route path={PEOPLE_RECORDS} element={<PeopleRecords />} />
+            <Route path={ORGANIZATION_RECORDS} element={<OrganizationRecords />} />
+
+
+          </Routes>
+        </Security>
+      </Router>
+    </div>
+  );
 }
 export default App;
