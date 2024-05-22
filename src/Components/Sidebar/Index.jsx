@@ -13,35 +13,17 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import HeaderSearch from "../Header/Search/Search";
-import userprofile from "../../Assets/userIconPlaceholder.jpg";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import AIIcon from "../../Assets/AIIcon.svg";
 import AlleadsSelected from "../../Assets/AlleadsSelected.svg";
-import DefaultProfile from "../DefaultProfile/Index";
 import backarrow from "../../Assets/backarrow.svg";
-import pathai from "../../Assets/pathAi.svg";
-import activeAipath from "../../Assets/activeAipath.svg";
-import questionmarkicon from "../../../src/Assets/questionmarkicon.svg";
-import bellalert from "../../../src/Assets/bellalert.svg";
-import cellphone from "../../../src/Assets/cellphone.svg";
-import cellphoneWhite from "../../../src/Assets/cellphone-white.svg";
-import Button from "@mui/material/Button";
 import { alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import bellalertwhite from "../../../src/Assets/bellalertwhite.svg";
-import questionmarkiconwhite from "../../../src/Assets/questionmarkiconwhite.svg";
-import JobsLogo from "../../Assets/JobsOhioLogo.jpeg"
-import trainingCapRed from "../../Assets/graduation-cap-red.png";
-import trainingCapWhite from "../../Assets/graduation-cap-white.png";
+import JobsLogo from "../../Assets/JobsOhioLogo.jpeg";
 import {
   AI_DECISION_MAKER,
-  AI_LEADS,
   AI_PATH,
   AI_PROFILE,
   AI_PROFILE_FORM_TABLE,
@@ -51,6 +33,7 @@ import {
   CONTACT_US,
   FAQ_SCREEN,
   JOI_TRAINING,
+  ORGANIZATION,
 } from "../../Utils/Constants";
 import { useOktaAuth } from "@okta/okta-react";
 import { APIUrlOne, GetOktaAuthData, GetUserId } from "../../Utils/Utils";
@@ -163,9 +146,7 @@ const StyledMenu = styled((props) => (
 }));
 export default function Sidebar({
   setRefState,
-  refState,
   setRefStatenew,
-  refStatenew,
 }) {
   const navigate = useNavigate();
   const getAuthData = GetOktaAuthData();
@@ -178,8 +159,6 @@ export default function Sidebar({
   const [leadsProfileData, setLeadsProfileData] = React.useState([]);
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
   const [showSearchdata, setshowSearchdata] = React.useState(false);
-  const [isLoadProfile, setIsLoadProfile] = React.useState(false);
-  const [isStateNew, setIsStateNew] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
@@ -196,13 +175,7 @@ export default function Sidebar({
       document.removeEventListener("click", handleClick);
     };
   }, []);
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+ 
   const handlesearch = () => {
     setLoading(true);
     const data = {
@@ -229,65 +202,6 @@ export default function Sidebar({
         toast.error(error.response.data.message);
       });
   };
-  const LeadsProfile = () => {
-    setLoading(true);
-    const option = {
-      method: "GET",
-      headers: {
-        "access-control-allow-origin": "*",
-        "content-type": "application/json",
-      },
-      url: `${APIUrlOne()}/v1/get_filter_org?user_id=${userId}`,
-    };
-    axios(option)
-      .then((e) => {
-        setLoading(false);
-        setLeadsProfileData(e?.data?.data);
-        setRefState(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
-  // React.useEffect(() => {
-  //   if (isLoadProfile) {
-  //     if (userId || refState) {
-  //       LeadsProfile();
-  //     }
-  //   } else {
-  //     setIsLoadProfile(true);
-  //   }
-
-  // }, [userId, refState, isLoadProfile]);
-  const decisionMakerProfile = () => {
-    setLoading(true);
-    const option = {
-      method: "GET",
-      headers: {
-        "access-control-allow-origin": "*",
-        "content-type": "application/json",
-      },
-      url: `${APIUrlOne()}/v1/get_filter_people?user_id=${userId}`,
-    };
-    axios(option)
-      .then((e) => {
-        setLoading(false);
-        setDecisionMakerData(e?.data?.data);
-        setRefStatenew(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
-  // React.useEffect(() => {
-  //   if (isStateNew) {
-  //     if (userId || refStatenew) {
-  //       decisionMakerProfile();
-  //     }
-  //   } else {
-  //     setIsStateNew(true);
-  //   }
-  // }, [userId, refStatenew, isStateNew]);
 
   const loggingOut = async () => {
     await oktaAuth.signOut({
@@ -330,7 +244,7 @@ export default function Sidebar({
                           if (
                             window.location.pathname === COMPANY_PROFILE_SCREEN
                           ) {
-                            navigate(AI_LEADS);
+                            navigate(ORGANIZATION);
                           } else {
                             navigate(AI_PROFILE);
                           }
@@ -367,7 +281,7 @@ export default function Sidebar({
                         if (
                           window.location.pathname === COMPANY_PROFILE_SCREEN
                         ) {
-                          navigate(AI_LEADS);
+                          navigate(ORGANIZATION);
                         } else {
                           navigate(AI_PROFILE);
                         }
@@ -394,7 +308,7 @@ export default function Sidebar({
 
 
           )}
-          <div className="bellicon-profileimage">
+          {/* <div className="bellicon-profileimage">
             <div className="image-and-information">
               <img src={userprofile} alt="logo" className="userprofile-image" />
               <div className="username-and-role">
@@ -404,49 +318,7 @@ export default function Sidebar({
                 </p>
               </div>
             </div>
-            {/* <div className="Leades-filter-inner-container-header">
-              <Button
-                style={{ textTransform: "none" }}
-                id="action-button"
-                aria-controls={openLogout ? "action-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={openLogout ? "true" : undefined}
-                variant="contained"
-                disableElevation
-                onClick={handleMenuClick}
-                endIcon={
-                  <ExpandMoreOutlinedIcon className="down-arrow-header" />
-                }
-              ></Button>
-              <StyledMenu
-                className="custom-menu"
-                id="action-menu"
-                MenuListProps={{
-                  "aria-labelledby": "action-button",
-                }}
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-              >
-                <div>
-                  <MenuItem
-                    className="AI-Leads-button-drop-down-up-header"
-                    onClick={handleMenuClose}
-                    disableRipple
-                  >
-
-                    <p
-                      className="push-to-slaesforce-in-button"
-                      onClick={() => loggingOut()}
-                    >
-                      {" "}
-                      Logout{" "}
-                    </p>
-                  </MenuItem>
-                </div>
-              </StyledMenu>
-            </div> */}
-          </div>
+          </div> */}
 
           <IconButton
             className="Siderbarresponsivebutton"
@@ -488,38 +360,6 @@ export default function Sidebar({
               : null
               }`}
           >
-            {/* <List>
-              <ListItem
-                disablePadding
-                sx={{ display: "block" }}
-                className="links-sidebar"
-              >
-                <ListItemButton
-                  component={Link}
-                  to="/dashboard"
-                  selected={window.location.pathname === "/dashboard"}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <ExploreOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Dashboard"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List> */}
             <List>
               <ListItem
                 disablePadding
@@ -528,8 +368,8 @@ export default function Sidebar({
               >
                 <ListItemButton
                   component={Link}
-                  to={AI_LEADS}
-                  selected={window.location.pathname === AI_LEADS}
+                  to={ORGANIZATION}
+                  selected={window.location.pathname === ORGANIZATION}
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
@@ -543,7 +383,7 @@ export default function Sidebar({
                       justifyContent: "center",
                     }}
                   >
-                    {window.location.pathname === AI_LEADS ? (
+                    {window.location.pathname === ORGANIZATION ? (
                       <img src={AlleadsSelected} alt="" />
                     ) : (
                       <img src={AIIcon} alt="" />
@@ -588,236 +428,7 @@ export default function Sidebar({
                 </ListItemButton>
               </ListItem>
             </List>
-            {/* <List>
-              <ListItem
-                disablePadding
-                sx={{ display: "block" }}
-                className="links-sidebar"
-              >
-                <ListItemButton
-                  component={Link}
-                  to={AI_PATH}
-                  selected={window.location.pathname === AI_PATH}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {window.location.pathname === AI_PATH ? (
-                      <img src={activeAipath} alt="" />
-                    ) : (
-                      <img src={pathai} alt="" />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"AI Path"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-
-            <List>
-              <ListItem
-                disablePadding
-                sx={{ display: "block" }}
-                className="links-sidebar"
-              >
-                <ListItemButton
-                  component={Link}
-                  to={AI_PROFILE}
-                  selected={window.location.pathname === AI_PROFILE}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <AccountCircleOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"AI Profile"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem
-                disablePadding
-                sx={{ display: "block" }}
-                className="links-sidebar"
-              >
-                <ListItemButton
-                  component={Link}
-                  to={FAQ_SCREEN}
-                  selected={window.location.pathname === FAQ_SCREEN}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {window.location.pathname === FAQ_SCREEN ? (
-                      <img src={questionmarkiconwhite} alt="" />
-                    ) : (
-                      <img src={questionmarkicon} alt="" />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"FAQ / Glossary"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-
-            <List>
-              <ListItem
-                disablePadding
-                sx={{ display: "block" }}
-                className="links-sidebar"
-              >
-                <ListItemButton
-                  component={Link}
-                  to={JOI_TRAINING}
-                  selected={window.location.pathname === JOI_TRAINING}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {window.location.pathname === JOI_TRAINING ? (
-                      <img src={trainingCapWhite} alt="" className="training-cap-icon" />
-                    ) : (
-                      <img src={trainingCapRed} alt="" className="training-cap-icon" />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"JOI Training"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-
-
-            <List>
-              <ListItem
-                disablePadding
-                to
-                sx={{ display: "block" }}
-                className="links-sidebar"
-              >
-                <ListItemButton
-                  to={COMING_SOON}
-                  component={Link}
-                  selected={window.location.pathname === COMING_SOON}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {window.location.pathname === COMING_SOON ? (
-                      <img src={bellalertwhite} alt="" />
-                    ) : (
-                      <img src={bellalert} alt="" />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Special Request"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem
-                disablePadding
-                sx={{ display: "block" }}
-                className="links-sidebar"
-              >
-                <ListItemButton
-                  component={Link}
-                  to={CONTACT_US}
-                  selected={window.location.pathname === CONTACT_US}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {window.location.pathname === CONTACT_US ? (
-                      <img src={cellphoneWhite} alt="" />
-                    ) : (
-                      <img src={cellphone} alt="" />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={"Contact Us"}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List> */}
           </div>
-          {/* <div className="default-profile-box">
-            {leadsProfileData || decisionMakerData ? (
-              <DefaultProfile
-                leadsProfileData={leadsProfileData}
-                decisionMakerData={decisionMakerData}
-                refState={refState}
-                setRefState={setRefState}
-                setRefStatenew={setRefStatenew}
-                refStatenew={refStatenew}
-              />
-            ) : null}
-          </div> */}
         </div>
       </Drawer>
     </>

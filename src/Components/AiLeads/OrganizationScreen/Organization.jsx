@@ -1,5 +1,6 @@
 import React from "react";
 import "./Style.css";
+import "../../../Components/PeopleScreen/PeopleScreen.css";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 // import LabelInput from "../LabelInputFields/Index";
@@ -13,7 +14,7 @@ import LabelInput from "../../LabelInputFields/Index";
 import Loader from "../../Loader/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { APIUrlFour } from "../../../Utils/Utils";
-import { AI_LEADS } from "../../../Utils/Constants";
+import { ORGANIZATION } from "../../../Utils/Constants";
 const Organization = () => {
     const location = useLocation();
     const OrganizationData = location?.state;
@@ -38,7 +39,6 @@ const Organization = () => {
         action: "",
         comments: "",
     });
-    console.log(Organization, "Organization");
     const [loading, setLoading] = React.useState();
     const OrgAction = [
         "outdated ",
@@ -145,7 +145,7 @@ const Organization = () => {
                     action: "",
                     comments: "",
                 });
-                navigate(AI_LEADS);
+                navigate(ORGANIZATION);
             })
             .catch((err) => {
                 setLoading(false);
@@ -214,7 +214,7 @@ const Organization = () => {
                     action: "",
                     comments: "",
                 });
-                navigate(AI_LEADS);
+                navigate(ORGANIZATION);
             })
             .catch((err) => {
                 setLoading(false);

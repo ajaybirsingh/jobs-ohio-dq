@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import AddIcon from '@mui/icons-material/Add';
-import StyledMenuInput from "../../StyledMenu/Index";
 import { GetLeadsFilterStatsData, GetStatsData } from "../../../Utils/Utils";
 import { useNavigate } from "react-router-dom";
 import { ORGANIZATION_RECORDS, PEOPLE_RECORDS } from "../../../Utils/Constants";

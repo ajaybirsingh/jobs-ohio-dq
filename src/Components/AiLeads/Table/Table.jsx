@@ -1,9 +1,6 @@
 import * as React from "react";
 import "./Table.css";
 import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -11,12 +8,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-import ContactDetailList from "../ContactDetailList/ContactDetailList";
 import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
-import RightSidebar from "../../RightSiderbar/RightSiderbar";
 import axios from "axios";
 import Loader from "../../Loader/Loader";
 import { toast } from "react-toastify";
@@ -31,24 +24,20 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import * as InfiniteScrollMain from "react-infinite-scroller";
 import * as XLSX from "xlsx";
 import { useState } from "react";
-import IndustryDropdown from "../IndustrySectorDropdown/Index";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { ORGANIZATION_RECORDS } from "../../../Utils/Constants";
+import { ORGANIZATION_RECORDS, ORG_DETAILS } from "../../../Utils/Constants";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { Textarea } from "@mui/joy";
 function Row({
   key,
   row,
-  onSelect,
   ExpandHandler,
   expandHandlerAccept,
   selectedRows,
   setSelectedRows,
-  setPageInner,
   pageInner,
   openRowId,
-  hasMoreInner,
   onLoadApi,
   setHasMoreInner,
   setopenRowId,
@@ -205,7 +194,7 @@ function Row({
   };
 
   const clickHandler = (event) => {
-    navigate("/companyprofilescreen", { state: { data: event } });
+    navigate(ORG_DETAILS)
   };
 
   React.useEffect(() => {
@@ -247,6 +236,7 @@ const handleClose = (row) => {
     setModalOpen(false);
   };
 const DeletePeople =(row)=>{
+  setDeleteData(row)
   setModalOpen(true);
 
 }
@@ -318,6 +308,7 @@ const DeletePeople =(row)=>{
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
         style={{ cursor: "pointer" }}
+        onClick={() => clickHandler(row)}
       >
         <>
 
@@ -455,245 +446,6 @@ const DeletePeople =(row)=>{
           </Tooltip>
         </TableCell> */}
       </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box
-              sx={{ margin: 1 }}
-              id="scrollableDiv"
-              className="ai-leads-table-inner"
-              ref={ref}
-            >
-              <TableContainer component={Paper}>
-                <InfiniteScrollMain
-                  pageStart={0}
-                  loadMore={(e) => {
-                    setTimeout(() => {
-                      if (pageInner <= Math.ceil(pages) && hasMoreInner) {
-                        setHasMoreInner(false);
-                        setPageInner(Number(pageInner) + 1);
-                      } else {
-                        setHasMoreInnerTable(false);
-                        setHasMoreInner(false);
-                      }
-                    }, 10);
-                  }}
-                  hasMore={hasMoreInner}
-                  loader={
-                    <div className="loader" key={0}>
-                      Loading ...
-                    </div>
-                  }
-                  useWindow={false}
-                  getScrollParent={() => ref?.current}
-                >
-                  <Table
-                    aria-label="collapsible table"
-                    className="ai-leads-table"
-                  >
-                    <TableHead>
-                      <TableRow className="row-head">
-                        <TableCell className="checkbox-row-table-inner checkbox-row-table">
-                          <input
-                            type="checkbox"
-                            onChange={(e) => setRowsSelect(e?.target?.checked)}
-                            checked={rowsSelect}
-                          />
-                        </TableCell>
-                        <TableCell className="empty-name-and-title">
-                        </TableCell>
-
-                        <TableCell className="company-row-table-inner-name-and-other">
-                          <p className="title-name-inner-lead-table">Name & Title</p>
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          className="score-row-table-New-Data"
-                        >
-                          JOI Strength
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          className="employee-row-table-innerIndustryAndSector"
-                        >
-                          <p className="sector-industry"> Industry/ Sector</p>
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          className="annual-row-table-NewJOSFStatus"
-                        >
-                          JOSF Status
-                        </TableCell>
-                        <TableCell align="left" className="industry-row-table-inner-table">
-                          Contact details
-                        </TableCell>
-                        <TableCell
-                          align="left"
-                          className="industry-row-table-inner-table-last"
-                        ></TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {innerTableData?.map((item, index) => {
-                        const firstName = item?.first_name;
-                        const lastName = item?.last_name;
-                        const decision_maker = item.decision_maker === true;
-                        const concatedName = `${firstName
-                          ? firstName
-                            ?.split(" ")
-                            ?.find((item) => !item.includes("("))
-                            ?.charAt(0)
-                          : ""
-                          }${lastName
-                            ? lastName
-                              ?.split(" ")
-                              ?.find((item) => !item.includes("("))
-                              ?.charAt(0)
-                            : ""
-                          }`;
-
-                        const isSelected = isChecked(item.person_id);
-                        return (
-                          <React.Fragment key={index}>
-                            <TableRow
-                              key={index}
-                              sx={{ "& > *": { borderBottom: "unset" } }}
-                            >
-                              <TableCell className="checkbox-row-table">
-                                {item?.suspect_status ? null : (
-                                  <input
-                                    type="checkbox"
-                                    checked={isSelected}
-                                    onChange={() => onSelect(item)}
-                                  />
-                                )}
-                              </TableCell>
-                              <TableCell align="left" className="empty-name-and-title">
-                                <div className="name-title-inner-table-ofAi-leads">
-                                  <div className="relation-section-inner">
-                                    <div
-                                      className={
-                                        decision_maker
-                                          ? "decision-maker-class"
-                                          : "create-name-img"
-                                      }
-                                    >
-                                      <p className="name-heading">
-                                        {concatedName}
-                                      </p>
-                                      <img
-                                        className={
-                                          item.suspect_status === null
-                                            ? "hide-image"
-                                            : "../images/salesforce-logo.svg"
-                                        }
-                                        src="../images/salesforce-logo.svg"
-                                        alt=""
-                                      />
-                                    </div>
-
-
-
-                                  </div>
-                                </div>
-                              </TableCell>
-
-                              <TableCell align="left" className="company-row-table-inner-name-and-other">
-                                <div className="name-title-inner-table-ofAi-leads">
-                                  <div className="relation-section-inner">
-                                    <div className="name-and-designation">
-                                      <p className="name-in-acordian">{`${item?.first_name
-                                        ? item?.first_name
-                                        : "-"
-                                        } ${item?.last_name ? item?.last_name : "-"
-                                        }`}</p>
-                                      <p className="designation-in-acordian">
-                                        {item?.primary_job_title?.length
-                                          ? item?.primary_job_title?.length > 20
-                                            ? item?.primary_job_title.substr(
-                                              0,
-                                              30
-                                            ) + "..."
-                                            : item?.primary_job_title
-                                          : "-"}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                <p className="j-strength-cell">
-                                  {item?.strengthData?.strength
-                                    ? item?.strengthData?.strength
-                                    : "-"}
-                                </p>
-                              </TableCell>
-                              <TableCell
-                                align="left"
-                                className="table-cell-of-contact-details-dropdown-th"
-                              >
-                                <div
-                                  className="Set-dropdown-ofIndustry"
-                                  style={{ position: "relative" }}
-                                >
-                                  <div className="email-andrelative-other-info">
-                                    <div className="maked-component-of-dropdown-forai-leads">
-                                      <IndustryDropdown row={row} />
-                                    </div>
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell align="left">
-                                <div className="suspect-and-arrow-in-accordian">
-                                  <p>
-                                    {item?.suspect_status
-                                      ? item?.suspect_status
-                                      : "-"}
-                                  </p>
-                                </div>
-                              </TableCell>
-                              <TableCell
-                                align="left"
-                                className="table-cell-of-contact-details-dropdown-th"
-                              >
-                                <div
-                                  className="Set-dropdown-ofContactDetailList"
-                                  style={{ position: "relative" }}
-                                >
-                                  <div className="email-and-other-infodc">
-                                    <div className="maked-component-of-dropdown">
-                                      <ContactDetailList item={item} />
-                                    </div>
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell className="left-arrow-main-cell-container">
-                                <IconButton
-                                  className="egberh"
-                                  aria-label="expand row"
-                                  size="small"
-                                >
-                                  <RightSidebar
-                                    handleRightsidebar={handleRightsidebar}
-                                    rowid={item}
-                                    dataShortestPath={dataShortestPath}
-                                    openSidebar={openSidebar}
-                                    userDetails={userDetails}
-                                  />
-                                </IconButton>
-                              </TableCell>
-                            </TableRow>
-                          </React.Fragment>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </InfiniteScrollMain>
-              </TableContainer>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
 
 
       <Dialog className="Delete-Confirmation"
@@ -763,7 +515,6 @@ export default function AiLeadsTable({
   };
   const [loading, setLoading] = React.useState(false);
   const [jsonData, setJsonData] = React.useState([]);
-  console.log(jsonData, 'jsonData635');
   const [hasMore, setHasMore] = React.useState(false);
   const [hasMoreInner, setHasMoreInner] = React.useState(false);
   const [page, setPage] = React.useState(0);

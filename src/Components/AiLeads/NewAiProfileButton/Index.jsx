@@ -8,7 +8,7 @@ import Modal from "@mui/material/Modal";
 import LabelInput from "../../LabelInputFields/Index";
 import Stack from "@mui/material/Stack";
 import ClearIcon from "@mui/icons-material/Clear";
-import { AI_LEADS } from "../../../Utils/Constants";
+import { ORGANIZATION } from "../../../Utils/Constants";
 const style = {
   position: "absolute",
   top: "50%",
@@ -33,7 +33,7 @@ export default function NewAIProfileButton({ validations, handlesave, handleMode
   };
   return (
     <>
-      <section   className= {window.location.pathname ===  AI_LEADS  ? "Leades-filter-drop-down-button-main-container" :"AI_DECISION_MAKERnoSticky" }>
+      <section   className= {window.location.pathname ===  ORGANIZATION  ? "Leades-filter-drop-down-button-main-container" :"AI_DECISION_MAKERnoSticky" }>
         <div>
           <h3 className="new-prospect-heading">{ prefilledData ? prefilledData?.name  : "New Prospect profile"} </h3>
         </div>

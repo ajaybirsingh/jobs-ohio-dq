@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../Components/Layout/Layout";
 import "./Style.css";
+import "../../Pages/Dashboard/Dashboard.css"
 import AiLeadsTable from "../../Components/AiLeads/Table/Table";
 import LeadsFilter from "../../Components/AiLeads/Filter/LeadsFilter";
 import AiLeadsAction from "../../Components/AiLeads/AiLeadsButton/AiLeadsAction";
