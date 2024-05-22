@@ -19,6 +19,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useLocation, useNavigate } from "react-router-dom";
 import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
 import CloseIcon from '@mui/icons-material/Close';
+import { AI_DECISION_MAKER } from "../../Utils/Constants";
+import moment from "moment/moment";
 export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ export default function PeopleScreen() {
     UserId: "",
   });
 
-
+  const formatedDate = moment(peopleData?.position_end_date).format("MM/DD/YYYY");
   React.useEffect(() => {
     if (peopleData?.first_name) {
       setPeopleDetails({
@@ -59,11 +61,11 @@ export default function PeopleScreen() {
         Oraganization: peopleData?.primary_organization,
         SourceDescription: peopleData?.source_description,
         City: peopleData?.city,
-        state: peopleData?.state,
+        State: peopleData?.state,
         Country: peopleData?.country,
         Zip: peopleData?.zip_code,
         Orglinkedin: peopleData?.organization_linkedin_username,
-        PositionEndDate: peopleData?.position_end_date,
+        PositionEndDate: formatedDate,
         Comments: peopleData?.comments,
         validation_status: peopleData?.status
       })
@@ -188,7 +190,7 @@ export default function PeopleScreen() {
       .then((e) => {
         setLoading(false);
         if (e?.status === 200) {
-          toast.success(e?.data?.message);
+          toast.success("Record Added successfully");
           setPeopleDetails({
             firstName: "",
             lastName: "",
@@ -207,7 +209,7 @@ export default function PeopleScreen() {
             PositionEndDate: "",
             Status: "",
           });
-          navigate('/');
+          navigate(AI_DECISION_MAKER);
         }
       })
       .catch((err) => {
@@ -262,7 +264,7 @@ export default function PeopleScreen() {
       .then((e) => {
         setLoading(false);
         if (e?.status === 200) {
-          toast.success(e?.data?.message);
+          toast.success("Record Updated successfully");
           setPeopleDetails({
             firstName: "",
             lastName: "",
@@ -281,7 +283,7 @@ export default function PeopleScreen() {
             PositionEndDate: "",
             Status: "",
           });
-          navigate('/');
+          navigate(AI_DECISION_MAKER);
         }
       })
       .catch((err) => {

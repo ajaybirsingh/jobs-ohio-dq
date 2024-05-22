@@ -193,8 +193,8 @@ function Row({
     }
   };
 
-  const clickHandler = (event) => {
-    navigate(ORG_DETAILS)
+  const clickHandler = (row) => {
+    navigate(ORG_DETAILS, { state: row })
   };
 
   React.useEffect(() => {
@@ -230,17 +230,17 @@ function Row({
     navigate(ORGANIZATION_RECORDS, { state: row })
   }
   const [modalTeaxtArea, setModalTeaxtArea] = React.useState("")
-const [deleteData, setDeleteData] = React.useState('');
-   const [ModalOpen,setModalOpen]=useState(false)
-const handleClose = (row) => {
+  const [deleteData, setDeleteData] = React.useState('');
+  const [ModalOpen, setModalOpen] = useState(false)
+  const handleClose = (row) => {
     setModalOpen(false);
   };
-const DeletePeople =(row)=>{
-  setDeleteData(row)
-  setModalOpen(true);
+  const DeletePeople = (row) => {
+    setDeleteData(row)
+    setModalOpen(true);
 
-}
-  
+  }
+
   const validateFields = () => {
     if (modalTeaxtArea === "") {
       toast.error("Please Enter Reason")
@@ -254,31 +254,31 @@ const DeletePeople =(row)=>{
     setLoading(true);
     const data = {
       records: [
-          {
-              org_id: deleteData.org_id,
-              user_id: null,
-              name: deleteData.name,
-              legal_name: deleteData.legal_name,
-              permalink: deleteData.permalink,
-              revenue_range: deleteData.revenue_range,
-              num_employees: deleteData.num_employees,
-              linkedin: deleteData.linkedin,
-              website_url: deleteData.website_url,
-              description: deleteData.description,
-              categories: deleteData.categories,
-              city: deleteData.city,
-              state: deleteData.state,
-              country: deleteData.country,
-              phone_number: deleteData.phone_number,
-              comments: modalTeaxtArea,
-              source: deleteData.source,    
-              source_description: deleteData.source_description,
-              validation_status: deleteData.validation_status,
-              action: "Delete",
-              updated_at: new Date().toISOString().slice(0, 10),
-          },
+        {
+          org_id: deleteData.org_id,
+          user_id: null,
+          name: deleteData.name,
+          legal_name: deleteData.legal_name,
+          permalink: deleteData.permalink,
+          revenue_range: deleteData.revenue_range,
+          num_employees: deleteData.num_employees,
+          linkedin: deleteData.linkedin,
+          website_url: deleteData.website_url,
+          description: deleteData.description,
+          categories: deleteData.categories,
+          city: deleteData.city,
+          state: deleteData.state,
+          country: deleteData.country,
+          phone_number: deleteData.phone_number,
+          comments: modalTeaxtArea,
+          source: deleteData.source,
+          source_description: deleteData.source_description,
+          validation_status: deleteData.validation_status,
+          action: "Delete",
+          updated_at: new Date().toISOString().slice(0, 10),
+        },
       ],
-  };  
+    };
     const option = {
       method: "POST",
       headers: {
@@ -293,7 +293,7 @@ const DeletePeople =(row)=>{
         setLoading(false);
         if (e?.status === 200) {
           toast.success(e?.data?.message);
-          setModalTeaxtArea('');  
+          setModalTeaxtArea('');
           handleClose();
         }
       })
@@ -308,14 +308,14 @@ const DeletePeople =(row)=>{
       <TableRow
         sx={{ "& > *": { borderBottom: "unset" } }}
         style={{ cursor: "pointer" }}
-        onClick={() => clickHandler(row)}
+
       >
         <>
 
           <TableCell
             component="th"
             scope="row"
-          // onClick={() => clickHandler(row)}
+            onClick={() => clickHandler(row)}
           >
             <Tooltip title={row.name ? row.name : 'Not Available'}>
               <h3 className="company-name-country-prospect justify-center">
@@ -326,6 +326,7 @@ const DeletePeople =(row)=>{
           <TableCell
             align="left"
             className="companylocation"
+            onClick={() => clickHandler(row)}
           >
             <Tooltip title={row?.legal_name ? row?.legal_name : 'Not Available'}>
               <h3 className="company-name-country-prospect">
@@ -333,7 +334,7 @@ const DeletePeople =(row)=>{
               </h3>
             </Tooltip>
           </TableCell>
-          <TableCell align="center">
+          <TableCell align="center" onClick={() => clickHandler(row)}>
             <div className="section-employee-size">
               <Tooltip title={row?.revenue_range ? row?.revenue_range : 'Not Available'}>
                 <h3 className="employee-size-table">
@@ -342,7 +343,7 @@ const DeletePeople =(row)=>{
               </Tooltip>
             </div>
           </TableCell>
-          <TableCell align="left">
+          <TableCell align="left" onClick={() => clickHandler(row)}>
             <Tooltip title={row?.num_employees ? row?.num_employees : 'Not Available'}>
               <h3 className="annual-revenue-table">
                 {row?.num_employees ? row?.num_employees : "-"}
@@ -364,7 +365,7 @@ const DeletePeople =(row)=>{
               </div>
             </div>
           </TableCell> */}
-          <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
+          <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }} onClick={() => clickHandler(row)}>
             <Tooltip title={
               linkedInUrl !== 'Not Available' ?
                 <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{linkedInUrl}</a>
@@ -387,7 +388,7 @@ const DeletePeople =(row)=>{
             </Tooltip>
           </TableCell>
         </>
-        <TableCell align="left">
+        <TableCell align="left" onClick={() => clickHandler(row)}>
           <Tooltip title={
             websiteUrl !== 'Not Available' ?
               <a href={websiteUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{websiteUrl}</a>
@@ -407,8 +408,8 @@ const DeletePeople =(row)=>{
             </Tooltip>
 
             <Tooltip title="Delete">
-            <DeleteIcon  onClick={() => DeletePeople(row)} className="action-icons-people-delete" />
-</Tooltip>
+              <DeleteIcon onClick={() => DeletePeople(row)} className="action-icons-people-delete" />
+            </Tooltip>
 
           </div>
         </TableCell>

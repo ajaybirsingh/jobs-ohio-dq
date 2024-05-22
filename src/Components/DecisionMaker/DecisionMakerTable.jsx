@@ -53,29 +53,31 @@ function Row({ row }) {
     const data = {
       records: [
         {
-          first_name: deleteData?.first_name,
-          last_name: deleteData?.last_name,
-          linkedin: deleteData?.linkedin,
-          primary_job_title: deleteData?.primary_job_title,
-          primary_organization: deleteData?.primary_organization,
-          organization_linkedin_username: deleteData?.organization_linkedin_username,
-          person_id: deleteData?.person_id,
-          org_permalink: deleteData?.org_permalink,
-          middle_name: "",
-          email: deleteData?.email,
-          phone_no: deleteData?.phone_no,
-          city: null,
-          state: null,
-          country: null,
-          zip_code: null,
-          position_end_date: deleteData?.position_end_date,
-          comments: modalTeaxtArea,
-          source: deleteData?.source,
-          source_description: deleteData?.source_description,
-          validation_status: "verified",
-          action: "delete",
-          user_id: null,
-          updated_at: new Date().toISOString().slice(0, 10),
+          // first_name: deleteData?.first_name,
+          // last_name: deleteData?.last_name,
+          // linkedin: deleteData?.linkedin,
+          // primary_job_title: deleteData?.primary_job_title,
+          // primary_organization: deleteData?.primary_organization,
+          // organization_linkedin_username: deleteData?.organization_linkedin_username,
+          // person_id: deleteData?.person_id,
+          // org_permalink: deleteData?.org_permalink,
+          // middle_name: "",
+          // email: deleteData?.email,
+          // phone_no: deleteData?.phone_no,
+          // city: null,
+          // state: null,
+          // country: null,
+          // zip_code: null,
+          // position_end_date: deleteData?.position_end_date,
+          // comments: modalTeaxtArea,
+          // source: deleteData?.source,
+          // source_description: deleteData?.source_description,
+          // validation_status: "verified",
+          // action: "delete",
+          // user_id: null,
+          // updated_at: new Date().toISOString().slice(0, 10),
+          record_id: deleteData?.person_id,
+          user_id: 0
         }
       ]
     };
@@ -93,7 +95,7 @@ function Row({ row }) {
       .then((e) => {
         setLoading(false);
         if (e?.status === 200) {
-          toast.success(e?.data?.message);
+          toast.success("Record Deleted Successfully");
           setModalTeaxtArea('');
           handleClose();
         }
@@ -158,7 +160,7 @@ function Row({ row }) {
                 className="Set-dropdown-ofContactDetailList"
                 style={{ position: "relative" }}
               >
-                
+
                 <p className="email-in-accordian">
                   {row?.linkedin
                     ? row?.linkedin.length > 28
@@ -201,7 +203,7 @@ function Row({ row }) {
         </>
         <TableCell className="table-cellhandleRightsidebar-prospect">
           <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-            
+
             <Tooltip title="Edit">
               <EditIcon className="action-icons-people-edit" onClick={() => EditPeople(row)} />
             </Tooltip>

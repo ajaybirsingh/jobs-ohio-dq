@@ -20,18 +20,21 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import PersonIcon from '@mui/icons-material/Person';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
+import { useLocation } from "react-router-dom";
 export default function OrgDetailsScreen({
 }) {
+  const location = useLocation();
+  const orgData = location?.state;
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
- 
+
   return (
     <>
-     
+
       <section className="OrgDetail-main-container">
         <div className=" CompanyProfile-outter-container">
           <div className="OrgDetailsScreen-flex-container">
@@ -43,26 +46,25 @@ export default function OrgDetailsScreen({
                 />
               </div>
               <div>
-             <h3 className="OrgDetails-username"> Bright PowerNew</h3>
-             <div className="CompanyProfile-content">
-              <img
+                <h3 className="OrgDetails-username">{orgData?.name ? orgData?.name : '-'}</h3>
+                <div className="CompanyProfile-content">
+                  <img
                     className="CompanyProfile-icons"
                     src={GlobalImg}
                     alt=""
                   />                <p className="industry-mentions">
-                website url -  
-                http://www.zygo.com
-                </p>
-              </div>
+                    website url - <a href={orgData?.website_url} target="_blank" className="website-url-link">{orgData?.website_url}</a>
+                  </p>
+                </div>
                 <div className="CompanyProfile-content">
-            <PersonIcon className="SetMui-icons"/>
-               <p>Legal Name -</p>
-               <p>Bright PowerNew</p>
+                  <PersonIcon className="SetMui-icons" />
+                  <p>Legal Name -</p>
+                  <p>{orgData?.legal_name ? orgData?.legal_name : '-'}</p>
                 </div>
                 <div className="CompanyProfile-content">
                   <img className="CompanyProfile-icons" src={callImg} alt="" />
                   <p> Phone No -</p>
-                  <p>64884597254</p>
+                  <p>{orgData?.phone_number ? orgData?.phone_number : '-'}</p>
                 </div>
                 <div className="CompanyProfile-content">
                   <img
@@ -71,33 +73,33 @@ export default function OrgDetailsScreen({
                     alt=""
                   />
                   <p>Location -</p>
-                <p>india, chandigarh , chandigarh</p>
+                  <p>{orgData?.city ? orgData?.city : null}, {orgData?.state ? orgData?.state : null}, {orgData?.country ? orgData?.country : null}</p>
                 </div>
                 <div className="CompanyProfile-content">
-                <LinkOffIcon  className="SetMui-icons"/>
-                <p>permalink -</p>
-                <p>zygo-corporation</p>
+                  <LinkOffIcon className="SetMui-icons" />
+                  <p>permalink -</p>
+                  <p>{orgData?.permalink ? orgData?.permalink : '-'}</p>
                 </div>
                 <div className="CompanyProfile-content">
-                <WorkHistoryIcon className="SetMui-icons"/>
-                <p>validation status -</p>
-                <p>zygo-corporation</p>
+                  <WorkHistoryIcon className="SetMui-icons" />
+                  <p>validation status -</p>
+                  <p>{orgData?.validation_status ? orgData?.validation_status : '-'}</p>
                 </div>
-              
+
               </div>
             </div>
             <div className="">
-            <div className="CompanyProfile-content">
-                <CategoryRoundedIcon  className="SetMui-icons"/>
+              <div className="CompanyProfile-content">
+                <CategoryRoundedIcon className="SetMui-icons" />
                 <p>categories -</p>
-                <p>information services </p>
-                </div>
+                <p>{orgData?.categories ? orgData?.categories : '-'}</p>
+              </div>
               <div className="CompanyProfile-content">
                 {/* <img className="CompanyProfile-icons" src={callImg} alt="" /> */}
                 <LinkedInIcon className="CompanyProfile-icons ai-score-icon" />
                 <p>
-                Linkedin - {""}
-                www.linkedin.com
+                  Linkedin - {""}
+                  <a href={orgData?.linkedin} target="_blank" className="website-url-link">{orgData?.linkedin}</a>
                 </p>
               </div>
               <div className="CompanyProfile-content">
@@ -107,36 +109,36 @@ export default function OrgDetailsScreen({
                   alt=""
                 />
                 <p>
-                num employees-{" "}
-                10K+
+                  num employees-{" "}
+                  {orgData?.num_employees ? orgData?.num_employees : null}
                 </p>
               </div>
               <div className="CompanyProfile-content">
                 <img className="CompanyProfile-icons" src={GrowIcons} alt="" />
                 <p>
-                revenue_range -{" "}
-                10M
+                  revenue_range -{" "}
+                  {orgData?.revenue_range ? orgData?.revenue_range : '-'}
                 </p>
               </div>
               <div className="CompanyProfile-content">
-            <SourceIcon className="SetMui-icons"/>
+                <SourceIcon className="SetMui-icons" />
                 <p className="industry-mentions">
-                source -  
-                crunchbase
+                  source -
+                  {orgData?.source ? orgData?.source : '-'}
                 </p>
               </div>
-          
-              
+
+
               <div className="CompanyProfile-content">
-                <DescriptionIcon  className="SetMui-icons"/>
+                <DescriptionIcon className="SetMui-icons" />
                 <p>source description -</p>
-                <p>Lorem ipsum dolor sit amet. </p>
-                </div>
-                <div className="CompanyProfile-content">
-                <InsertCommentIcon  className="SetMui-icons"/>
+                <p>{orgData?.source_description ? orgData?.source_description : '-'}</p>
+              </div>
+              <div className="CompanyProfile-content">
+                <InsertCommentIcon className="SetMui-icons" />
                 <p>comments -</p>
-                <p>Lorem ipsum dolor sit amet. </p>
-                </div>
+                <p>{orgData?.comments ? orgData?.comments : '-'}</p>
+              </div>
             </div>
           </div>
           <div className="Orgdetail-infomation-main">
@@ -152,7 +154,7 @@ export default function OrgDetailsScreen({
                 <AccordionDetails>
                   <Typography className="CompanyProfile-infomation">
                     <p className="industry-mentions">
-               Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti eum dolorem facere incidunt voluptates in quibusdam quia ea architecto est minus a vero excepturi sequi ducimus, omnis deserunt fugiat accusamus.
+                      {orgData?.description ? orgData?.description : '-'}
                     </p>
                   </Typography>
                 </AccordionDetails>

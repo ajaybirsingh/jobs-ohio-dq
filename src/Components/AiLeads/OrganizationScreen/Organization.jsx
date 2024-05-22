@@ -125,27 +125,30 @@ const Organization = () => {
         axios(option)
             .then((e) => {
                 setLoading(false);
-                setOrganization({
-                    Name: "",
-                    LegalName: "",
-                    RevenueRange: "",
-                    num_employees: "",
-                    orgpermalink: "",
-                    linkedin: "",
-                    website_url: "",
-                    description: "",
-                    categories: "",
-                    city: "",
-                    state: "",
-                    country: "",
-                    phoneNumber: "",
-                    source: "",
-                    source_description: "",
-                    validation_status: "",
-                    action: "",
-                    comments: "",
-                });
-                navigate(ORGANIZATION);
+                if (e?.status === 200) {
+                    toast.success("Record Add Successfully");
+                    setOrganization({
+                        Name: "",
+                        LegalName: "",
+                        RevenueRange: "",
+                        num_employees: "",
+                        orgpermalink: "",
+                        linkedin: "",
+                        website_url: "",
+                        description: "",
+                        categories: "",
+                        city: "",
+                        state: "",
+                        country: "",
+                        phoneNumber: "",
+                        source: "",
+                        source_description: "",
+                        validation_status: "",
+                        action: "",
+                        comments: "",
+                    });
+                    navigate(ORGANIZATION);
+                }
             })
             .catch((err) => {
                 setLoading(false);
@@ -194,27 +197,31 @@ const Organization = () => {
         axios(option)
             .then((e) => {
                 setLoading(false);
-                setOrganization({
-                    Name: "",
-                    LegalName: "",
-                    RevenueRange: "",
-                    num_employees: "",
-                    orgpermalink: "",
-                    linkedin: "",
-                    website_url: "",
-                    description: "",
-                    categories: "",
-                    city: "",
-                    state: "",
-                    country: "",
-                    phoneNumber: "",
-                    source: "",
-                    source_description: "",
-                    validation_status: "",
-                    action: "",
-                    comments: "",
-                });
-                navigate(ORGANIZATION);
+                if (e?.status === 200) {
+                    toast.success("Record Updated Successfully");
+                    setOrganization({
+                        Name: "",
+                        LegalName: "",
+                        RevenueRange: "",
+                        num_employees: "",
+                        orgpermalink: "",
+                        linkedin: "",
+                        website_url: "",
+                        description: "",
+                        categories: "",
+                        city: "",
+                        state: "",
+                        country: "",
+                        phoneNumber: "",
+                        source: "",
+                        source_description: "",
+                        validation_status: "",
+                        action: "",
+                        comments: "",
+                    });
+                    navigate(ORGANIZATION);
+                }
+
             })
             .catch((err) => {
                 setLoading(false);
