@@ -1,4 +1,4 @@
-export const LOGIN = "/dashboard";
+export const LOGIN = "/login";
 export const DASHBOARD = "/dashboard";
 export const TWITTER_FEED = '/twitterfeed';
 export const AI_DECISION_MAKER = '/people';
@@ -17,3 +17,4 @@ export const PDF_SAMPLE = '/pdfSample'
 export const PEOPLE_RECORDS = '/peopleRecords'
 export const ORGANIZATION_RECORDS = '/organizationRecords'
 export const ORG_DETAILS = '/OrgDetails'
+export const REGISTER = '/Register'

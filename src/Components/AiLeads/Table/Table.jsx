@@ -253,31 +253,44 @@ function Row({
     if (!validateFields()) return
     setLoading(true);
     const data = {
+      // records: [
+      //   // {
+      //   //   org_id: deleteData.org_id,
+      //   //   user_id: null,
+      //   //   name: deleteData.name,
+      //   //   legal_name: deleteData.legal_name,
+      //   //   permalink: deleteData.permalink,
+      //   //   revenue_range: deleteData.revenue_range,
+      //   //   num_employees: deleteData.num_employees,
+      //   //   linkedin: deleteData.linkedin,
+      //   //   website_url: deleteData.website_url,
+      //   //   description: deleteData.description,
+      //   //   categories: deleteData.categories,
+      //   //   city: deleteData.city,
+      //   //   state: deleteData.state,
+      //   //   country: deleteData.country,
+      //   //   phone_number: deleteData.phone_number,
+      //   //   comments: modalTeaxtArea,
+      //   //   source: deleteData.source,
+      //   //   source_description: deleteData.source_description,
+      //   //   validation_status: deleteData.validation_status,
+      //   //   action: "Delete",
+      //   //   updated_at: new Date().toISOString().slice(0, 10),
+      //   // },
+      //   {
+      //     record_id: "4",
+      //     user_id: 0,
+      //   }
+      // ],
+
       records: [
         {
-          org_id: deleteData.org_id,
-          user_id: null,
-          name: deleteData.name,
-          legal_name: deleteData.legal_name,
-          permalink: deleteData.permalink,
-          revenue_range: deleteData.revenue_range,
-          num_employees: deleteData.num_employees,
-          linkedin: deleteData.linkedin,
-          website_url: deleteData.website_url,
-          description: deleteData.description,
-          categories: deleteData.categories,
-          city: deleteData.city,
-          state: deleteData.state,
-          country: deleteData.country,
-          phone_number: deleteData.phone_number,
-          comments: modalTeaxtArea,
-          source: deleteData.source,
-          source_description: deleteData.source_description,
-          validation_status: deleteData.validation_status,
-          action: "Delete",
-          updated_at: new Date().toISOString().slice(0, 10),
-        },
-      ],
+          record_id: deleteData.org_id,
+          user_id: "17279a04-c331-4b16-b397-d752e75e6335"
+        }
+      ]
+
+
     };
     const option = {
       method: "POST",
@@ -292,7 +305,7 @@ function Row({
       .then((e) => {
         setLoading(false);
         if (e?.status === 200) {
-          toast.success(e?.data?.message);
+          toast.success("Record Deleted Seccussfully");
           setModalTeaxtArea('');
           handleClose();
         }

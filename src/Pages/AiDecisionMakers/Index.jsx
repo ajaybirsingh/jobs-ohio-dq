@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../Components/Layout/Layout";
 import "./Style.css";
 import AiLeadsAction from "../../Components/AiLeads/AiLeadsButton/AiLeadsAction";
@@ -6,7 +6,8 @@ import DecisionMakerTable from "../../Components/DecisionMaker/DecisionMakerTabl
 import DecisionmakersFilter from "../../Components/DecisionMaker/DecisionFilter/Index";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { APIUrlOne } from "../../Utils/Utils";
+import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
+import Loader from "../../Components/Loader/Loader";
 
 const DecisionMaker = () => {
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ const DecisionMaker = () => {
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
   const [hasMore, setHasMore] = useState(false);
   const [statsCountDecisionMaker, setStatsCountDecisionMaker] = useState(0);
-  const [applyFilter,setIsApplyFilter] = useState(false);
+  const [applyFilter, setIsApplyFilter] = useState(false);
   const validateFilters = () => {
     if (!selectedData?.length && !showData?.length && !lastdata?.length
     ) {
@@ -33,6 +34,11 @@ const DecisionMaker = () => {
     return true;
   }
 
+  useEffect(() => {
+    if (istableDataFilter) {
+      setSkip(0);
+    }
+  }, [istableDataFilter])
   const duplicateHandlePass = (e) => {
     if (!validateFilters()) return;
     setLoading(true);
@@ -43,23 +49,24 @@ const DecisionMaker = () => {
     data.decision_maker = showData?.[0];
     data.josf_status = lastdata?.[0]
     const option = {
-      method: "POST",
+      method: "GET",
       headers: {
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      url: `${APIUrlOne()}/v1/apply_people_filter?limit=50&skip=0`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=0&validation_filter=${selectedData}`,
+
       data: JSON.stringify(data),
     };
     axios(option)
       .then((e) => {
-        setTimeout(()=>      setLoading(false),100)
+        setTimeout(() => setLoading(false), 100)
         if (e?.status === 200) {
           const comingData = e?.data?.data;
           const statsCount = e?.data?.count;
           setStatsCountDecisionMaker(statsCount);
           setFirstFilterData(comingData);
-          if (comingData.length === 0 || comingData.length % 50 !==0) {
+          if (comingData.length === 0 || comingData.length % 50 !== 0) {
             setHasMore(false);
           } else {
             setTimeout(() => {
@@ -83,7 +90,7 @@ const DecisionMaker = () => {
 
   const handlePassSubmit = (e) => {
     if (!validateFilters()) return;
-    if(statsCountDecisionMaker<=tableCommingData.length) return ;
+    if (statsCountDecisionMaker <= tableCommingData.length) return;
     setHasMore(false);
     setLoading(true);
     const data = {};
@@ -91,22 +98,23 @@ const DecisionMaker = () => {
     data.decision_maker = showData?.[0];
     data.josf_status = lastdata?.[0]
     const option = {
-      method: "POST",
+      method: "GET",
       headers: {
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      url: `${APIUrlOne()}/v1/apply_people_filter?limit=50&skip=${skip ? skip : 0}`,
+      // url: `${APIUrlOne()}/v1/apply_people_filter?limit=50&skip=${skip ? skip : 0}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&validation_filter=${selectedData}`,
       data: JSON.stringify(data),
     };
     axios(option)
       .then((e) => {
-        setTimeout(()=>      setLoading(false),100)
+        setTimeout(() => setLoading(false), 100)
         if (e?.status === 200) {
           const comingData = e?.data?.data;
           const statsCount = e?.data?.count;
           setStatsCountDecisionMaker(statsCount);
-          if (comingData.length === 0 || comingData.length % 50 !==0) {
+          if (comingData.length === 0 || comingData.length % 50 !== 0) {
             setHasMore(false);
           } else {
             setTimeout(() => {
@@ -129,6 +137,9 @@ const DecisionMaker = () => {
   };
   return (
     <>
+      {
+        loading ? <Loader /> : null
+      }
       <Layout>
         <div className="child-section-of-everypage">
           <AiLeadsAction

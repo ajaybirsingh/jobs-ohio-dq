@@ -90,7 +90,7 @@ const Organization = () => {
             records: [
                 {
                     org_id: null,
-                    user_id: null,
+                    user_id: '17279a04-c331-4b16-b397-d752e75e6335',
                     name: Organization.Name,
                     legal_name: Organization.LegalName,
                     permalink: Organization.orgpermalink,
@@ -162,7 +162,7 @@ const Organization = () => {
             records: [
                 {
                     org_id: OrganizationData.org_id,
-                    user_id: null,
+                    user_id: '17279a04-c331-4b16-b397-d752e75e6335',
                     name: Organization.Name,
                     legal_name: Organization.LegalName,
                     permalink: Organization.orgpermalink,

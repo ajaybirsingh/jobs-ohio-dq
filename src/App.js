@@ -15,11 +15,13 @@ import {
   ORGANIZATION_RECORDS,
   ORG_DETAILS,
   PEOPLE_RECORDS,
+  REGISTER,
 } from "./Utils/Constants";
 import PeopleRecords from "./Pages/AiDecisionMakers/PeopleRecords/People";
 import OrganizationRecords from "./Pages/AiLeads/OrganizationRecords/Organization";
 import ReactGA from "react-ga4";
 import OrgDetails from "./Pages/OrgDetails/OrgDetails";
+import Register from "./Components/Auth/Register/Register";
 function App() {
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     window.location.replace(originalUri);
@@ -65,6 +67,7 @@ function App() {
             <Route path={PEOPLE_RECORDS} element={<PeopleRecords />} />
             <Route path={ORGANIZATION_RECORDS} element={<OrganizationRecords />} />
             <Route path={ORG_DETAILS} element={<OrgDetails />} />
+            <Route path={REGISTER} element={<Register />} />
           </Routes>
         </Security>
       </Router>

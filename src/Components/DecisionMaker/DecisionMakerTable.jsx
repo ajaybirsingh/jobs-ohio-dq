@@ -51,35 +51,14 @@ function Row({ row }) {
 
     setLoading(true);
     const data = {
+      // {
       records: [
         {
-          // first_name: deleteData?.first_name,
-          // last_name: deleteData?.last_name,
-          // linkedin: deleteData?.linkedin,
-          // primary_job_title: deleteData?.primary_job_title,
-          // primary_organization: deleteData?.primary_organization,
-          // organization_linkedin_username: deleteData?.organization_linkedin_username,
-          // person_id: deleteData?.person_id,
-          // org_permalink: deleteData?.org_permalink,
-          // middle_name: "",
-          // email: deleteData?.email,
-          // phone_no: deleteData?.phone_no,
-          // city: null,
-          // state: null,
-          // country: null,
-          // zip_code: null,
-          // position_end_date: deleteData?.position_end_date,
-          // comments: modalTeaxtArea,
-          // source: deleteData?.source,
-          // source_description: deleteData?.source_description,
-          // validation_status: "verified",
-          // action: "delete",
-          // user_id: null,
-          // updated_at: new Date().toISOString().slice(0, 10),
-          record_id: deleteData?.person_id,
-          user_id: 0
+          record_id: "0",
+          user_id: '17279a04-c331-4b16-b397-d752e75e6335'
         }
       ]
+      // }
     };
 
     const option = {

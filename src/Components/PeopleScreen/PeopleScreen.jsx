@@ -150,7 +150,7 @@ export default function PeopleScreen() {
       records: [
         {
           person_id: null,
-          user_id: null,
+          user_id: '17279a04-c331-4b16-b397-d752e75e6335',
           first_name: PeopleDetails?.firstName,
           last_name: PeopleDetails?.lastName,
           email: PeopleDetails?.email,
@@ -245,7 +245,7 @@ export default function PeopleScreen() {
           source_description: PeopleDetails?.SourceDescription,
           validation_status: PeopleDetails?.Status,
           action: "",
-          user_id: null,
+          user_id: '17279a04-c331-4b16-b397-d752e75e6335',
           updated_at: new Date().toISOString().slice(0, 10),
         }
       ],

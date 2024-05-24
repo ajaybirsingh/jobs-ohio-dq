@@ -175,7 +175,7 @@ export default function Sidebar({
       document.removeEventListener("click", handleClick);
     };
   }, []);
- 
+
   const handlesearch = () => {
     setLoading(true);
     const data = {
@@ -340,7 +340,7 @@ export default function Sidebar({
               alignItems: "center",
             }}
           >
-            <Link to={'/dashboard'}>
+            <Link to={'/'}>
               <img
                 src={JobsLogo}
                 alt="logo"

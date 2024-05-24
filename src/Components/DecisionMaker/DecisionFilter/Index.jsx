@@ -321,11 +321,11 @@ export default function LeadsFilter({
   //   aiDecisionMakerdropdown();
   // }, []);
   const PeopleStatus = [
-    "Pending",
-    "Verified",
-    "Updated",
-    "Notfound",
-    "Debatable",
+    "pending",
+    "verified",
+    "updated",
+    "notfound",
+    "debatable"
   ];
   return (
     <>
@@ -353,7 +353,7 @@ export default function LeadsFilter({
                 dataList: PeopleStatus,
                 checked: selectedData,
               }}
-              placeholder="Status"
+              placeholder="Action"
             />
           </div>
           {/* <div className="AILeads-Filter2nddrop-down">
@@ -391,7 +391,7 @@ export default function LeadsFilter({
         <div className="apply-hit-button">
           <div
             className="inner-apply-button-container"
-          // onClick={duplicateHandlePass}
+            onClick={duplicateHandlePass}
           >
             <FileDownloadDoneIcon className="apply-tick-icon" />
             <button className="AileadsFilter-Apply-button" variant="contained">
@@ -400,7 +400,7 @@ export default function LeadsFilter({
           </div>
         </div>
         <div
-          // onClick={ResetFilterData}
+          onClick={ResetFilterData}
           className="Reset-filter-container">
           <div className="inner-reset-filter">
             <div>

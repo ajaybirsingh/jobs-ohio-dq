@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader/Loader";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { APIUrlOne } from "../../Utils/Utils";
+import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
 
 const AILeads = () => {
   const [tableCommingData, setTableCommingData] = React.useState([]);
@@ -40,12 +40,13 @@ const AILeads = () => {
     data.revenue_range = showlast;
     data.j_score = jScoredata?.[0];
     const option = {
-      method: "POST",
+      method: "GET",
       headers: {
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      url: `${APIUrlOne()}/v1/apply_org_filter?limit=50&skip=0`,
+      // url: `${APIUrlOne()}/v1/apply_org_filter?limit=50&skip=0`,
+      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=0&validation_filter=${selectedData}`,
       data: JSON.stringify(data),
     };
     axios(option)
@@ -91,12 +92,14 @@ const AILeads = () => {
     data.revenue_range = showlast;
     data.j_score = jScoredata?.[0];
     const option = {
-      method: "POST",
+      method: "GET",
       headers: {
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      url: `${APIUrlOne()}/v1/apply_org_filter?limit=50&skip=${(page - 1) * 50}`,
+      // url: `${APIUrlOne()}/v1/apply_org_filter?limit=50&skip=${(page - 1) * 50}`,
+      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=${(page - 1) * 50}&validation_filter=${selectedData}`,
+
       data: JSON.stringify(data),
     };
     axios(option)
@@ -162,7 +165,7 @@ const AILeads = () => {
             isSalesForceTrigger={isSalesForceTrigger}
             statsCount={statsCount}
           />
-          {/* <LeadsFilter
+          <LeadsFilter
             showlast={showlast}
             setShowlast={setShowlast}
             setJscore={setJscore}
@@ -178,20 +181,20 @@ const AILeads = () => {
             setIstableDataFilter={setIstableDataFilter}
             setStatsCount={setStatsCount}
             setPage={setPage}
-          /> */}
-          <div className="leads-table-section-main-outer"> 
-            <AiLeadsTable
-              handleApply={handleApply}
-              tableCommingData={tableCommingData}
-              setTableCommingData={setTableCommingData}
-              istableDataFilter={istableDataFilter}
-              setCurrentLeadsLength={setCurrentLeadsLength}
-              setIstableDataFilter={setIstableDataFilter}
-              isSalesForceTrigger={isSalesForceTrigger}
-              isDecisionMakerExcel={isDecisionMakerExcel}
-              setIsDecisionMakerExcel={setIsDecisionMakerExcel}
-            />
-          </div>
+          />
+          {/* <div className="leads-table-section-main-outer"> */}
+          <AiLeadsTable
+            handleApply={handleApply}
+            tableCommingData={tableCommingData}
+            setTableCommingData={setTableCommingData}
+            istableDataFilter={istableDataFilter}
+            setCurrentLeadsLength={setCurrentLeadsLength}
+            setIstableDataFilter={setIstableDataFilter}
+            isSalesForceTrigger={isSalesForceTrigger}
+            isDecisionMakerExcel={isDecisionMakerExcel}
+            setIsDecisionMakerExcel={setIsDecisionMakerExcel}
+          />
+          {/* </div> */}
         </div>
       </Layout>
     </>

@@ -102,6 +102,13 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
   const handleClose = () => {
     setOpen(false);
   };
+  const PeopleStatus = [
+    "pending",
+    "verified",
+    "updated",
+    "notfound",
+    "debatable"
+  ];
   return (
     <React.Fragment>
       <div className="outer-main-for-filtersand-buttons">
@@ -123,15 +130,15 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
                 handleChange: handleIndustryChange,
                 selectedData: selectedData,
                 handleCheckboxChange: handeldata,
-                dataList: aiLeadsFilters?.data?.categories,
+                dataList: PeopleStatus,
                 checked: selectedData,
               }}
               onMouseEnter={handleOpen}
               onMouseLeave={handleClose}
-              placeholder="Industry"
+              placeholder="Action"
             />
           </div>
-          <div className="Leads-Filter-Laststdrop-down">
+          {/* <div className="Leads-Filter-Laststdrop-down">
             <FormControlSelect
               formControlData={{
                 value: selectedRevenue,
@@ -161,7 +168,7 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
               onMouseLeave={handleClose}
               placeholder="JOI Score"
             />
-          </div>
+          </div> */}
         </section>
         <div className="apply-hit-button">
           <div className="inner-apply-button-container" onClick={handleApply}>
