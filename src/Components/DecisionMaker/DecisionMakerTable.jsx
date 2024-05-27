@@ -30,7 +30,7 @@ function Row({ row }) {
   const EditPeople = (row) => {
     navigate(PEOPLE_RECORDS, { state: row })
   }
-
+  const userId = GetUserId();
   const [deleteData, setDeleteData] = React.useState('');
   const DeletePeople = (row) => {
     setDeleteData(row)
@@ -46,6 +46,7 @@ function Row({ row }) {
     }
     return true
   }
+  
   const handleDeleteCase = () => {
     if (!validateFields()) return
 
@@ -55,7 +56,7 @@ function Row({ row }) {
       records: [
         {
           record_id: "0",
-          user_id: '17279a04-c331-4b16-b397-d752e75e6335'
+          user_id: userId
         }
       ]
       // }

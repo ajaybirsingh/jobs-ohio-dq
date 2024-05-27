@@ -13,7 +13,9 @@ import Loader from "../../Loader/Loader";
 import JobsLogo from "../../../Assets/JobsOhioLogo.jpeg";
 import { authClient } from "../../../Utils/Common";
 import LabelInput from "../../LabelInputFields/Index";
-import { REGISTER } from "../../../Utils/Constants";
+import { ORGANIZATION, REGISTER } from "../../../Utils/Constants";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -21,6 +23,10 @@ const Login = () => {
         emailAddress: "",
         password: "",
     });
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const handlePasswordVisible = () => {
+        setPasswordVisible(!passwordVisible)
+    }
     const validateInputs = () => {
         if (
             !userDetails?.emailAddress ||
@@ -40,7 +46,8 @@ const Login = () => {
         return true;
     };
     const auth = useOktaAuth();
-    const login = () => {
+    const login = (e) => {
+        e?.preventDefault();
         if (!validateInputs()) return
         setLoading(true);
         const data = {
@@ -61,7 +68,8 @@ const Login = () => {
                 setLoading(false);
                 if (response?.status === 200) {
                     SetUserId("userId", response?.data?.user_id);
-                    toast.success(response?.data.message)
+                    toast.success(response?.data.message);
+                    navigate(ORGANIZATION)
                     setUserDetails({
                         emailAddress: "",
                         password: "",
@@ -87,7 +95,7 @@ const Login = () => {
                             <div className="heading-content-section">
                                 <h2>Login </h2>
                                 <form
-                                // onSubmit={loggingIn}
+                                    onSubmit={login}
                                 >
                                     <div className="Login-user-all-inputs">
                                         <label htmlFor="">
@@ -108,37 +116,36 @@ const Login = () => {
                                         <label htmlFor="">
                                             Passsword <span className="mandatoryfields">*</span>
                                         </label>
-                                        <LabelInput
-                                            value={userDetails.password}
-                                            onChange={(e) => {
-                                                const inputvalue = e?.target?.value;
-                                                setUserDetails({
-                                                    ...userDetails,
-                                                    password: inputvalue,
-                                                });
-                                            }}
-                                        />
+                                        <div className="password-visible-section">
+                                            <LabelInput
+                                                value={userDetails.password}
+                                                onChange={(e) => {
+                                                    const inputvalue = e?.target?.value;
+                                                    setUserDetails({
+                                                        ...userDetails,
+                                                        password: inputvalue,
+                                                    });
+                                                }}
+                                                type={passwordVisible ? `text` : 'password'}
+                                            />
+                                            {
+                                                passwordVisible ?
+                                                    <VisibilityOffIcon className="icon-password-eye" onClick={() => handlePasswordVisible()} /> :
+                                                    <VisibilityIcon className="icon-password-eye" onClick={() => handlePasswordVisible()} />
+                                            }
+
+
+                                        </div>
+
                                     </div>
                                     <div className="login-button-section">
                                         <p onClick={() => navigate(REGISTER)}> <span>Don't Have an Account?</span> Sign up</p>
-                                        <button type="button" onClick={login}>
+                                        <button type="submit" onClick={login}>
                                             Login
                                         </button>
                                     </div>
-                                    {/* <div className="separator">
-                                        <span>OR</span>
-                                    </div> */}
-                                    <div className="login-button-section-okta">
-                                        {
-                                            auth.authState?.isAuthenticated ? (
-                                                <button type="submit" onClick={loggingOut}>
-                                                    Logout
-                                                </button>
-                                            ) : null
-                                            // <button type="submit" onClick={loggingIn}
-                                            // >Login with Okta</button>
-                                        }
-                                    </div>
+
+
                                 </form>
                             </div>
                         </div>

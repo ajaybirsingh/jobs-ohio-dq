@@ -1,8 +1,8 @@
-export const LOGIN = "/login";
+export const LOGIN = "/";
 export const DASHBOARD = "/dashboard";
 export const TWITTER_FEED = '/twitterfeed';
 export const AI_DECISION_MAKER = '/people';
-export const ORGANIZATION = "/";
+export const ORGANIZATION = "/organization";
 export const AI_PATH = '/aipath';
 export const AI_PROFILE = '/aiprofile';
 export const AI_PROFILE_FORM_TABLE = '/aiprofileformtable';

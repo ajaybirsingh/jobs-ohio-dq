@@ -17,7 +17,7 @@ import axios from "axios";
 import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useLocation, useNavigate } from "react-router-dom";
-import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
+import { APIUrlFour, APIUrlOne, GetUserId } from "../../Utils/Utils";
 import CloseIcon from '@mui/icons-material/Close';
 import { AI_DECISION_MAKER } from "../../Utils/Constants";
 import moment from "moment/moment";
@@ -142,7 +142,7 @@ export default function PeopleScreen() {
     }
     return true;
   };
-
+  const userId = GetUserId();
   const handelApplyRecords = () => {
     if (!validateFields()) return;
     setLoading(true);
@@ -150,7 +150,7 @@ export default function PeopleScreen() {
       records: [
         {
           person_id: null,
-          user_id: '17279a04-c331-4b16-b397-d752e75e6335',
+          user_id: userId,
           first_name: PeopleDetails?.firstName,
           last_name: PeopleDetails?.lastName,
           email: PeopleDetails?.email,
@@ -245,7 +245,7 @@ export default function PeopleScreen() {
           source_description: PeopleDetails?.SourceDescription,
           validation_status: PeopleDetails?.Status,
           action: "",
-          user_id: '17279a04-c331-4b16-b397-d752e75e6335',
+          user_id: userId,
           updated_at: new Date().toISOString().slice(0, 10),
         }
       ],

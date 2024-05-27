@@ -55,10 +55,10 @@ function Row({
   const [scrollPagination, setScrollPagination] = useState(false);
   const linkedInUrl = row?.linkedin ? row?.linkedin : 'Not Available';
   const websiteUrl = row?.website_url ? row?.website_url : 'Not Available';
-  const loggedInUserId = GetUserId();
+  const userId = GetUserId();
   const handleRightsidebar = (event) => {
     const data = {};
-    data.source_uid = Number(loggedInUserId);
+    // data.source_uid = Number(loggedInUserId);
     data.target_uid = Number(event?.person_id);
     const option = {
       method: "POST",
@@ -147,7 +147,7 @@ function Row({
     setLoading(true);
 
     const tuples = childData?.map((item) => ({
-      items: [Number(loggedInUserId), item.person_id],
+      // items: [Number(loggedInUserId), item.person_id],
     }));
     const data = { tuples };
     const options = {
@@ -286,7 +286,7 @@ function Row({
       records: [
         {
           record_id: deleteData.org_id,
-          user_id: "17279a04-c331-4b16-b397-d752e75e6335"
+          user_id: userId
         }
       ]
 

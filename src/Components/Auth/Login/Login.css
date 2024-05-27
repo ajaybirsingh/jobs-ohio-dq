@@ -85,6 +85,18 @@
   font-family: Inter;
 }
 
+.password-visible-section {
+  position: relative;
+}
+
+.icon-password-eye {
+  position: absolute;
+  top: 20px;
+  right: -10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .email-address-input:focus-visible {
   outline: none !important;
 }

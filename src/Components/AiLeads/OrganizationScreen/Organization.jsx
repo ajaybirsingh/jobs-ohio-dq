@@ -13,7 +13,7 @@ import axios from "axios";
 import LabelInput from "../../LabelInputFields/Index";
 import Loader from "../../Loader/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
-import { APIUrlFour } from "../../../Utils/Utils";
+import { APIUrlFour, GetUserId } from "../../../Utils/Utils";
 import { ORGANIZATION } from "../../../Utils/Constants";
 const Organization = () => {
     const location = useLocation();
@@ -39,6 +39,7 @@ const Organization = () => {
         action: "",
         comments: "",
     });
+    const userId = GetUserId();
     const [loading, setLoading] = React.useState();
     const OrgAction = [
         "outdated ",
@@ -84,13 +85,14 @@ const Organization = () => {
         }
         return true
     }
+    
     const handelAddOrg = () => {
         if (!validations()) return
         const data = {
             records: [
                 {
                     org_id: null,
-                    user_id: '17279a04-c331-4b16-b397-d752e75e6335',
+                    user_id: userId,
                     name: Organization.Name,
                     legal_name: Organization.LegalName,
                     permalink: Organization.orgpermalink,
@@ -162,7 +164,7 @@ const Organization = () => {
             records: [
                 {
                     org_id: OrganizationData.org_id,
-                    user_id: '17279a04-c331-4b16-b397-d752e75e6335',
+                    user_id: userId,
                     name: Organization.Name,
                     legal_name: Organization.LegalName,
                     permalink: Organization.orgpermalink,

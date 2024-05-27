@@ -84,7 +84,7 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
       >
         <div className="showing-leads-head">
           {
-            currentLeadsLength && !statsCount && location === "/" ?
+            currentLeadsLength && !statsCount && location === "/organization" ?
               <>
                 <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
                 <p>Out of {location === "/organization" || "/organization" ? statsData?.generated_leads.toLocaleString() || '-' : null}</p>
