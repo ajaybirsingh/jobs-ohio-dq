@@ -8,6 +8,8 @@ import Loader from "../../Loader/Loader";
 import LabelInput from "../../LabelInputFields/Index";
 import { LOGIN } from "../../../Utils/Constants";
 import { useNavigate } from "react-router-dom";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 // import Loader from "../Loader/Loader";
 // import LabelInput from "../LabelInputFields/Index";
 const Register = () => {
@@ -18,9 +20,13 @@ const Register = () => {
         lastname: "",
         username: "",
         emailAddress: "",
-        role: "",
+        role: "user",
         password: "",
     });
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const handlePasswordVisible = () => {
+        setPasswordVisible(!passwordVisible)
+    }
     const validateInputs = () => {
         if (UserRegister.firstname === "") {
             toast.error("Please Enter First Name");
@@ -28,14 +34,6 @@ const Register = () => {
         }
         if (UserRegister.lastname === "") {
             toast.error("Please Enter Last Name");
-            return false;
-        }
-        if (UserRegister.username === "") {
-            toast.error("Please Enter User Name");
-            return false;
-        }
-        if (UserRegister.role === "") {
-            toast.error("Please Enter Role");
             return false;
         }
         if (
@@ -49,6 +47,16 @@ const Register = () => {
             toast.error("Please Enter Valid Email Address");
             return false;
         }
+        if (UserRegister.username === "") {
+            toast.error("Please Enter User Name");
+            return false;
+        }
+        if (UserRegister.role === "") {
+            toast.error("Please Enter Role");
+            return false;
+        }
+
+
         if (!UserRegister?.password || UserRegister?.password?.trim() === "") {
             toast.error("Please Enter Password");
             return false;
@@ -147,39 +155,6 @@ const Register = () => {
                                     <div className="Register-flex-container">
                                         <div className="Register-alliputs">
                                             <label htmlFor="">
-                                                User Name{" "}
-                                                <span className="Registermandatoryfields">*</span>
-                                            </label>
-                                            <LabelInput
-                                                value={UserRegister.username}
-                                                onChange={(e) => {
-                                                    const inputvalue = e?.target?.value;
-                                                    setUserRegister({
-                                                        ...UserRegister,
-                                                        username: inputvalue,
-                                                    });
-                                                }}
-                                            />
-                                        </div>
-                                        <div className="Register-alliputs">
-                                            <label htmlFor="">
-                                                Role <span className="Registermandatoryfields">*</span>
-                                            </label>
-                                            <LabelInput
-                                                value={UserRegister.role}
-                                                onChange={(e) => {
-                                                    const inputvalue = e?.target?.value;
-                                                    setUserRegister({
-                                                        ...UserRegister,
-                                                        role: inputvalue,
-                                                    });
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="Register-flex-container">
-                                        <div className="Register-alliputs">
-                                            <label htmlFor="">
                                                 Email <span className="Registermandatoryfields">*</span>
                                             </label>
                                             <LabelInput
@@ -195,19 +170,62 @@ const Register = () => {
                                         </div>
                                         <div className="Register-alliputs">
                                             <label htmlFor="">
-                                                Passsword{" "}
+                                                User Name{" "}
                                                 <span className="Registermandatoryfields">*</span>
                                             </label>
                                             <LabelInput
-                                                value={UserRegister.password}
+                                                value={UserRegister.username}
                                                 onChange={(e) => {
                                                     const inputvalue = e?.target?.value;
                                                     setUserRegister({
                                                         ...UserRegister,
-                                                        password: inputvalue,
+                                                        username: inputvalue,
                                                     });
                                                 }}
                                             />
+                                        </div>
+                                        {/* <div className="Register-alliputs">
+                                            <label htmlFor="">
+                                                Role <span className="Registermandatoryfields">*</span>
+                                            </label>
+                                            <LabelInput
+                                                value={UserRegister.role}
+                                                onChange={(e) => {
+                                                    const inputvalue = e?.target?.value;
+                                                    setUserRegister({
+                                                        ...UserRegister,
+                                                        role: inputvalue,
+                                                    });
+                                                }}
+                                            />
+                                        </div> */}
+                                    </div>
+                                    <div className="Register-flex-container">
+
+                                        <div className="Register-alliputs">
+                                            <label htmlFor="">
+                                                Passsword{" "}
+                                                <span className="Registermandatoryfields">*</span>
+                                            </label>
+                                            <div className="password-visible-section">
+                                                <LabelInput
+                                                    value={UserRegister.password}
+                                                    onChange={(e) => {
+                                                        const inputvalue = e?.target?.value;
+                                                        setUserRegister({
+                                                            ...UserRegister,
+                                                            password: inputvalue,
+                                                        });
+                                                    }}
+                                                    type={passwordVisible ? 'text' : 'password'}
+                                                />
+                                                {
+                                                    passwordVisible ?
+                                                        <VisibilityOffIcon className="icon-password-eye" onClick={() => handlePasswordVisible()} /> :
+                                                        <VisibilityIcon className="icon-password-eye" onClick={() => handlePasswordVisible()} />
+                                                }
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div className="Register-button-section">

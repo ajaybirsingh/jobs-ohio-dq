@@ -34,6 +34,7 @@ import {
   FAQ_SCREEN,
   JOI_TRAINING,
   ORGANIZATION,
+  ORG_DETAILS,
 } from "../../Utils/Constants";
 import { useOktaAuth } from "@okta/okta-react";
 import { APIUrlOne, GetOktaAuthData, GetUserId } from "../../Utils/Utils";
@@ -222,6 +223,10 @@ export default function Sidebar({
     return () => clearTimeout(timer);
   }, [headerSearchData]);
 
+  const logoutHandler = () => {
+    localStorage.clear();
+    navigate('/')
+  }
   return (
     <>
       <CssBaseline />
@@ -232,23 +237,13 @@ export default function Sidebar({
           {open ? (
 
             <DrawerHeader className="header-main">
-              {window.location.pathname === AI_PROFILE_FORM_TABLE ||
-                window.location.pathname === AI_PROSPECT_PROFILE ||
-                window.location.pathname === COMPANY_PROFILE_SCREEN ? (
+              {window.location.pathname === ORG_DETAILS ? (
                 <div>
                   <List>
                     <ListItem className="arrowbutton-item-list">
                       <ListItemButton
                         className="backarrow-list-button"
-                        onClick={() => {
-                          if (
-                            window.location.pathname === COMPANY_PROFILE_SCREEN
-                          ) {
-                            navigate(ORGANIZATION);
-                          } else {
-                            navigate(AI_PROFILE);
-                          }
-                        }}
+                        onClick={() => navigate(ORGANIZATION)}
                       >
                         <div className="backarrow-header-main">
                           <img src={backarrow} alt="" />
@@ -269,23 +264,13 @@ export default function Sidebar({
             </DrawerHeader>
 
           ) : (<DrawerHeader className="header-main">
-            {window.location.pathname === AI_PROFILE_FORM_TABLE ||
-              window.location.pathname === AI_PROSPECT_PROFILE ||
-              window.location.pathname === COMPANY_PROFILE_SCREEN ? (
+            {window.location.pathname === ORG_DETAILS ? (
               <div>
                 <List>
                   <ListItem className="arrowbutton-item-list">
                     <ListItemButton
                       className="backarrow-list-button"
-                      onClick={() => {
-                        if (
-                          window.location.pathname === COMPANY_PROFILE_SCREEN
-                        ) {
-                          navigate(ORGANIZATION);
-                        } else {
-                          navigate(AI_PROFILE);
-                        }
-                      }}
+                      onClick={() => navigate(ORGANIZATION)}
                     >
                       <div className="backarrow-header-main">
                         <img src={backarrow} alt="" />
@@ -303,6 +288,9 @@ export default function Sidebar({
               responseData={responseData}
               handlesearch={handlesearch}
             />
+
+
+
           </DrawerHeader>
 
 
@@ -328,6 +316,10 @@ export default function Sidebar({
           >
             <MenuIcon />
           </IconButton>
+          {
+            userId ? <button className="logout-button" onClick={() => logoutHandler()}>logout</button> : null
+          }
+
         </Toolbar>
 
       </AppBar>

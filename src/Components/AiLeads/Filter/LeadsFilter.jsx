@@ -6,7 +6,8 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import FormControlSelect from "../../FormControl/Index";
 import axios from "axios";
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
-import { APIUrlOne } from "../../../Utils/Utils";
+import { APIUrlFour, APIUrlOne } from "../../../Utils/Utils";
+import { logDOM } from "@testing-library/react";
 export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
   handleApply,
   setSelectedData,
@@ -26,6 +27,7 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
     ravenue: "",
     jScore: "",
   });
+  const [actionFilterData,setActionFilterData] = React.useState([]);
   const LeadsFilters = () => {
     const option = {
       method: "GET",
@@ -33,15 +35,19 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      url: `${APIUrlOne()}/v1/org_filters`,
+      url: `${APIUrlFour()}/v1/get_status_list`,
     };
     axios(option)
       .then((e) => {
-        const data = JSON.parse(e?.request?.response);
-        setAiLeadsFilters(data);
+        const data = e?.data?.status_list;
+        setActionFilterData(data);
       })
       .catch(() => { });
   };
+
+  React.useEffect(() => {
+    LeadsFilters();
+  }, [])
   // React.useEffect(() => {
   //   if (isLoadFilters) {
   //     LeadsFilters();
@@ -102,13 +108,6 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
   const handleClose = () => {
     setOpen(false);
   };
-  const PeopleStatus = [
-    "pending",
-    "verified",
-    "updated",
-    "notfound",
-    "debatable"
-  ];
   return (
     <React.Fragment>
       <div className="outer-main-for-filtersand-buttons">
@@ -130,7 +129,7 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
                 handleChange: handleIndustryChange,
                 selectedData: selectedData,
                 handleCheckboxChange: handeldata,
-                dataList: PeopleStatus,
+                dataList: actionFilterData,
                 checked: selectedData,
               }}
               onMouseEnter={handleOpen}

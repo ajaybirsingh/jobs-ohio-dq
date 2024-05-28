@@ -28,6 +28,7 @@ export default function PeopleScreen() {
   const [showSearchdata, setshowSearchdata] = React.useState(false);
   const [responseData, setResponseData] = React.useState(null);
   const [selectedOrganization, setSelectedOrganization] = React.useState('');
+  const [actionData, setActionData] = React.useState([]);
   const [PeopleDetails, setPeopleDetails] = React.useState({
     firstName: "",
     lastName: "",
@@ -373,6 +374,26 @@ export default function PeopleScreen() {
     setSelectedOrganization('');
   }
 
+  const actionFilters = () => {
+    const option = {
+        method: "GET",
+        headers: {
+            "content-type": "plain/text",
+        },
+        url: `${APIUrlFour()}/v1/get_status_list`,
+    };
+    axios(option)
+        .then((e) => {
+            const data = e?.data?.status_list;
+            setActionData(data);
+        })
+        .catch((err) => {
+
+        })
+}
+React.useEffect(() => {
+    actionFilters();
+}, [])
   return (
     <>
       {loading ? <Loader /> : null}
@@ -806,10 +827,10 @@ export default function PeopleScreen() {
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
                   >
-                    <MenuItem disabled value="">
+                    <MenuItem disabled value="" className="disable-menu-action">
                       <em className="SelectAction-css"> Select Status</em>
                     </MenuItem>
-                    {PeopleStatus?.map((item, index) => {
+                    {actionData?.map((item, index) => {
                       return (
                         <MenuItem key={index} value={item}>
                           {item}

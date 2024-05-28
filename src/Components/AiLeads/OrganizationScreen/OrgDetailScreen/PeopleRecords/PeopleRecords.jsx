@@ -48,45 +48,73 @@ function Row({ row, selected, onSelect }) {
                                 src={decisionMakerImage}
                                 alt=""
                             /> */}
-              <p className="letter-heading">{row?.name?.substring(0, 1)}</p>
+              <p className="letter-heading">{row?.first_name?.substring(0, 1) + row?.last_name?.substring(0, 1)}</p>
             </div>
           </div>
         </TableCell>
-        <TableCell className="Decision-maker-userTeblesell" align="left">
-          {/* <div className="Decision-maker-user-name-main-container"> */}
-          {/* <div className="name-and-title-text"> */}
-          {/* <h3 className="company-name-country-prospect-added"> */}
-          {row?.name
-            ? row.name.substring(0, 10) + (row.name.length > 10 ? "..." : "")
-            : "-"}
-          {/* </h3> */}
-          {/* <p className="after-company-name-country-prospect-new"> */}
-          {row?.primary_job_title
-            ? row.primary_job_title.substring(0, 10) +
+
+        <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+          <Tooltip title={row?.first_name + row.last_name}>
+            {row?.first_name
+              ? row.first_name + row.last_name.substring(0, 10) + (row.last_name.length > 10 ? "..." : "")
+              : "-"}
+          </Tooltip>
+        </TableCell>
+
+        <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+          <Tooltip title={row?.primary_organization}>
+            {row?.primary_organization
+              ? row.primary_organization.substring(0, 10) +
+              (row.primary_organization.length > 10 ? "..." : "")
+              : "-"}
+          </Tooltip>
+        </TableCell>
+
+        <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+          <Tooltip title={row?.primary_job_title}>
+            {row?.primary_job_title
+              ? row.primary_job_title.substring(0, 10) +
               (row.primary_job_title.length > 10 ? "..." : "")
-            : "-"}
-          {/* </p> */}
-          {/* </div> */}
-          {/* </div> */}
+              : "-"}
+          </Tooltip>
         </TableCell>
-        <TableCell className="Decision-maker-userTeblesell" align="left">
-          {/* <div className="Decision-maker-user-name-main-container"> */}
-          {/* <div className="name-and-title-text"> */}
-          {/* <p className="after-company-name-country-prospect-new"> */}
-          {row?.legal_name
-            ? row.legal_name.substring(0, 10) +
-              (row.legal_name.length > 10 ? "..." : "")
-            : "-"}
-          {/* </p> */}
-          {/* </div> */}
-          {/* </div> */}
+
+        {/* <TableCell align="left">
+          <Tooltip title={row?.linkedin ? row?.linkedin : "Not Available"}>
+            <div className="Suspect-table-data">
+              <h3 className="industry-sector-table">
+                {row?.linkedin
+                  ? row?.linkedin.length > 26
+                    ? row?.linkedin.substr(0, 26) + "..."
+                    : row?.linkedin
+                  : "-"}
+              </h3>
+            </div>
+          </Tooltip>
+        </TableCell> */}
+        <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
+          <Tooltip title={
+            linkedInUrl !== 'Not Available' ?
+              <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{linkedInUrl}</a>
+              : 'Not Available'
+          }>
+            <div
+              className="Set-dropdown-ofContactDetailList"
+              style={{ position: "relative" }}
+            >
+
+              <p className="email-in-accordian">
+                {row?.linkedin
+                  ? row?.linkedin.length > 28
+                    ? row?.linkedin.substr(28, 28) ||
+                    row?.linkedin.length > 20 + "..."
+                    : row?.linkedin
+                  : "Not Available"}
+              </p>
+            </div>
+          </Tooltip>
         </TableCell>
-        <TableCell component="th" scope="row">
-          <p className="People-revenue-range">
-            {row?.revenue_range ? row?.revenue_range : "-"}
-          </p>
-        </TableCell>
-        <TableCell align="left">
+        <TableCell align="left" className="cursor-pointer">
           <Tooltip title={row?.email ? row?.email : "Not Available"}>
             <div className="Suspect-table-data">
               <h3 className="industry-sector-table">
@@ -116,12 +144,22 @@ function Row({ row, selected, onSelect }) {
           align="left"
           className="table-cell-of-contact-details-dropdown-th-prospect"
         >
-          {row?.source ? row.source : "-"}
+          <Tooltip title={row?.comments}>
+            {row?.comments
+              ? row?.comments.length > 28
+                ? row?.comments.substr(28, 28) ||
+                row?.comments.length > 20 + "..."
+                : row?.comments
+              : "-"}
+          </Tooltip>
         </TableCell>
         <TableCell align="left" className="Num-ofemployeess-data">
-          {row?.num_employees ? row.num_employees : "-"}
+          <Tooltip Tooltip={row?.source_description}
+          >
+            {row?.source_description ? row.source_description : "-"}
+          </Tooltip>
         </TableCell>
-        <TableCell className="Peoples-org_permalink" align="left">
+        {/* <TableCell className="Peoples-org_permalink" align="left">
           <Tooltip
             title={row?.org_permalink ? row?.org_permalink : "Not Available"}
           >
@@ -153,7 +191,6 @@ function Row({ row, selected, onSelect }) {
                 : "-"}
             </div>
           </Tooltip>
-          {/* {row?.country ? row.country : "-"} */}
         </TableCell>
         <TableCell
           align="left"
@@ -169,7 +206,7 @@ function Row({ row, selected, onSelect }) {
                 : row?.city
               : "-"}
           </Tooltip>
-        </TableCell>
+        </TableCell> */}
       </>
     </TableRow>
   );
@@ -218,11 +255,10 @@ export default function PeopleRecords({ rowData }) {
     const option = {
       method: "GET",
       headers: {
-        "access-control-allow-origin": "*",
-        "content-type": "application/json",
+        "content-type": "plain/text",
       },
       // url: `${APIUrlFour()}v1/org_validation?limit=50&skip=0&org_id=${org_id}`
-      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=0&org_id=${org_id}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=0&org_id=${org_id}`,
     };
     axios(option)
       .then((e) => {
@@ -291,10 +327,10 @@ export default function PeopleRecords({ rowData }) {
               <TableHead>
                 <TableRow className="table-row-ai-leads">
                   <TableCell className="Decisions-row-empty"></TableCell>
-                  <TableCell>Name & Title</TableCell>
-                  <TableCell>Legal Name </TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Organization </TableCell>
                   <TableCell align="left" className="DecisionstableJOIStrength">
-                    <p className="strengthdata">Revenue Range </p>
+                    <p className="strengthdata">Job Title</p>
                   </TableCell>
                   {/* <TableCell
                     align="left"
@@ -304,6 +340,9 @@ export default function PeopleRecords({ rowData }) {
                   </TableCell> */}
                   <TableCell align="left" className="People-linkdin-table-cell">
                     <p className="People-Linkedin">Linkedin</p>
+                  </TableCell>
+                  <TableCell align="left" className="People-linkdin-table-cell">
+                    <p className="People-Linkedin">Email</p>
                   </TableCell>
                   {/* <TableCell
                     align="left"
@@ -320,12 +359,12 @@ export default function PeopleRecords({ rowData }) {
                     <p className="People-phone-data"> Phone no</p>
                   </TableCell>
                   <TableCell align="left" className="">
-                    source
+                    Comments
                   </TableCell>
                   <TableCell align="left" className="industry-row-tableStatus">
-                    <p className="People-Employees-data">Num Employees</p>
+                    <p className="People-Employees-data">Source Description</p>
                   </TableCell>
-                  <TableCell align="left" className="Permalink-all-people">
+                  {/* <TableCell align="left" className="Permalink-all-people">
                     permalink
                   </TableCell>
                   <TableCell align="left" className="">
@@ -342,7 +381,7 @@ export default function PeopleRecords({ rowData }) {
                     className="prospects-row-tableDetails-cd"
                   >
                     <p className="people-city-data">city</p>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>

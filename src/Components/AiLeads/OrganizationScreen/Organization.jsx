@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Style.css";
 import "../../../Components/PeopleScreen/PeopleScreen.css";
 import Stack from "@mui/material/Stack";
@@ -41,13 +41,7 @@ const Organization = () => {
     });
     const userId = GetUserId();
     const [loading, setLoading] = React.useState();
-    const OrgAction = [
-        "outdated ",
-        "inaccurate ",
-        "missing ",
-        "format ",
-        "error",
-    ];
+    const [actionData, setActionData] = useState([]);
     const OrgStatus = ["pending", "verified", "updated", "notfound", "debatable"];
 
     const validations = () => {
@@ -85,7 +79,7 @@ const Organization = () => {
         }
         return true
     }
-    
+
     const handelAddOrg = () => {
         if (!validations()) return
         const data = {
@@ -255,6 +249,27 @@ const Organization = () => {
             })
         }
     }, [OrganizationData])
+
+    const actionFilters = () => {
+        const option = {
+            method: "GET",
+            headers: {
+                "content-type": "plain/text",
+            },
+            url: `${APIUrlFour()}/v1/get_status_list`,
+        };
+        axios(option)
+            .then((e) => {
+                const data = e?.data?.status_list;
+                setActionData(data);
+            })
+            .catch((err) => {
+
+            })
+    }
+    useEffect(() => {
+        actionFilters();
+    }, [])
     return (
         <>
             {loading ? <Loader /> : null}
@@ -511,10 +526,10 @@ const Organization = () => {
                                         displayEmpty
                                         inputProps={{ "aria-label": "Without label" }}
                                     >
-                                        <MenuItem disabled value="">
+                                        <MenuItem disabled value="" className="disable-menu-action">
                                             <em className="SelectAction-css"> Select Status</em>
                                         </MenuItem>
-                                        {OrgStatus?.map((item, index) => {
+                                        {actionData?.map((item, index) => {
                                             return (
                                                 <MenuItem key={index} value={item}>
                                                     {item}

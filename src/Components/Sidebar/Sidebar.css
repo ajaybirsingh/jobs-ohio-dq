@@ -63,6 +63,19 @@
   overflow-x: hidden;
 }
 
+.logout-button {
+  width: 100px;
+  height: 47px;
+  background: #DA291C !important;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 .all-sidebar-listitems .MuiList-padding.MuiList-padding {
   padding-top: 0px !important;
   padding-bottom: 0px !important;

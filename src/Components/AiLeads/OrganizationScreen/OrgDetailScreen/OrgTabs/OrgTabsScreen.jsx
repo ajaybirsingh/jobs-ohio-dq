@@ -51,11 +51,11 @@ export default function OrgTabsScreen() {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs className='Companydata' value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab
-                        label="Peoples " {...a11yProps(0)} />
+                        label="Peoples " {...a11yProps(0)} className='tab-peoples' />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                    <PeopleRecords/>
+                <PeopleRecords />
             </CustomTabPanel>
         </Box>
     );
