@@ -63,7 +63,8 @@ const Register = () => {
         }
         return true;
     };
-    const RegisterUser = () => {
+    const RegisterUser = (e) => {
+        e?.preventDefault();
         if (!validateInputs()) return;
         setLoading(true);
         const data = {
@@ -116,7 +117,7 @@ const Register = () => {
                             <div className="Register-heading">
                                 <h2>Sign up</h2>
                                 <form
-                                // onSubmit={loggingIn}
+                                    onSubmit={RegisterUser}
                                 >
                                     <div className="Register-flex-container">
                                         <div className="Register-alliputs">
@@ -231,7 +232,7 @@ const Register = () => {
                                     <div className="Register-button-section">
                                         <p style={{ cursor: 'pointer' }}>Already have account? <span onClick={() => navigate(LOGIN)}>Login</span> </p>
 
-                                        <button type="button" onClick={RegisterUser}>
+                                        <button type="submit" onClick={RegisterUser}>
                                             Sign up
                                         </button>
                                     </div>
