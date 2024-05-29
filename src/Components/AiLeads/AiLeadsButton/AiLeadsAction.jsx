@@ -4,11 +4,15 @@ import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import AddIcon from '@mui/icons-material/Add';
-import { GetLeadsFilterStatsData, GetStatsData } from "../../../Utils/Utils";
+import { GetLeadsFilterStatsData, GetOrganizationCount, GetPeopleCount, GetStatsData } from "../../../Utils/Utils";
 import { useNavigate } from "react-router-dom";
 import { ORGANIZATION_RECORDS, PEOPLE_RECORDS } from "../../../Utils/Constants";
 export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigger, isSalesForceTrigger, setIsDecisionMakerExcel, statsCount, statsCountDecisionMaker }) {
   const navigate = useNavigate();
+  const orgCount = GetOrganizationCount();
+  const peopleCount = GetPeopleCount();
+  const formattedOrgCount = new Intl.NumberFormat().format(orgCount);
+  const formattedPeopleCount = new Intl.NumberFormat().format(peopleCount);
   const StyledMenu = styled((props) => (
     <Menu
       elevation={0}
@@ -87,7 +91,7 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
             currentLeadsLength && !statsCount && location === "/organization" ?
               <>
                 <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
-                <p>Out of {location === "/organization" || "/organization" ? statsData?.generated_leads.toLocaleString() || '-' : null}</p>
+                <p>Out of {location === "/organization" || "/organization" ? formattedOrgCount || '-' : null}</p>
               </> : null
           }
           {
@@ -101,7 +105,7 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
             currentLeadsLength && !statsCount && location === "/people" && !statsCountDecisionMaker ?
               <>
                 <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
-                <p>Out of {location === "/people" ? statsData?.decisionmaker_count.toLocaleString() || '-' : null}</p>
+                <p>Out of {location === "/people" ? formattedPeopleCount || '-' : null}</p>
               </> : null
           }
           {

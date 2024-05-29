@@ -62,6 +62,18 @@ export const SetUserId = (item, value) => {
 export const GetUserId = () => {
     return localStorage.getItem('userId') || null
 }
+export const SetOrganizationCount = (item, value) => {
+    localStorage.setItem(item, JSON.stringify(value))
+}
+export const GetOrganizationCount = () => {
+    return localStorage.getItem('orgCount') || null
+}
+export const SetPeopleCount = (item, value) => {
+    localStorage.setItem(item, JSON.stringify(value))
+}
+export const GetPeopleCount = () => {
+    return localStorage.getItem('peoCount') || null;
+}
 // export const ClientId = () => {
 //     return '0oaez4a6k38GCrsto5d7'
 // }

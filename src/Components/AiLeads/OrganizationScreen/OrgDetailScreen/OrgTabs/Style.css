@@ -68,3 +68,21 @@
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
+
+.add-people-button-details-screen {
+  width: 100px;
+  height: 47px;
+  background: #DA291C !important;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.box-add-people-button {
+  display: flex;
+  justify-content: space-between;
+}

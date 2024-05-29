@@ -21,6 +21,7 @@ import { APIUrlFour, APIUrlOne, GetUserId } from "../../Utils/Utils";
 import CloseIcon from '@mui/icons-material/Close';
 import { AI_DECISION_MAKER } from "../../Utils/Constants";
 import moment from "moment/moment";
+import dayjs from "dayjs";
 export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -47,9 +48,10 @@ export default function PeopleScreen() {
     PositionEndDate: "",
     Status: "",
     UserId: "",
+    uuid: ""
   });
-
-  const formatedDate = moment(peopleData?.position_end_date).format("MM/DD/YYYY");
+  const [dropDownData, setDropDownData] = React.useState([]);
+  const formatedDate = moment(peopleData?.position_end_date).format("YYYY-MM-DD");
   React.useEffect(() => {
     if (peopleData?.first_name) {
       setPeopleDetails({
@@ -68,7 +70,32 @@ export default function PeopleScreen() {
         Orglinkedin: peopleData?.organization_linkedin_username,
         PositionEndDate: formatedDate,
         Comments: peopleData?.comments,
-        validation_status: peopleData?.status
+        Status: peopleData?.validation_status,
+        uuid: peopleData?.uuid
+      })
+    }
+  }, [peopleData])
+
+  React.useEffect(() => {
+    if (peopleData?.uuid) {
+      setPeopleDetails({
+        // firstName: peopleData?.first_name,
+        // lastName: peopleData?.last_name,
+        // email: peopleData?.email,
+        // PhoneNo: peopleData?.phone_no,
+        // Linkedin: peopleData?.linkedin,
+        // JobTitle: peopleData?.primary_job_title,
+        Oraganization: peopleData?.legal_name,
+        // SourceDescription: peopleData?.source_description,
+        // City: peopleData?.city,
+        // State: peopleData?.state,
+        // Country: peopleData?.country,
+        // Zip: peopleData?.zip_code,
+        Orglinkedin: peopleData?.linkedin,
+        // PositionEndDate: formatedDate,
+        // Comments: peopleData?.comments,
+        // Status: peopleData?.validation_status,
+        uuid: peopleData?.uuid
       })
     }
   }, [peopleData])
@@ -147,36 +174,67 @@ export default function PeopleScreen() {
   const handelApplyRecords = () => {
     if (!validateFields()) return;
     setLoading(true);
-    const data = {
+    const data =
+    // {
+    //   records: [
+    //     {
+    //       person_id: null,
+    //       user_id: userId,
+    //       first_name: PeopleDetails?.firstName,
+    //       last_name: PeopleDetails?.lastName,
+    //       email: PeopleDetails?.email,
+    //       phone_no: PeopleDetails?.PhoneNo,
+    //       linkedin: PeopleDetails?.Linkedin,
+    //       primary_job_title: PeopleDetails?.JobTitle,
+    //       primary_organization: selectedOrganization?.org_name,
+    //       source_description: PeopleDetails?.SourceDescription,
+    //       city: PeopleDetails?.City,
+    //       state: PeopleDetails?.State,
+    //       country: PeopleDetails?.Country,
+    //       zip_code: PeopleDetails?.Zip,
+    //       comments: PeopleDetails?.Comments,
+    //       organization_linkedin_username: PeopleDetails?.Orglinkedin,
+    //       position_end_date: PeopleDetails?.PositionEndDate,
+    //       org_permalink: "",
+    //       middle_name: "",
+    //       updated_at: new Date().toISOString().slice(0, 10),
+    //       name: "",
+    //       source: "",
+    //       validation_status: PeopleDetails?.Status,
+    //       action: "",
+    //     },
+    //   ],
+    // };
+    {
       records: [
         {
-          person_id: null,
-          user_id: userId,
+          uuid: null,
           first_name: PeopleDetails?.firstName,
           last_name: PeopleDetails?.lastName,
-          email: PeopleDetails?.email,
-          phone_no: PeopleDetails?.PhoneNo,
           linkedin: PeopleDetails?.Linkedin,
           primary_job_title: PeopleDetails?.JobTitle,
-          primary_organization: selectedOrganization?.org_name,
-          source_description: PeopleDetails?.SourceDescription,
+          primary_organization: selectedOrganization?.org_name || PeopleDetails?.Oraganization,
+          organization_linkedin_username: PeopleDetails?.Orglinkedin,
+          person_id: null,
+          org_permalink: "",
+          middle_name: "",
+          email: PeopleDetails?.email,
+          phone_no: PeopleDetails?.PhoneNo,
           city: PeopleDetails?.City,
           state: PeopleDetails?.State,
           country: PeopleDetails?.Country,
           zip_code: PeopleDetails?.Zip,
-          comments: PeopleDetails?.Comments,
-          organization_linkedin_username: PeopleDetails?.Orglinkedin,
           position_end_date: PeopleDetails?.PositionEndDate,
-          org_permalink: "",
-          middle_name: "",
-          updated_at: new Date().toISOString().slice(0, 10),
-          name: "",
+          comments: PeopleDetails?.Comments,
           source: "",
+          source_description: PeopleDetails?.SourceDescription,
           validation_status: PeopleDetails?.Status,
           action: "",
-        },
-      ],
-    };
+          user_id: userId,
+          updated_at: new Date().toISOString().slice(0, 10)
+        }
+      ]
+    }
 
     const option = {
       method: "POST",
@@ -222,14 +280,46 @@ export default function PeopleScreen() {
   const handleEditRecords = () => {
     if (!validateFields()) return;
     setLoading(true);
-    const data = {
+    const data =
+    // {
+    //   records: [
+    //     {
+    //       first_name: PeopleDetails?.firstName,
+    //       last_name: PeopleDetails?.lastName,
+    //       linkedin: PeopleDetails?.Linkedin,
+    //       primary_job_title: PeopleDetails?.JobTitle,
+    //       primary_organization: selectedOrganization?.org_name ? selectedOrganization?.org_name : "",
+    //       organization_linkedin_username: PeopleDetails?.Orglinkedin ? PeopleDetails?.Orglinkedin : "",
+    //       person_id: peopleData?.person_id,
+    //       org_permalink: "",
+    //       middle_name: "",
+    //       email: PeopleDetails?.email,
+    //       phone_no: PeopleDetails?.PhoneNo,
+    //       city: PeopleDetails?.City,
+    //       state: PeopleDetails?.State ? PeopleDetails?.State : "",
+    //       country: PeopleDetails?.Country,
+    //       zip_code: PeopleDetails?.Zip,
+    //       position_end_date: PeopleDetails?.PositionEndDate,
+    //       comments: PeopleDetails?.Comments,
+    //       source: "",
+    //       source_description: PeopleDetails?.SourceDescription,
+    //       validation_status: PeopleDetails?.Status,
+    //       action: "",
+    //       user_id: userId,
+    //       updated_at: new Date().toISOString().slice(0, 10),
+    //     }
+    //   ],
+    // };
+
+    {
       records: [
         {
+          uuid: PeopleDetails?.uuid,
           first_name: PeopleDetails?.firstName,
           last_name: PeopleDetails?.lastName,
           linkedin: PeopleDetails?.Linkedin,
           primary_job_title: PeopleDetails?.JobTitle,
-          primary_organization: selectedOrganization?.org_name ? selectedOrganization?.org_name : "",
+          primary_organization: PeopleDetails?.Oraganization,
           organization_linkedin_username: PeopleDetails?.Orglinkedin ? PeopleDetails?.Orglinkedin : "",
           person_id: peopleData?.person_id,
           org_permalink: "",
@@ -247,11 +337,10 @@ export default function PeopleScreen() {
           validation_status: PeopleDetails?.Status,
           action: "",
           user_id: userId,
-          updated_at: new Date().toISOString().slice(0, 10),
+          updated_at: new Date().toISOString().slice(0, 10)
         }
-      ],
-    };
-
+      ]
+    }
     const option = {
       method: "POST",
       headers: {
@@ -325,7 +414,7 @@ export default function PeopleScreen() {
     setLoading(true)
     const data = { org_name: PeopleDetails.Oraganization };
     axios
-      .post(`${APIUrlOne()}/v1/org_search`, data, {
+      .post(`${APIUrlFour()}/v1/org_search`, data, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -376,24 +465,54 @@ export default function PeopleScreen() {
 
   const actionFilters = () => {
     const option = {
-        method: "GET",
-        headers: {
-            "content-type": "plain/text",
-        },
-        url: `${APIUrlFour()}/v1/get_status_list`,
+      method: "GET",
+      headers: {
+        "content-type": "plain/text",
+      },
+      url: `${APIUrlFour()}/v1/get_status_list`,
     };
     axios(option)
-        .then((e) => {
-            const data = e?.data?.status_list;
-            setActionData(data);
-        })
-        .catch((err) => {
+      .then((e) => {
+        const data = e?.data?.status_list;
+        setActionData(data);
+      })
+      .catch((err) => {
 
-        })
-}
-React.useEffect(() => {
+      })
+  }
+  React.useEffect(() => {
     actionFilters();
-}, [])
+  }, [])
+
+  const DropDownsData = () => {
+    const option = {
+      method: "GET",
+      headers: {
+        "access-control-allow-origin": "*",
+        "content-type": "application/json",
+      },
+      url: `${APIUrlOne()}/v1/org_filters`,
+    };
+    axios(option)
+      .then((e) => {
+        if (e?.status === 200) {
+          setDropDownData(e?.data?.data);
+        }
+      })
+      .catch((err) => {
+
+      })
+  }
+  React.useEffect(() => {
+    DropDownsData();
+  }, [])
+
+  const states = PeopleDetails?.Country === 'United States' ? dropDownData?.state : dropDownData?.ca_states;
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
   return (
     <>
       {loading ? <Loader /> : null}
@@ -642,11 +761,10 @@ React.useEffect(() => {
               </div>
             </div> */}
             <div className="Pepole-flex-container">
-              <div className="People-child-container">
+              {/* <div className="People-child-container">
                 <label className="PeopleScreen-lables" htmlFor="">
                   City
                 </label>
-                {/* <span className="PeopleMandatoryfields">*</span> */}
 
                 <LabelInput
                   onChange={(e) => {
@@ -658,8 +776,40 @@ React.useEffect(() => {
                   }}
                   value={PeopleDetails?.City}
                 />
-              </div>
+              </div> */}
               <div className="People-child-container">
+                <label htmlFor="" className="PeopleScreen-lables">
+                  Country
+                </label>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <Select
+                    placeholder="Select Country"
+                    className="AddOrg-dropdown"
+                    onChange={(e) => {
+                      const inputvalue = e?.target?.value;
+                      setPeopleDetails({
+                        ...PeopleDetails,
+                        Country: inputvalue,
+                      });
+                    }}
+                    value={PeopleDetails?.Country}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem disabled value="" className="disable-menu-action">
+                      <em className="SelectAction-css"> Select Country</em>
+                    </MenuItem>
+                    {dropDownData?.country?.map((item, index) => {
+                      return (
+                        <MenuItem key={index} value={item}>
+                          {item}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </div>
+              {/* <div className="People-child-container">
                 <label htmlFor="" className="PeopleScreen-lables">
                   State
                 </label>
@@ -673,23 +823,57 @@ React.useEffect(() => {
                   }}
                   value={PeopleDetails?.State}
                 />
+              </div> */}
+              <div className="People-child-container">
+                <label className="PeopleScreen-lables" htmlFor="">
+                  State
+                </label>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <Select
+                    placeholder="Select State"
+                    className="AddOrg-dropdown"
+                    onChange={(e) => {
+                      const inputvalue = e?.target?.value;
+                      setPeopleDetails({
+                        ...PeopleDetails,
+                        State: inputvalue,
+                      });
+                    }}
+                    value={PeopleDetails?.State}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem disabled value="" className="disable-menu-action">
+                      <em className="SelectAction-css"> Select State</em>
+                    </MenuItem>
+
+                    {states?.map((item, index) => {
+                      return (
+                        <MenuItem key={index} value={item}>
+                          {item}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
               </div>
             </div>
 
             <div className="Pepole-flex-container">
               <div className="People-child-container">
-                <label htmlFor="" className="PeopleScreen-lables">
-                  Country
+                <label className="PeopleScreen-lables" htmlFor="">
+                  City
                 </label>
+
                 <LabelInput
                   onChange={(e) => {
                     const inputvalue = e?.target?.value;
                     setPeopleDetails({
                       ...PeopleDetails,
-                      Country: inputvalue,
+                      City: inputvalue,
                     });
                   }}
-                  value={PeopleDetails?.Country}
+                  value={PeopleDetails?.City}
                 />
               </div>
               <div className="People-child-container">
@@ -782,7 +966,9 @@ React.useEffect(() => {
                     className="Position-end-date"
                     // value={dayjs(unixTimestamp)}
                     // disabled={prefilledData?.last_funding_at_from || prefilledData}
+
                     onChange={dateFromHandler}
+                    value={dayjs(PeopleDetails?.PositionEndDate)}
                     renderInput={(params) => (
                       <TextField placeholder="" {...params} />
                     )}

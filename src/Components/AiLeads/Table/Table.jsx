@@ -19,6 +19,7 @@ import {
   APIUrlThree,
   APIUrlTwo,
   GetUserId,
+  SetOrganizationCount,
 } from "../../../Utils/Utils";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as InfiniteScrollMain from "react-infinite-scroller";
@@ -556,6 +557,7 @@ export default function AiLeadsTable({
     axios(option)
       .then((e) => {
         setLoading(false);
+        SetOrganizationCount('orgCount',e?.data?.count);
         const comingData = e?.data?.data;
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);

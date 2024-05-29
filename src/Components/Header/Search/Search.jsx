@@ -10,7 +10,7 @@ export default function HeaderSearch({ headerSearchData, setheaderSearchData, re
     const navigate = useNavigate();
     const handelselectdata = (item) => {
         setheaderSearchData(item?.org_name);
-        navigate(`/companyprofilescreen`, { state: { data: item, isComponyScreen: window.location.pathname === '/companyprofilescreen' } });
+        // navigate(`/companyprofilescreen`, { state: { data: item, isComponyScreen: window.location.pathname === '/companyprofilescreen' } });
         // if (window.location.pathname === '/companyprofilescreen') {
         //     window.location.reload();
         // }

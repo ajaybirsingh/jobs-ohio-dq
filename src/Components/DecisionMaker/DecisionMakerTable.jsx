@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import decisionMakerImage from "../../Assets/Cloudfigma.svg";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-import { APIUrlFour, APIUrlTwo, GetUserId } from "../../Utils/Utils";
+import { APIUrlFour, APIUrlTwo, GetUserId, SetPeopleCount } from "../../Utils/Utils";
 import { toast } from "react-toastify";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as XLSX from 'xlsx';
@@ -282,6 +282,7 @@ export default function DecisionMakerTable({
     axios(option)
       .then((response) => {
         setLoading(false);
+        SetPeopleCount('peoCount', response?.data?.count);
         const comingData = response?.data?.data;
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);

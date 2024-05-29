@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DecisionMaker from '../../../../../Pages/AiDecisionMakers/Index';
 import PeopleRecords from '../PeopleRecords/PeopleRecords';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { PEOPLE_RECORDS } from '../../../../../Utils/Constants';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
     return (
@@ -37,8 +39,11 @@ function a11yProps(index) {
     };
 }
 export default function OrgTabsScreen() {
+    const navigate = useNavigate();
     const [value, setValue] = React.useState(0);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const location = useLocation();
+    const orgData = location?.state;
     const open = Boolean(anchorEl);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -46,13 +51,22 @@ export default function OrgTabsScreen() {
     const handleMenuDownloadExcel = () => {
         setAnchorEl(null);
     }
+    const addPeople = (orgData) => {
+        navigate(PEOPLE_RECORDS, {state: orgData})
+    }
     return (
         <Box className="OrgTabs_main-box" sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="box-add-people-button">
+
                 <Tabs className='Companydata' value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab
                         label="Peoples " {...a11yProps(0)} className='tab-peoples' />
                 </Tabs>
+
+                <button className='add-people-button-details-screen' onClick={() => addPeople(orgData)}>
+                    add people
+                </button>
+
             </Box>
             <CustomTabPanel value={value} index={0}>
                 <PeopleRecords />

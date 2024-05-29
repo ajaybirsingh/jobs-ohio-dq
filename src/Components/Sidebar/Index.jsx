@@ -37,7 +37,7 @@ import {
   ORG_DETAILS,
 } from "../../Utils/Constants";
 import { useOktaAuth } from "@okta/okta-react";
-import { APIUrlOne, GetOktaAuthData, GetUserId } from "../../Utils/Utils";
+import { APIUrlFour, APIUrlOne, GetOktaAuthData, GetUserId } from "../../Utils/Utils";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Loader from "../Loader/Loader";
@@ -184,7 +184,7 @@ export default function Sidebar({
     };
 
     axios
-      .post(`${APIUrlOne()}/v1/org_search`, data, {
+      .post(`${APIUrlFour()}/v1/org_search`, data, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
