@@ -25,7 +25,7 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
     ravenue: "",
     jScore: "",
   });
-  const [actionFilterData,setActionFilterData] = React.useState([]);
+  const [actionFilterData, setActionFilterData] = React.useState([]);
   const LeadsFilters = () => {
     const option = {
       method: "GET",

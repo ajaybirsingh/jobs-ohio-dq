@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import PeopleRecords from '../PeopleRecords/PeopleRecords';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PEOPLE_RECORDS } from '../../../../../Utils/Constants';
+import AddIcon from '@mui/icons-material/Add';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
     return (
@@ -37,7 +38,7 @@ function a11yProps(index) {
         'aria-controls': `simple-tabpanel-${index}`,
     };
 }
-export default function OrgTabsScreen({organizationData}) {
+export default function OrgTabsScreen({ organizationData }) {
     const navigate = useNavigate();
     const [value, setValue] = React.useState(0);
     const location = useLocation();
@@ -46,7 +47,7 @@ export default function OrgTabsScreen({organizationData}) {
         setValue(newValue);
     };
     const addPeople = (orgData) => {
-        navigate(PEOPLE_RECORDS, {state: orgData})
+        navigate(PEOPLE_RECORDS, { state: orgData })
     }
     return (
         <Box className="OrgTabs_main-box" sx={{ width: '100%' }}>
@@ -58,8 +59,11 @@ export default function OrgTabsScreen({organizationData}) {
                 </Tabs>
 
                 <button className='add-people-button-details-screen' onClick={() => addPeople(orgData)}>
-                    add people
+                    Add people
+                    <AddIcon className='add-people-icon' />
                 </button>
+
+
 
             </Box>
             <CustomTabPanel value={value} index={0}>

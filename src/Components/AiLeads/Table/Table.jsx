@@ -474,8 +474,7 @@ export default function AiLeadsTable({
       headers: {
         "content-type": "plain/text",
       },
-      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=${(page - 1) * 50
-        }`,
+      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=${(page - 1) * 50}&validation_filter=pending`,
     };
     axios(option)
       .then((e) => {

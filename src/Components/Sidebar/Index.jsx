@@ -324,7 +324,7 @@ const userIdWithoutQuotes = removeQuotes(userId);
             <MenuIcon />
           </IconButton>
           {
-            userIdWithoutQuotes ? <button className="logout-button" onClick={() => logoutHandler()}>logout</button> : null
+            userIdWithoutQuotes ? <button className="logout-button" onClick={() => logoutHandler()}>Logout</button> : null
           }
 
         </Toolbar>

@@ -15,7 +15,7 @@ const AILeads = () => {
   const [tableCommingData, setTableCommingData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [hasMore, setHasMore] = React.useState(false);
-  const [selectedData, setSelectedData] = React.useState([]);
+  const [selectedData, setSelectedData] = React.useState(['pending']);
   const [istableDataFilter, setIstableDataFilter] = React.useState(false);
   const [currentLeadsLength, setCurrentLeadsLength] = React.useState('');
   const [isDecisionMakerExcel, setIsDecisionMakerExcel] = useState(false);

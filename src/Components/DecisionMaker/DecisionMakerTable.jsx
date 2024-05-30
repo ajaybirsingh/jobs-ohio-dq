@@ -109,13 +109,13 @@ const userIdWithoutQuotes = removeQuotes(userId);
                   : "Decision-maker-user-noborder create-name-img"
               }
             >
-              <img
+              {/* <img
                 className={
                   row?.suspect_status === null ? "hide-image" : "decisionMakerImageAi-Decisionmaker"
                 }
                 src={decisionMakerImage}
                 alt=""
-              />
+              /> */}
               <p className="letter-heading">{row?.first_name ? row?.first_name?.split(" ")?.find(item => !item.includes('('))?.charAt(0) : ""}{row?.last_name ? row?.last_name?.split(" ")?.find(item => !item.includes('('))?.charAt(0) : ""}</p>
             </div>
           </TableCell>

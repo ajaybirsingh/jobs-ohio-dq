@@ -26,7 +26,7 @@ const Organization = () => {
         linkedin: "",
         website_url: "",
         description: "",
-        categories: "",
+        categories: [],
         city: "",
         state: "",
         country: "",
@@ -341,7 +341,7 @@ const Organization = () => {
                                     value={Organization?.phoneNumber}
                                 />
                             </div>
-                           
+
                             <div className="People-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Num Employees
@@ -376,7 +376,7 @@ const Organization = () => {
                             </div>
                         </div>
                         <div className="AddOrganization-flex-container">
-                            
+
                             <div className="People-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Revenue Range
@@ -426,9 +426,9 @@ const Organization = () => {
                             </div>
                         </div>
                         <div className="AddOrganization-flex-container">
-                            
+
                             <div className="People-child-container">
-                                <label htmlFor="" className="PeopleScreen-lables">
+                                {/* <label htmlFor="" className="PeopleScreen-lables">
                                     Categories
                                 </label>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -457,8 +457,37 @@ const Organization = () => {
                                             );
                                         })}
                                     </Select>
+                                </FormControl> */}
+                                <label htmlFor="" className="PeopleScreen-lables">
+                                    Categories
+                                </label>
+                                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                    <Select
+                                        multiple
+                                        placeholder="Select Categories"
+                                        className="AddOrg-dropdown"
+                                        onChange={(e) => {
+                                            const inputvalue = e?.target?.value;
+                                            setOrganization({
+                                                ...Organization,
+                                                categories: inputvalue,
+                                            });
+                                        }}
+                                        value={Organization?.categories}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                    >
+                                        <MenuItem disabled value="" className="disable-menu-action">
+                                            <em className="SelectAction-css">Select Categories</em>
+                                        </MenuItem>
+                                        {dropDownData?.categories?.map((item, index) => (
+                                            <MenuItem key={index} value={item}>
+                                                {item}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
                                 </FormControl>
-                                
+
                             </div>
                             <div className="uploderinput">
                                 <label className="PeopleScreen-lables" htmlFor="">
@@ -477,7 +506,7 @@ const Organization = () => {
                             </div>
                         </div>
                         <div className="AddOrganization-flex-container">
-                           
+
                             <div className="People-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Country
@@ -510,7 +539,7 @@ const Organization = () => {
                                     </Select>
                                 </FormControl>
                             </div>
-                            
+
                             <div className="People-child-container">
                                 <label className="PeopleScreen-lables" htmlFor="">
                                     State
@@ -561,7 +590,7 @@ const Organization = () => {
                                     value={Organization?.city}
                                 />
                             </div>
-                            
+
                             <div className="AddOrganization-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Description
@@ -666,14 +695,14 @@ const Organization = () => {
                                     />
                                 </div>
                             </div>
-                            
+
 
                         </div>
                         <div className="Pepole-flex-container">
 
 
                         </div>
-                        
+
                         <div className="SUBMITbutton-div">
                             <Stack spacing={2} direction="row">
                                 {OrganizationData ? <Button
