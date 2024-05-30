@@ -6,7 +6,7 @@ import DecisionMakerTable from "../../Components/DecisionMaker/DecisionMakerTabl
 import DecisionmakersFilter from "../../Components/DecisionMaker/DecisionFilter/Index";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
+import { APIUrlFour } from "../../Utils/Utils";
 import Loader from "../../Components/Loader/Loader";
 
 const DecisionMaker = () => {
@@ -103,7 +103,6 @@ const DecisionMaker = () => {
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      // url: `${APIUrlOne()}/v1/apply_people_filter?limit=50&skip=${skip ? skip : 0}`,
       url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&validation_filter=${selectedData}`,
       data: JSON.stringify(data),
     };

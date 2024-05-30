@@ -30,7 +30,14 @@ function Row({ row }) {
   const EditPeople = (row) => {
     navigate(PEOPLE_RECORDS, { state: row })
   }
-  const userId = GetUserId();
+  const removeQuotes = (str) => {
+    if (str.startsWith('"') && str.endsWith('"')) {
+        return str.slice(1, -1);
+    }
+    return str;
+};
+const userId = GetUserId();
+const userIdWithoutQuotes = removeQuotes(userId);
   const [deleteData, setDeleteData] = React.useState('');
   const DeletePeople = (row) => {
     setDeleteData(row)
@@ -56,7 +63,7 @@ function Row({ row }) {
       records: [
         {
           record_id: "0",
-          user_id: userId
+          user_id: userIdWithoutQuotes
         }
       ]
       // }

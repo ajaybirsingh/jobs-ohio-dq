@@ -5,7 +5,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import DecisionMaker from '../../../../../Pages/AiDecisionMakers/Index';
 import PeopleRecords from '../PeopleRecords/PeopleRecords';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PEOPLE_RECORDS } from '../../../../../Utils/Constants';
@@ -38,19 +37,14 @@ function a11yProps(index) {
         'aria-controls': `simple-tabpanel-${index}`,
     };
 }
-export default function OrgTabsScreen() {
+export default function OrgTabsScreen({organizationData}) {
     const navigate = useNavigate();
     const [value, setValue] = React.useState(0);
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const location = useLocation();
-    const orgData = location?.state;
-    const open = Boolean(anchorEl);
+    const orgData = organizationData || location?.state;
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    const handleMenuDownloadExcel = () => {
-        setAnchorEl(null);
-    }
     const addPeople = (orgData) => {
         navigate(PEOPLE_RECORDS, {state: orgData})
     }
@@ -69,7 +63,7 @@ export default function OrgTabsScreen() {
 
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <PeopleRecords />
+                <PeopleRecords organizationData={organizationData} />
             </CustomTabPanel>
         </Box>
     );

@@ -22,7 +22,6 @@ import {
   SetOrganizationCount,
 } from "../../../Utils/Utils";
 import InfiniteScroll from "react-infinite-scroll-component";
-import * as InfiniteScrollMain from "react-infinite-scroller";
 import * as XLSX from "xlsx";
 import { useState } from "react";
 import EditIcon from '@mui/icons-material/Edit';
@@ -56,7 +55,16 @@ function Row({
   const [scrollPagination, setScrollPagination] = useState(false);
   const linkedInUrl = row?.linkedin ? row?.linkedin : 'Not Available';
   const websiteUrl = row?.website_url ? row?.website_url : 'Not Available';
+  
+
+  const removeQuotes = (str) => {
+    if (str.startsWith('"') && str.endsWith('"')) {
+      return str.slice(1, -1);
+    }
+    return str;
+  };
   const userId = GetUserId();
+  const userIdWithoutQuotes = removeQuotes(userId);
   const handleRightsidebar = (event) => {
     const data = {};
     // data.source_uid = Number(loggedInUserId);
@@ -148,7 +156,6 @@ function Row({
     setLoading(true);
 
     const tuples = childData?.map((item) => ({
-      // items: [Number(loggedInUserId), item.person_id],
     }));
     const data = { tuples };
     const options = {
@@ -210,10 +217,6 @@ function Row({
     }
   }, [pageInner]);
 
-  const isChecked = (id) => {
-    return selectedRows.some((info) => info.person_id === id);
-  };
-
   const pages = row.people_count / 50;
   const closeExpandHandler = () => {
     setInnerTAbleData([]);
@@ -254,44 +257,12 @@ function Row({
     if (!validateFields()) return
     setLoading(true);
     const data = {
-      // records: [
-      //   // {
-      //   //   org_id: deleteData.org_id,
-      //   //   user_id: null,
-      //   //   name: deleteData.name,
-      //   //   legal_name: deleteData.legal_name,
-      //   //   permalink: deleteData.permalink,
-      //   //   revenue_range: deleteData.revenue_range,
-      //   //   num_employees: deleteData.num_employees,
-      //   //   linkedin: deleteData.linkedin,
-      //   //   website_url: deleteData.website_url,
-      //   //   description: deleteData.description,
-      //   //   categories: deleteData.categories,
-      //   //   city: deleteData.city,
-      //   //   state: deleteData.state,
-      //   //   country: deleteData.country,
-      //   //   phone_number: deleteData.phone_number,
-      //   //   comments: modalTeaxtArea,
-      //   //   source: deleteData.source,
-      //   //   source_description: deleteData.source_description,
-      //   //   validation_status: deleteData.validation_status,
-      //   //   action: "Delete",
-      //   //   updated_at: new Date().toISOString().slice(0, 10),
-      //   // },
-      //   {
-      //     record_id: "4",
-      //     user_id: 0,
-      //   }
-      // ],
-
       records: [
         {
-          record_id: deleteData.org_id,
-          user_id: userId
+          record_id: "cdfdb91e-15d9-4803-9287-b3d6f1d845d6",
+          user_id: userIdWithoutQuotes
         }
       ]
-
-
     };
     const option = {
       method: "POST",
@@ -364,21 +335,6 @@ function Row({
               </h3>
             </Tooltip>
           </TableCell>
-          {/* <TableCell
-            align="left"
-            className="table-cell-of-contact-details-dropdown-th"
-          >
-            <div
-              className="Set-dropdown-ofIndustry"
-              style={{ position: "relative" }}
-            >
-              <div className="email-andrelative-other-info">
-                <div className="maked-component-of-dropdown-forai-leads">
-                  <IndustryDropdown row={row} />
-                </div>
-              </div>
-            </div>
-          </TableCell> */}
           <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }} onClick={() => clickHandler(row)}>
             <Tooltip title={
               linkedInUrl !== 'Not Available' ?
@@ -427,39 +383,6 @@ function Row({
 
           </div>
         </TableCell>
-        {/* <TableCell className="collapse-expand-main-header">
-          <Tooltip title={open ? "Collapse" : "Expand"}>
-            {open ? (
-              <IconButton
-                aria-label="expand row"
-                size="small"
-                onClick={() => closeExpandHandler()}
-                className="button-collapse-table-main"
-              >
-                <RemoveRoundedIcon className="icon-collapse-table" />
-              </IconButton>
-            ) : (
-              <IconButton
-                aria-label="expand row"
-                size="small"
-                onClick={() => {
-                  setInnerTAbleData([]);
-                  setHasMoreInner(false);
-                  setTimeout(() => {
-                    if (openRowId !== row?.org_id) {
-                      setLoading(true);
-                      setPageInner(1);
-                      onExpand(row?.org_id);
-                    }
-                  }, 0);
-                }}
-                className="button-collapse-table-main"
-              >
-                <AddIcon className="icon-collapse-table" />
-              </IconButton>
-            )}
-          </Tooltip>
-        </TableCell> */}
       </TableRow>
 
 

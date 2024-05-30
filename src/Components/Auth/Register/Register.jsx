@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Register.css";
 import { toast } from "react-toastify";
 import JobsLogo from "../../../Assets/JobsOhioLogo.jpeg";
@@ -10,8 +10,6 @@ import { LOGIN } from "../../../Utils/Constants";
 import { useNavigate } from "react-router-dom";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-// import Loader from "../Loader/Loader";
-// import LabelInput from "../LabelInputFields/Index";
 const Register = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -185,21 +183,6 @@ const Register = () => {
                                                 }}
                                             />
                                         </div>
-                                        {/* <div className="Register-alliputs">
-                                            <label htmlFor="">
-                                                Role <span className="Registermandatoryfields">*</span>
-                                            </label>
-                                            <LabelInput
-                                                value={UserRegister.role}
-                                                onChange={(e) => {
-                                                    const inputvalue = e?.target?.value;
-                                                    setUserRegister({
-                                                        ...UserRegister,
-                                                        role: inputvalue,
-                                                    });
-                                                }}
-                                            />
-                                        </div> */}
                                     </div>
                                     <div className="Register-flex-container">
 

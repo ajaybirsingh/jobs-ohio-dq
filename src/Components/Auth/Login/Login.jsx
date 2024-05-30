@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import "./Login.css";
 import { useOktaAuth } from "@okta/okta-react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
     APIUrlFour,
@@ -11,7 +11,6 @@ import {
 import axios from "axios";
 import Loader from "../../Loader/Loader";
 import JobsLogo from "../../../Assets/JobsOhioLogo.jpeg";
-import { authClient } from "../../../Utils/Common";
 import LabelInput from "../../LabelInputFields/Index";
 import { ORGANIZATION, REGISTER } from "../../../Utils/Constants";
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -81,7 +80,6 @@ const Login = () => {
                 setLoading(false);
             });
     };
-    const loggingOut = async () => auth.oktaAuth.signOut();
     return (
         <>
             {loading ? <Loader /> : null}

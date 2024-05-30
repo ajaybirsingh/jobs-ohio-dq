@@ -79,22 +79,8 @@ export default function PeopleScreen() {
   React.useEffect(() => {
     if (peopleData?.uuid) {
       setPeopleDetails({
-        // firstName: peopleData?.first_name,
-        // lastName: peopleData?.last_name,
-        // email: peopleData?.email,
-        // PhoneNo: peopleData?.phone_no,
-        // Linkedin: peopleData?.linkedin,
-        // JobTitle: peopleData?.primary_job_title,
         Oraganization: peopleData?.legal_name,
-        // SourceDescription: peopleData?.source_description,
-        // City: peopleData?.city,
-        // State: peopleData?.state,
-        // Country: peopleData?.country,
-        // Zip: peopleData?.zip_code,
         Orglinkedin: peopleData?.linkedin,
-        // PositionEndDate: formatedDate,
-        // Comments: peopleData?.comments,
-        // Status: peopleData?.validation_status,
         uuid: peopleData?.uuid
       })
     }
@@ -134,11 +120,6 @@ export default function PeopleScreen() {
     800: "#303740",
     900: "#1C2025",
   };
-
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  function isValidEmail(email) {
-    return emailRegex.test(email);
-  }
   const validateFields = () => {
     if (!PeopleDetails?.firstName || PeopleDetails?.firstName?.trim() === "") {
       toast.error("Please Enter First Name");
@@ -156,10 +137,6 @@ export default function PeopleScreen() {
       toast.error("Please Enter JobTitle");
       return false;
     }
-    // if (!selectedOrganization?.org_name || !PeopleDetails?.Oraganization) {
-    //   toast.error("Please Select Organization");
-    //   return false;
-    // }
     if (!selectedOrganization?.org_name && !PeopleDetails?.Oraganization) {
       toast.error("Please Select Organization");
       return false;
@@ -170,41 +147,18 @@ export default function PeopleScreen() {
     }
     return true;
   };
-  const userId = GetUserId();
+  const removeQuotes = (str) => {
+    if (str.startsWith('"') && str.endsWith('"')) {
+        return str.slice(1, -1);
+    }
+    return str;
+};
+const userId = GetUserId();
+const userIdWithoutQuotes = removeQuotes(userId);
   const handelApplyRecords = () => {
     if (!validateFields()) return;
     setLoading(true);
     const data =
-    // {
-    //   records: [
-    //     {
-    //       person_id: null,
-    //       user_id: userId,
-    //       first_name: PeopleDetails?.firstName,
-    //       last_name: PeopleDetails?.lastName,
-    //       email: PeopleDetails?.email,
-    //       phone_no: PeopleDetails?.PhoneNo,
-    //       linkedin: PeopleDetails?.Linkedin,
-    //       primary_job_title: PeopleDetails?.JobTitle,
-    //       primary_organization: selectedOrganization?.org_name,
-    //       source_description: PeopleDetails?.SourceDescription,
-    //       city: PeopleDetails?.City,
-    //       state: PeopleDetails?.State,
-    //       country: PeopleDetails?.Country,
-    //       zip_code: PeopleDetails?.Zip,
-    //       comments: PeopleDetails?.Comments,
-    //       organization_linkedin_username: PeopleDetails?.Orglinkedin,
-    //       position_end_date: PeopleDetails?.PositionEndDate,
-    //       org_permalink: "",
-    //       middle_name: "",
-    //       updated_at: new Date().toISOString().slice(0, 10),
-    //       name: "",
-    //       source: "",
-    //       validation_status: PeopleDetails?.Status,
-    //       action: "",
-    //     },
-    //   ],
-    // };
     {
       records: [
         {
@@ -230,7 +184,7 @@ export default function PeopleScreen() {
           source_description: PeopleDetails?.SourceDescription,
           validation_status: PeopleDetails?.Status,
           action: "",
-          user_id: userId,
+          user_id: userIdWithoutQuotes,
           updated_at: new Date().toISOString().slice(0, 10)
         }
       ]
@@ -281,36 +235,6 @@ export default function PeopleScreen() {
     if (!validateFields()) return;
     setLoading(true);
     const data =
-    // {
-    //   records: [
-    //     {
-    //       first_name: PeopleDetails?.firstName,
-    //       last_name: PeopleDetails?.lastName,
-    //       linkedin: PeopleDetails?.Linkedin,
-    //       primary_job_title: PeopleDetails?.JobTitle,
-    //       primary_organization: selectedOrganization?.org_name ? selectedOrganization?.org_name : "",
-    //       organization_linkedin_username: PeopleDetails?.Orglinkedin ? PeopleDetails?.Orglinkedin : "",
-    //       person_id: peopleData?.person_id,
-    //       org_permalink: "",
-    //       middle_name: "",
-    //       email: PeopleDetails?.email,
-    //       phone_no: PeopleDetails?.PhoneNo,
-    //       city: PeopleDetails?.City,
-    //       state: PeopleDetails?.State ? PeopleDetails?.State : "",
-    //       country: PeopleDetails?.Country,
-    //       zip_code: PeopleDetails?.Zip,
-    //       position_end_date: PeopleDetails?.PositionEndDate,
-    //       comments: PeopleDetails?.Comments,
-    //       source: "",
-    //       source_description: PeopleDetails?.SourceDescription,
-    //       validation_status: PeopleDetails?.Status,
-    //       action: "",
-    //       user_id: userId,
-    //       updated_at: new Date().toISOString().slice(0, 10),
-    //     }
-    //   ],
-    // };
-
     {
       records: [
         {
@@ -336,7 +260,7 @@ export default function PeopleScreen() {
           source_description: PeopleDetails?.SourceDescription,
           validation_status: PeopleDetails?.Status,
           action: "",
-          user_id: userId,
+          user_id: userIdWithoutQuotes,
           updated_at: new Date().toISOString().slice(0, 10)
         }
       ]
@@ -395,20 +319,6 @@ export default function PeopleScreen() {
       PositionEndDate: formattedDate,
     });
   };
-  const PeopleStatus = [
-    "pending",
-    "verified",
-    "updated",
-    "notfound",
-    "debatable",
-  ];
-  const PeopleAction = [
-    "outdated ",
-    "inaccurate ",
-    "missing ",
-    "format ",
-    "error",
-  ];
 
   const OrgSearch = () => {
     setLoading(true)
@@ -499,20 +409,14 @@ export default function PeopleScreen() {
           setDropDownData(e?.data?.data);
         }
       })
-      .catch((err) => {
+      .catch(() => {
 
       })
   }
   React.useEffect(() => {
     DropDownsData();
   }, [])
-
   const states = PeopleDetails?.Country === 'United States' ? dropDownData?.state : dropDownData?.ca_states;
-  const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-  ]
   return (
     <>
       {loading ? <Loader /> : null}
@@ -562,7 +466,6 @@ export default function PeopleScreen() {
                 <label htmlFor="" className="PeopleScreen-lables">
                   Email
                 </label>
-                {/* <span className="PeopleMandatoryfields">*</span> */}
                 <LabelInput
                   onChange={(e) => {
                     const inputvalue = e?.target?.value;
@@ -578,7 +481,6 @@ export default function PeopleScreen() {
                 <label htmlFor="" className="PeopleScreen-lables">
                   Phone No
                 </label>
-                {/* <span className="PeopleMandatoryfields">*</span> */}
                 <LabelInput
                   onChange={(e) => {
                     const inputvalue = e?.target?.value;
@@ -626,42 +528,6 @@ export default function PeopleScreen() {
                 />
               </div>
             </div>
-
-            {/* <div className="Pepole-flex-container">
-              <div className="People-child-container">
-                <label htmlFor="" className="PeopleScreen-lables">
-                  Organization
-                </label>
-                <span className="PeopleMandatoryfields">*</span>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      Oraganization: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.Oraganization}
-                />
-              </div>
-              <div className="uploderinput">
-                <label className="PeopleScreen-lables" htmlFor="">
-                  Source Description
-                </label>
-
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      SourceDescription: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.SourceDescription}
-                />
-              </div>
-            </div> */}
-
             <div className="Pepole-flex-container">
               <div className="SetCoustom-drop-down">
 
@@ -715,7 +581,6 @@ export default function PeopleScreen() {
                 <label className="PeopleScreen-lables" htmlFor="">
                   Source Description
                 </label>
-                {/* <span className="PeopleMandatoryfields">*</span> */}
                 <LabelInput
                   onChange={(e) => {
                     const inputvalue = e?.target?.value;
@@ -728,55 +593,9 @@ export default function PeopleScreen() {
                 />
               </div>
             </div>
-            {/* <div className="Pepole-flex-container">
-              <div className="People-child-container">
-                <label htmlFor="" className="PeopleScreen-lables">
-                  Address
-                </label>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      Address: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.Address}
-                />
-              </div>
-              <div className="People-child-container">
-                <label className="PeopleScreen-lables" htmlFor="">
-                  Street
-                </label>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      Street: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.Street}
-                />
-              </div>
-            </div> */}
+            
             <div className="Pepole-flex-container">
-              {/* <div className="People-child-container">
-                <label className="PeopleScreen-lables" htmlFor="">
-                  City
-                </label>
-
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      City: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.City}
-                />
-              </div> */}
+              
               <div className="People-child-container">
                 <label htmlFor="" className="PeopleScreen-lables">
                   Country
@@ -809,21 +628,7 @@ export default function PeopleScreen() {
                   </Select>
                 </FormControl>
               </div>
-              {/* <div className="People-child-container">
-                <label htmlFor="" className="PeopleScreen-lables">
-                  State
-                </label>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      State: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.State}
-                />
-              </div> */}
+              
               <div className="People-child-container">
                 <label className="PeopleScreen-lables" htmlFor="">
                   State
@@ -892,40 +697,6 @@ export default function PeopleScreen() {
                 />
               </div>
             </div>
-
-            {/* <div className="Pepole-flex-container">
-              <div className="People-child-container">
-                <label htmlFor="" className="PeopleScreen-lables">
-                  Facebook
-                </label>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      Address: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.Facebook}
-                />
-              </div>
-              <div className="People-child-container">
-                <label className="PeopleScreen-lables" htmlFor="">
-                  Twitter
-                </label>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      City: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.Twitter}
-                />
-              </div>
-            </div> */}
-
             <div className="Pepole-flex-container">
               <div className="People-child-container">
                 <label htmlFor="" className="PeopleScreen-lables">
@@ -942,21 +713,7 @@ export default function PeopleScreen() {
                   value={PeopleDetails?.Orglinkedin}
                 />
               </div>
-              {/* <div className="People-child-container">
-                <label className="PeopleScreen-lables" htmlFor="">
-                  Died On
-                </label>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      DiedOn: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.DiedOn}
-                />
-              </div> */}
+            
               <div className="People-child-container">
                 <label className="PeopleScreen-lables" htmlFor="">
                   Position End date
@@ -964,8 +721,6 @@ export default function PeopleScreen() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     className="Position-end-date"
-                    // value={dayjs(unixTimestamp)}
-                    // disabled={prefilledData?.last_funding_at_from || prefilledData}
 
                     onChange={dateFromHandler}
                     value={dayjs(PeopleDetails?.PositionEndDate)}
@@ -977,22 +732,6 @@ export default function PeopleScreen() {
               </div>
             </div>
             <div className="Pepole-flex-container">
-
-              {/* <div className="People-child-container">
-                <label htmlFor="" className="PeopleScreen-lables">
-                  Org Permalink
-                </label>
-                <LabelInput
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      Address: inputvalue,
-                    });
-                  }}
-                  value={PeopleDetails?.Facebook}
-                />
-              </div> */}
               <div className="People-child-container">
                 <label className="PeopleScreen-lables" htmlFor="">
                   Status
@@ -1050,63 +789,6 @@ export default function PeopleScreen() {
 
 
             </div>
-
-            {/* <div className="Pepole-flex-container">
-
-              <div className="People-child-container">
-                <label className="PeopleScreen-lables" htmlFor="">
-                  Action
-                </label>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                  <Select
-                    className="ContactUsScreen-dropdown"
-                    placeholder="Select Action"
-                    onChange={(e) => {
-                      const inputvalue = e?.target?.value;
-                      setPeopleDetails({
-                        ...PeopleDetails,
-                        action: inputvalue,
-                      });
-                    }}
-                    value={PeopleDetails?.action}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem disabled value="">
-                      <em className="SelectAction-css">Select Action</em>
-                    </MenuItem>
-                    {PeopleAction?.map((item, index) => {
-                      return (
-                        <MenuItem key={index} value={item}>
-                          {item}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-              </div>
-            </div> */}
-            {/* <div className="Pepole-flex-container"></div>
-            <div className="People-child-container">
-              <label cl htmlFor="" className="PeopleScreen-lables">
-                Comment
-              </label>
-              <div className="PeopleTextarea">
-                <Textarea
-                  className="PeopleScreen-lables-text-field-area"
-                  value={PeopleDetails?.Comments}
-                  aria-label="minimum height"
-                  minRows={3}
-                  onChange={(e) => {
-                    const inputvalue = e?.target?.value;
-                    setPeopleDetails({
-                      ...PeopleDetails,
-                      Comments: inputvalue,
-                    });
-                  }}
-                />
-              </div>
-            </div> */}
             <div className="SUBMITbutton-div">
               {
                 peopleData?.first_name ?

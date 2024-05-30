@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import "../Search/Search.css"
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
-import { AI_PROFILE_FORM_TABLE, AI_PROSPECT_PROFILE, COMPANY_PROFILE_SCREEN } from '../../../Utils/Constants';
+import { AI_PROFILE_FORM_TABLE, AI_PROSPECT_PROFILE, COMPANY_PROFILE_SCREEN, ORG_DETAILS } from '../../../Utils/Constants';
 export default function HeaderSearch({ headerSearchData, setheaderSearchData, responseData, showSearchdata }) {
     const navigate = useNavigate();
     const handelselectdata = (item) => {
@@ -14,6 +14,7 @@ export default function HeaderSearch({ headerSearchData, setheaderSearchData, re
         // if (window.location.pathname === '/companyprofilescreen') {
         //     window.location.reload();
         // }
+        navigate(ORG_DETAILS, { state: item });
     };
     const emtySearchdata = () => {
         setheaderSearchData("")

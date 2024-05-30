@@ -4,7 +4,6 @@ import callImg from "../../../../Assets/call.svg";
 import LoctionImg from "../../../../Assets/loction.svg";
 import userprofile from "../../../../Assets/user.svg";
 import GrowIcons from "../../../../Assets/grow.svg";
-import Companyimg from "../../../../Assets/company.svg";
 import GlobalImg from "../../../../Assets/Globe.svg";
 import IndustryImage from "../../../../Assets/office-building.png";
 import Accordion from "@mui/material/Accordion";
@@ -21,16 +20,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import { useLocation } from "react-router-dom";
-export default function OrgDetailsScreen({
-}) {
+export default function OrgDetailsScreen({organizationData}) {
   const location = useLocation();
-  const orgData = location?.state;
-  const [value, setValue] = React.useState(0);
+  const orgData = organizationData || location?.state;
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   return (
     <>
@@ -95,7 +88,6 @@ export default function OrgDetailsScreen({
                 <p>{orgData?.categories ? orgData?.categories : '-'}</p>
               </div>
               <div className="CompanyProfile-content">
-                {/* <img className="CompanyProfile-icons" src={callImg} alt="" /> */}
                 <LinkedInIcon className="CompanyProfile-icons ai-score-icon" />
                 <p>
                   Linkedin - {""}

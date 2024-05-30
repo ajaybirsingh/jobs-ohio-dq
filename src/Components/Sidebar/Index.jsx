@@ -156,7 +156,14 @@ export default function Sidebar({
   const [headerSearchData, setheaderSearchData] = React.useState("");
   const [responseData, setResponseData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
-  const userId = GetUserId();
+  const removeQuotes = (str) => {
+    if (str.startsWith('"') && str.endsWith('"')) {
+        return str.slice(1, -1);
+    }
+    return str;
+};
+const userId = GetUserId();
+const userIdWithoutQuotes = removeQuotes(userId);
   const [leadsProfileData, setLeadsProfileData] = React.useState([]);
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
   const [showSearchdata, setshowSearchdata] = React.useState(false);
@@ -317,7 +324,7 @@ export default function Sidebar({
             <MenuIcon />
           </IconButton>
           {
-            userId ? <button className="logout-button" onClick={() => logoutHandler()}>logout</button> : null
+            userIdWithoutQuotes ? <button className="logout-button" onClick={() => logoutHandler()}>logout</button> : null
           }
 
         </Toolbar>

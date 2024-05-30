@@ -8,24 +8,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-// import decisionMakerImage from "../../../../Assets/Cloudfigma.svg";
-import decisionMakerImage from "../../../../../Assets/Cloudfigma.svg";
 import axios from "axios";
-// import Loader from "../../../../Components/Loader/Loader";
 import {
-  APIUrlFour,
-  APIUrlOne,
-  APIUrlTwo,
-  GetUserId,
+  APIUrlFour
 } from "../../../../../Utils/Utils";
 import { useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Tooltip } from "@mui/material";
 import Loader from "../../../../Loader/Loader";
 let loaded = false;
-function Row({ row, selected, onSelect }) {
-  const [open, setOpen] = React.useState(false);
-  const loggedInUserId = GetUserId();
+function Row({ row }) {
   const linkedInUrl = row?.linkedin ? row.linkedin : "Not Available";
   return (
     <TableRow className="juyds" sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -39,15 +31,6 @@ function Row({ row, selected, onSelect }) {
                   : "Decision-maker-user-namenoborder"
               }
             >
-              {/* <img
-                                className={
-                                    row?.suspect_status === null
-                                        ? "hide-image"
-                                        : "decisionMakerImage-new"
-                                }
-                                src={decisionMakerImage}
-                                alt=""
-                            /> */}
               <p className="letter-heading">{row?.first_name?.substring(0, 1) + row?.last_name?.substring(0, 1)}</p>
             </div>
           </div>
@@ -78,20 +61,6 @@ function Row({ row, selected, onSelect }) {
               : "-"}
           </Tooltip>
         </TableCell>
-
-        {/* <TableCell align="left">
-          <Tooltip title={row?.linkedin ? row?.linkedin : "Not Available"}>
-            <div className="Suspect-table-data">
-              <h3 className="industry-sector-table">
-                {row?.linkedin
-                  ? row?.linkedin.length > 26
-                    ? row?.linkedin.substr(0, 26) + "..."
-                    : row?.linkedin
-                  : "-"}
-              </h3>
-            </div>
-          </Tooltip>
-        </TableCell> */}
         <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
           <Tooltip title={
             linkedInUrl !== 'Not Available' ?
@@ -159,54 +128,6 @@ function Row({ row, selected, onSelect }) {
             {row?.source_description ? row.source_description : "-"}
           </Tooltip>
         </TableCell>
-        {/* <TableCell className="Peoples-org_permalink" align="left">
-          <Tooltip
-            title={row?.org_permalink ? row?.org_permalink : "Not Available"}
-          >
-            <div className="Suspect-table-data">
-              {row?.org_permalink
-                ? row?.org_permalink?.length > 14
-                  ? row?.org_permalink.substr(0, 14) + "..."
-                  : row?.org_permalink
-                : "-"}
-            </div>
-          </Tooltip>
-        </TableCell>
-        <TableCell
-          align="left"
-          className="table-cell-of-contact-details-dropdown-th-prospect"
-        >
-          {row?.comments ? row.comments : "-"}
-        </TableCell>
-        <TableCell
-          align="left"
-          className="table-cell-of-contact-details-dropdown-th-prospect"
-        >
-          <Tooltip title={row?.country ? row?.country : "Not Available"}>
-            <div className="Suspect-table-data">
-              {row?.country
-                ? row?.country?.length > 6
-                  ? row?.country.substr(0, 6) + ".."
-                  : row?.country
-                : "-"}
-            </div>
-          </Tooltip>
-        </TableCell>
-        <TableCell
-          align="left"
-          className="table-cell-of-contact-details-dropdown-th-prospect"
-        >
-          {row?.state ? row.state : "-"}
-        </TableCell>
-        <TableCell align="left" className="">
-          <Tooltip title={row?.city ? row?.city : "Not Available"}>
-            {row?.city
-              ? row?.city?.length > 4
-                ? row?.city.substr(0, 4) + ".."
-                : row?.city
-              : "-"}
-          </Tooltip>
-        </TableCell> */}
       </>
     </TableRow>
   );
@@ -216,14 +137,13 @@ Row.propTypes = {
   selected: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
-export default function PeopleRecords({ rowData }) {
+export default function PeopleRecords({ rowData, organizationData }) {
   const location = useLocation();
   const orgData = location?.state;
   const isComponyScreen = location?.state?.isComponyScreen;
   const [loading, setLoading] = React.useState(false);
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
   const [selectedRows, setSelectedRows] = React.useState([]);
-  const [strengthTableData, setStrengthTableData] = React.useState([]);
   const decisionMakerTableData = decisionMakerData;
   const [hasMore, setHasMore] = React.useState(false);
   const [page, setPage] = React.useState(1);
@@ -232,33 +152,28 @@ export default function PeopleRecords({ rowData }) {
   const [decisionMakerDataCount, setDecisionMakerDataCount] = React.useState(
     []
   );
-  //   const fetchMoreData = () => {
-  //     if (!decisionMakerData?.length) return;
-  //     const hasMore = decisionMakerData?.length < rowData?.people_count || decisionMakerDataCount;
-  //     if (!hasMore) return;
-  //     setSkip((prevskip) => prevskip + 50);
-  //   };
+  const fetchMoreData = () => {
+    if (!decisionMakerData?.length) return;
+    const hasMore = decisionMakerData?.length < rowData?.people_count || decisionMakerDataCount;
+    if (!hasMore) return;
+    setSkip((prevskip) => prevskip + 50);
+  };
   const [orgId, setOrgId] = React.useState("");
   React.useEffect(() => {
-    if (orgId !== (orgData?.org_id || orgData?.id)) {
+    if (orgId !== (orgData?.org_id || orgData?.id || organizationData?.org_id)) {
       setSkip(0);
       setDecisionMakerData([]);
     }
-  }, [orgData?.org_id]);
+  }, [orgData?.org_id, organizationData?.org_id]);
   const aiDecisionMakerTable = () => {
     setLoading(true);
-    // setHasMore(false);
-    // if (orgId !== (orgData?.org_id || orgData?.id) && isComponyScreen) {
-    //     setOrgId(orgData?.org_id || orgData.id);
-    // }
-    var org_id = orgData.org_id;
+    const org_id = organizationData?.org_id || orgData.org_id;
     const option = {
       method: "GET",
       headers: {
         "content-type": "plain/text",
       },
-      // url: `${APIUrlFour()}v1/org_validation?limit=50&skip=0&org_id=${org_id}`
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=0&org_id=${org_id}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&org_id=${org_id}`,
     };
     axios(option)
       .then((e) => {
@@ -286,35 +201,17 @@ export default function PeopleRecords({ rowData }) {
       });
   };
   React.useEffect(() => {
-    aiDecisionMakerTable();
-    // if (orgData?.length) {
-    // } else {
-    //     setIsMakerTable(true);
-    // }
-  }, []);
-  //   const handleSelectAllClick = (event) => {
-  //     if (decisionMakerTableData.length === 0) {
-  //       return;
-  //     }
-  //     if (event.target.checked) {
-  //       const newSelecteds = decisionMakerTableData.map((row) => row.first_name);
-  //       setSelectedRows(newSelecteds);
-  //     } else {
-  //       setSelectedRows([]);
-  //     }
-  //   };
-  //   React.useEffect(() => {
-  //       if (decisionMakerData?.length > 50) {
-  //         aiDecisionMakerTable(comingOrgId);
-  //     }
-  //   }, [skip]);
+    if (organizationData?.org_id || orgData.org_id) {
+      aiDecisionMakerTable();
+    }
+  }, [organizationData?.org_id, orgData.org_id, skip]);
   return (
     <>
       {loading ? <Loader /> : null}
       <InfiniteScroll
         // rowData?.people_count (may be we need to use here)
         dataLength={decisionMakerData?.length}
-        // next={() => fetchMoreData()}
+        next={() => fetchMoreData()}
         hasMore={hasMore}
         scrollableTarget="DecisionMaker-table-main"
       >
@@ -332,26 +229,12 @@ export default function PeopleRecords({ rowData }) {
                   <TableCell align="left" className="DecisionstableJOIStrength">
                     <p className="strengthdata">Job Title</p>
                   </TableCell>
-                  {/* <TableCell
-                    align="left"
-                    className="employee-row-tableCompanydata"
-                  >
-                    <p className="company-tag-leads-to-company">Company</p>
-                  </TableCell> */}
                   <TableCell align="left" className="People-linkdin-table-cell">
                     <p className="People-Linkedin">Linkedin</p>
                   </TableCell>
                   <TableCell align="left" className="People-linkdin-table-cell">
                     <p className="People-Linkedin">Email</p>
                   </TableCell>
-                  {/* <TableCell
-                    align="left"
-                    className="Decisions-row-tableNameaAndtitle-leads-to-companyprofile"
-                  >
-                    <p className="Contact-Details-heading-leads-to-profile">
-                      Contact Details
-                    </p>
-                  </TableCell> */}
                   <TableCell
                     align="left"
                     className="prospects-row-tableDetails-cd"
@@ -364,24 +247,6 @@ export default function PeopleRecords({ rowData }) {
                   <TableCell align="left" className="industry-row-tableStatus">
                     <p className="People-Employees-data">Source Description</p>
                   </TableCell>
-                  {/* <TableCell align="left" className="Permalink-all-people">
-                    permalink
-                  </TableCell>
-                  <TableCell align="left" className="">
-                    comments
-                  </TableCell>
-                  <TableCell align="left" className="">
-                    country
-                  </TableCell>
-                  <TableCell align="left" className="">
-                    state
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    className="prospects-row-tableDetails-cd"
-                  >
-                    <p className="people-city-data">city</p>
-                  </TableCell> */}
                 </TableRow>
               </TableHead>
               <TableBody>

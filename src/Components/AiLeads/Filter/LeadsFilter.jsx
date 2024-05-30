@@ -7,7 +7,6 @@ import FormControlSelect from "../../FormControl/Index";
 import axios from "axios";
 import FileDownloadDoneIcon from '@mui/icons-material/FileDownloadDone';
 import { APIUrlFour, APIUrlOne } from "../../../Utils/Utils";
-import { logDOM } from "@testing-library/react";
 export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
   handleApply,
   setSelectedData,
@@ -17,7 +16,6 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
   setStatsCount,
   setPage
 }) {
-  const [isLoadFilters, setIsLoadFilters] = React.useState(false);
   const [selectedIndustry, setSelectedIndustry] = React.useState("");
   const [selectedRevenue, setSelectedRevenue] = React.useState("");
   const [selectedJscore, setSelectedJscore] = React.useState("");
@@ -48,45 +46,15 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
   React.useEffect(() => {
     LeadsFilters();
   }, [])
-  // React.useEffect(() => {
-  //   if (isLoadFilters) {
-  //     LeadsFilters();
-  //   } else {
-  //     setIsLoadFilters(true);
-  //   }
-
-  // }, [isLoadFilters]);
   const handleIndustryChange = (event) => {
     const value = event.target.value;
     setSelectedIndustry(value);
-  };
-  const handleRevenueChange = (event) => {
-    const value = event.target.value;
-    setSelectedRevenue(value);
-  };
-  const handleJscoreChange = (event) => {
-    const value = event.target.value;
-    setSelectedJscore(value);
   };
   const handeldata = (event, item) => {
     if (event.target.checked) {
       setSelectedData([...selectedData, item]);
     } else {
       setSelectedData(selectedData?.filter((uncheck) => uncheck !== item));
-    }
-  };
-  const handeldatajScore = (event, item) => {
-    if (event.target.checked) {
-      setJscore([...jScoredata, item]);
-    } else {
-      setJscore(jScoredata.filter((uncheck) => uncheck !== item));
-    }
-  };
-  const handeldatalast = (event, item) => {
-    if (event.target.checked) {
-      setShowlast([...showlast, item]);
-    } else {
-      setShowlast(showlast.filter((uncheck) => uncheck !== item));
     }
   };
   const ResetFilterData = () => {
@@ -137,37 +105,6 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
               placeholder="Action"
             />
           </div>
-          {/* <div className="Leads-Filter-Laststdrop-down">
-            <FormControlSelect
-              formControlData={{
-                value: selectedRevenue,
-                handleChange: handleRevenueChange,
-                selectedData: showlast,
-                handleCheckboxChange: handeldatalast,
-                isRevenue: true,
-                dataList: aiLeadsFilters?.data?.revenue_range,
-                checked: showlast,
-              }}
-              placeholder="Revenue"
-              onMouseEnter={handleOpen}
-              onMouseLeave={handleClose}
-            />
-          </div>
-          <div className="JScoreContainer">
-            <FormControlSelect
-              formControlData={{
-                value: selectedJscore,
-                handleChange: handleJscoreChange,
-                selectedData: jScoredata,
-                handleCheckboxChange: handeldatajScore,
-                dataList: aiLeadsFilters?.data?.j_score?.slice(1),
-                checked: jScoredata,
-              }}
-              onMouseEnter={handleOpen}
-              onMouseLeave={handleClose}
-              placeholder="JOI Score"
-            />
-          </div> */}
         </section>
         <div className="apply-hit-button">
           <div className="inner-apply-button-container" onClick={handleApply}>

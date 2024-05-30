@@ -3,12 +3,10 @@ import "./Style.css";
 import "../../../Components/PeopleScreen/PeopleScreen.css";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-// import LabelInput from "../LabelInputFields/Index";
 import { FormControl, MenuItem, Select, TextField, InputLabel } from "@mui/material";
 import Textarea from "@mui/joy/Textarea";
 import { toast } from "react-toastify";
 import SaveAltTwoToneIcon from "@mui/icons-material/SaveAltTwoTone";
-// import Loader from "../Loader/Loader";
 import axios from "axios";
 import LabelInput from "../../LabelInputFields/Index";
 import Loader from "../../Loader/Loader";
@@ -40,41 +38,23 @@ const Organization = () => {
         comments: "",
         uuid: ""
     });
+    const removeQuotes = (str) => {
+        if (str.startsWith('"') && str.endsWith('"')) {
+            return str.slice(1, -1);
+        }
+        return str;
+    };
     const userId = GetUserId();
+    const userIdWithoutQuotes = removeQuotes(userId);
     const [loading, setLoading] = React.useState();
     const [actionData, setActionData] = useState([]);
     const [dropDownData, setDropDownData] = useState([]);
-    const OrgStatus = ["pending", "verified", "updated", "notfound", "debatable"];
 
     const validations = () => {
         if (Organization.Name === "") {
             toast.error("Please Enter Name ")
             return false
         }
-        // if (Organization.LegalName === "") {
-        //     toast.error("Please Enter Legal Name ")
-        //     return false
-        // }
-        // if (Organization.num_employees === "") {
-        //     toast.error("Please Select Num Employees ")
-        //     return false
-        // }
-        // if (Organization.RevenueRange === "") {
-        //     toast.error("Please Select Revenue Range ")
-        //     return false
-        // }
-        // if (Organization.linkedin === "") {
-        //     toast.error("Please Enter Linkedin ")
-        //     return false
-        // }
-        // if (Organization.categories === "") {
-        //     toast.error("Please Select Categories ")
-        //     return false
-        // }
-        // if (Organization.orgpermalink === "") {
-        //     toast.error("Please Enter Org Permalink")
-        //     return false
-        // }
         if (Organization.website_url === "") {
             toast.error("Please Enter Website Url ")
             return false
@@ -85,33 +65,6 @@ const Organization = () => {
     const handelAddOrg = () => {
         if (!validations()) return
         const data =
-        // {
-        //     records: [
-        //         {
-        //             uuid: null,
-        //             user_id: userId,
-        //             name: Organization.Name,
-        //             legal_name: Organization.LegalName,
-        //             permalink: Organization.orgpermalink,
-        //             revenue_range: Organization.RevenueRange,
-        //             num_employees: Organization.num_employees,
-        //             linkedin: Organization.linkedin,
-        //             website_url: Organization.website_url,
-        //             description: Organization.description,
-        //             categories: Organization.categories,
-        //             city: Organization.city,
-        //             state: Organization.state,
-        //             country: Organization.country,
-        //             phone_number: Organization.phoneNumber,
-        //             comments: Organization.comments,
-        //             source: Organization.source,
-        //             source_description: Organization.source_description,
-        //             validation_status: Organization.validation_status,
-        //             action: "add",
-        //             updated_at: new Date().toISOString().slice(0, 10),
-        //         },
-        //     ],
-        // };
         {
             records: [
                 {
@@ -135,7 +88,7 @@ const Organization = () => {
                     source_description: Organization.source_description,
                     validation_status: Organization.validation_status,
                     action: "add",
-                    user_id: userId,
+                    user_id: userIdWithoutQuotes,
                     updated_at: new Date().toISOString().slice(0, 10)
                 }
             ]
@@ -186,33 +139,6 @@ const Organization = () => {
     const handelUpdateOrg = () => {
         if (!validations()) return
         const data =
-        // {
-        //     records: [
-        //         {
-        //             org_id: OrganizationData.org_id,
-        //             user_id: userId,
-        //             name: Organization.Name,
-        //             legal_name: Organization.LegalName,
-        //             permalink: Organization.orgpermalink,
-        //             revenue_range: Organization.RevenueRange,
-        //             num_employees: Organization.num_employees,
-        //             linkedin: Organization.linkedin,
-        //             website_url: Organization.website_url,
-        //             description: Organization.description,
-        //             categories: Organization.categories,
-        //             city: Organization.city,
-        //             state: Organization.state,
-        //             country: Organization.country,
-        //             phone_number: Organization.phoneNumber,
-        //             comments: Organization.comments,
-        //             source: Organization.source,
-        //             source_description: Organization.source_description,
-        //             validation_status: Organization.validation_status,
-        //             action: "update",
-        //             updated_at: new Date().toISOString().slice(0, 10),
-        //         },
-        //     ],
-        // };
         {
             records: [
                 {
@@ -236,7 +162,7 @@ const Organization = () => {
                     source_description: Organization.source_description,
                     validation_status: Organization.validation_status,
                     action: "update",
-                    user_id: userId,
+                    user_id: userIdWithoutQuotes,
                     updated_at: new Date().toISOString().slice(0, 10)
                 }
             ]
@@ -324,7 +250,7 @@ const Organization = () => {
                 const data = e?.data?.status_list;
                 setActionData(data);
             })
-            .catch((err) => {
+            .catch(() => {
 
             })
     }
@@ -347,7 +273,7 @@ const Organization = () => {
                     setDropDownData(e?.data?.data);
                 }
             })
-            .catch((err) => {
+            .catch(() => {
 
             })
     }
@@ -415,21 +341,7 @@ const Organization = () => {
                                     value={Organization?.phoneNumber}
                                 />
                             </div>
-                            {/* <div className="AddOrganization-child-container">
-                                <label htmlFor="" className="PeopleScreen-lables">
-                                    Num Employees <span className="OrganizationMandatoryfields">*</span>
-                                </label>
-                                <LabelInput
-                                    onChange={(e) => {
-                                        const inputvalue = e?.target?.value;
-                                        setOrganization({
-                                            ...Organization,
-                                            num_employees: inputvalue,
-                                        });
-                                    }}
-                                    value={Organization?.num_employees}
-                                />
-                            </div> */}
+                           
                             <div className="People-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Num Employees
@@ -464,21 +376,7 @@ const Organization = () => {
                             </div>
                         </div>
                         <div className="AddOrganization-flex-container">
-                            {/* <div className="AddOrganization-child-container">
-                                <label htmlFor="" className="PeopleScreen-lables">
-                                    Revenue Range <span className="OrganizationMandatoryfields">*</span>
-                                </label>
-                                <LabelInput
-                                    onChange={(e) => {
-                                        const inputvalue = e?.target?.value;
-                                        setOrganization({
-                                            ...Organization,
-                                            RevenueRange: inputvalue,
-                                        });
-                                    }}
-                                    value={Organization?.RevenueRange}
-                                />
-                            </div> */}
+                            
                             <div className="People-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Revenue Range
@@ -528,21 +426,7 @@ const Organization = () => {
                             </div>
                         </div>
                         <div className="AddOrganization-flex-container">
-                            {/* <div className="AddOrganization-child-container">
-                                <label htmlFor="" className="PeopleScreen-lables">
-                                    Categories <span className="OrganizationMandatoryfields">*</span>
-                                </label>
-                                <LabelInput
-                                    onChange={(e) => {
-                                        const inputvalue = e?.target?.value;
-                                        setOrganization({
-                                            ...Organization,
-                                            categories: inputvalue,
-                                        });
-                                    }}
-                                    value={Organization?.categories}
-                                />
-                            </div> */}
+                            
                             <div className="People-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Categories
@@ -574,40 +458,7 @@ const Organization = () => {
                                         })}
                                     </Select>
                                 </FormControl>
-                                {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                    <InputLabel id="select-categories-label">Select Categories</InputLabel>
-                                    <Select
-                                        labelId="select-categories-label"
-                                        placeholder="Select Categories"
-                                        className="AddOrg-dropdown"
-                                        multiple
-                                        onChange={(e) => {
-                                            const inputvalue = e.target.value;
-                                            setOrganization({
-                                                ...Organization,
-                                                categories: inputvalue,
-                                            });
-                                        }}
-                                        value={Organization.categories}
-                                        displayEmpty
-                                        inputProps={{ "aria-label": "Without label" }}
-                                        renderValue={(selected) => {
-                                            if (selected.length === 0) {
-                                                return <em className="SelectAction-css">Select Categories</em>;
-                                            }
-                                            return selected.join(', ');
-                                        }}
-                                    >
-                                        <MenuItem disabled value="">
-                                            <em className="SelectAction-css">Select Categories</em>
-                                        </MenuItem>
-                                        {dropDownData.categories.map((item, index) => (
-                                            <MenuItem key={index} value={item}>
-                                                {item}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl> */}
+                                
                             </div>
                             <div className="uploderinput">
                                 <label className="PeopleScreen-lables" htmlFor="">
@@ -626,21 +477,7 @@ const Organization = () => {
                             </div>
                         </div>
                         <div className="AddOrganization-flex-container">
-                            {/* <div className="AddOrganization-child-container">
-                                <label htmlFor="" className="PeopleScreen-lables">
-                                    City
-                                </label>
-                                <LabelInput
-                                    onChange={(e) => {
-                                        const inputvalue = e?.target?.value;
-                                        setOrganization({
-                                            ...Organization,
-                                            city: inputvalue,
-                                        });
-                                    }}
-                                    value={Organization?.city}
-                                />
-                            </div> */}
+                           
                             <div className="People-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Country
@@ -673,21 +510,7 @@ const Organization = () => {
                                     </Select>
                                 </FormControl>
                             </div>
-                            {/* <div className="uploderinput">
-                                <label className="PeopleScreen-lables" htmlFor="">
-                                    State
-                                </label>
-                                <LabelInput
-                                    onChange={(e) => {
-                                        const inputvalue = e?.target?.value;
-                                        setOrganization({
-                                            ...Organization,
-                                            state: inputvalue,
-                                        });
-                                    }}
-                                    value={Organization?.state}
-                                />
-                            </div> */}
+                            
                             <div className="People-child-container">
                                 <label className="PeopleScreen-lables" htmlFor="">
                                     State
@@ -738,21 +561,7 @@ const Organization = () => {
                                     value={Organization?.city}
                                 />
                             </div>
-                            {/* <div className="uploderinput">
-                                <label className="PeopleScreen-lables" htmlFor="">
-                                    Org Permalink <span className="OrganizationMandatoryfields">*</span>
-                                </label>
-                                <LabelInput
-                                    onChange={(e) => {
-                                        const inputvalue = e?.target?.value;
-                                        setOrganization({
-                                            ...Organization,
-                                            orgpermalink: inputvalue,
-                                        });
-                                    }}
-                                    value={Organization?.orgpermalink}
-                                />
-                            </div> */}
+                            
                             <div className="AddOrganization-child-container">
                                 <label htmlFor="" className="PeopleScreen-lables">
                                     Description
@@ -857,56 +666,14 @@ const Organization = () => {
                                     />
                                 </div>
                             </div>
-                            {/* <div className="People-child-container">
-                                <label className="PeopleScreen-lables" htmlFor="">
-                                    Action
-                                </label>
-                                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                    <Select
-                                        className="ContactUsScreen-dropdown"
-                                        placeholder="Select Action"
-                                        onChange={(e) => {
-                                            const inputvalue = e?.target?.value;
-                                            setOrganization({
-                                                ...Organization,
-                                                action: inputvalue,
-                                            });
-                                        }}
-                                        value={Organization?.action}
-                                        displayEmpty
-                                        inputProps={{ "aria-label": "Without label" }}
-                                    >
-                                        <MenuItem disabled value="">
-                                            <em className="SelectAction-css">Select Action</em>
-                                        </MenuItem>
-                                        {OrgAction?.map((item, index) => {
-                                            return (
-                                                <MenuItem key={index} value={item}>
-                                                    {item}
-                                                </MenuItem>
-                                            );
-                                        })}
-                                    </Select>
-                                </FormControl>
-                            </div> */}
+                            
 
                         </div>
                         <div className="Pepole-flex-container">
 
 
                         </div>
-                        {/* <div className="SUBMITbutton-div">
-                            <Stack spacing={2} direction="row">
-                                <Button
-                                    className="addOrganization-SUBMIT-button"
-                                    variant="contained"
-                                    onClick={handelAddOrg}
-                                >
-                                    <SaveAltTwoToneIcon />
-                                    SUBMIT
-                                </Button>
-                            </Stack>
-                        </div> */}
+                        
                         <div className="SUBMITbutton-div">
                             <Stack spacing={2} direction="row">
                                 {OrganizationData ? <Button

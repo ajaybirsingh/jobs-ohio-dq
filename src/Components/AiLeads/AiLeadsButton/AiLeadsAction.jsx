@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import { styled, alpha } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
 import AddIcon from '@mui/icons-material/Add';
-import { GetLeadsFilterStatsData, GetOrganizationCount, GetPeopleCount, GetStatsData } from "../../../Utils/Utils";
+import { GetOrganizationCount, GetPeopleCount, GetStatsData } from "../../../Utils/Utils";
 import { useNavigate } from "react-router-dom";
 import { ORGANIZATION_RECORDS, PEOPLE_RECORDS } from "../../../Utils/Constants";
 export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigger, isSalesForceTrigger, setIsDecisionMakerExcel, statsCount, statsCountDecisionMaker }) {
@@ -65,22 +65,12 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
     setAnchorEl(event.currentTarget);
     navigate(ORGANIZATION_RECORDS)
   }
-  const handleMenuSalesforce = () => {
-    setIsSalesForceTrigger(true);
-    setAnchorEl(null);
-  };
-  const handleMenuDownloadExcel = () => {
-    setIsDecisionMakerExcel(true);
-    setAnchorEl(null);
-  }
   React.useEffect(() => {
     if (isSalesForceTrigger) {
       setIsSalesForceTrigger(false)
     }
   }, [isSalesForceTrigger])
   const location = window?.location?.pathname;
-  const statsData = GetStatsData();
-  const filterStatsData = GetLeadsFilterStatsData();
   return (
     <>
       <section className=

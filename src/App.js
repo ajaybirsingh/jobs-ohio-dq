@@ -41,9 +41,8 @@ function App() {
   });
 
   useEffect(() => {
-    console.log("Tracking page view: ", window.location.pathname + window.location.search);
     ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search });
-  }, [window.location]); // This ensures the effect is only run on location change
+  }, [window.location]);
   return (
     <div className="App">
       <Router>
