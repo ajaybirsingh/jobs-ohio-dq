@@ -32,12 +32,12 @@ function Row({ row }) {
   }
   const removeQuotes = (str) => {
     if (str.startsWith('"') && str.endsWith('"')) {
-        return str.slice(1, -1);
+      return str.slice(1, -1);
     }
     return str;
-};
-const userId = GetUserId();
-const userIdWithoutQuotes = removeQuotes(userId);
+  };
+  const userId = GetUserId();
+  const userIdWithoutQuotes = removeQuotes(userId);
   const [deleteData, setDeleteData] = React.useState('');
   const DeletePeople = (row) => {
     setDeleteData(row)
@@ -53,7 +53,7 @@ const userIdWithoutQuotes = removeQuotes(userId);
     }
     return true
   }
-  
+
   const handleDeleteCase = () => {
     if (!validateFields()) return
 

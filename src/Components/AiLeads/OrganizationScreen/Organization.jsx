@@ -12,10 +12,11 @@ import LabelInput from "../../LabelInputFields/Index";
 import Loader from "../../Loader/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { APIUrlFour, APIUrlOne, GetUserId } from "../../../Utils/Utils";
-import { ORGANIZATION } from "../../../Utils/Constants";
+import { ORGANIZATION, ORG_DETAILS } from "../../../Utils/Constants";
 const Organization = () => {
     const location = useLocation();
-    const OrganizationData = location?.state;
+    const OrganizationData = location?.state?.data;
+    const isOrgScreencome = location?.state?.isOrgListing;
     const navigate = useNavigate();
     const [Organization, setOrganization] = React.useState({
         Name: "",
@@ -26,7 +27,7 @@ const Organization = () => {
         linkedin: "",
         website_url: "",
         description: "",
-        categories: [],
+        categories: "",
         city: "",
         state: "",
         country: "",
@@ -155,7 +156,7 @@ const Organization = () => {
                     legal_name: Organization.LegalName,
                     city: Organization.city,
                     phone_number: Organization.phoneNumber,
-                    org_id: OrganizationData.org_id,
+                    org_id: OrganizationData?.org_id ? OrganizationData?.org_id : null,
                     permalink: Organization.orgpermalink,
                     comments: Organization.comments,
                     source: Organization.source,
@@ -201,7 +202,12 @@ const Organization = () => {
                         action: "",
                         comments: "",
                     });
-                    navigate(ORGANIZATION);
+                    if (isOrgScreencome) {
+                        navigate(ORGANIZATION);
+                    } else {
+                        navigate(ORG_DETAILS, { state: OrganizationData })
+                    }
+
                 }
 
             })
@@ -458,7 +464,7 @@ const Organization = () => {
                                         })}
                                     </Select>
                                 </FormControl> */}
-                                <label htmlFor="" className="PeopleScreen-lables">
+                                {/* <label htmlFor="" className="PeopleScreen-lables">
                                     Categories
                                 </label>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -474,6 +480,38 @@ const Organization = () => {
                                             });
                                         }}
                                         value={Organization?.categories}
+                                        
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                    >
+                                        <MenuItem disabled value="" className="disable-menu-action">
+                                            <em className="SelectAction-css">Select Categories</em>
+                                        </MenuItem>
+                                        {dropDownData?.categories?.map((item, index) => (
+                                            <MenuItem key={index} value={item}>
+                                                {item}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl> */}
+                                <label htmlFor="" className="PeopleScreen-lables">
+                                    Categories
+                                </label>
+                                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                    <Select
+                                        multiple
+                                        placeholder="Select Categories"
+                                        className="AddOrg-dropdown"
+                                        onChange={(e) => {
+                                            const selectedValues = e.target.value;
+                                            const inputvalue = selectedValues.join(", ");
+                                            setOrganization({
+                                                ...Organization,
+                                                categories: inputvalue,
+                                            });
+                                        }}
+                                        value={Organization.categories ? Organization.categories.split(", ") : []}
+                                        renderValue={(selected) => selected.join(', ')}
                                         displayEmpty
                                         inputProps={{ 'aria-label': 'Without label' }}
                                     >

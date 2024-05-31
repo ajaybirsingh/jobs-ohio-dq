@@ -55,7 +55,7 @@ function Row({
   const [scrollPagination, setScrollPagination] = useState(false);
   const linkedInUrl = row?.linkedin ? row?.linkedin : 'Not Available';
   const websiteUrl = row?.website_url ? row?.website_url : 'Not Available';
-  
+
 
   const removeQuotes = (str) => {
     if (str.startsWith('"') && str.endsWith('"')) {
@@ -231,7 +231,7 @@ function Row({
   const ref = React.useRef(null);
   const isBranchLocationsDisabled = true;
   const EditOrgUser = (row) => {
-    navigate(ORGANIZATION_RECORDS, { state: row })
+    navigate(ORGANIZATION_RECORDS, { state: {data: row, isOrgListing: window.location.pathname === '/organization' }})
   }
   const [modalTeaxtArea, setModalTeaxtArea] = React.useState("")
   const [deleteData, setDeleteData] = React.useState('');
@@ -252,14 +252,13 @@ function Row({
     }
     return true
   }
-
   const handleDeleteCase = () => {
     if (!validateFields()) return
     setLoading(true);
     const data = {
       records: [
         {
-          record_id: "cdfdb91e-15d9-4803-9287-b3d6f1d845d6",
+          record_id: deleteData?.uuid,
           user_id: userIdWithoutQuotes
         }
       ]
@@ -479,7 +478,7 @@ export default function AiLeadsTable({
     axios(option)
       .then((e) => {
         setLoading(false);
-        SetOrganizationCount('orgCount',e?.data?.count);
+        SetOrganizationCount('orgCount', e?.data?.count);
         const comingData = e?.data?.data;
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);

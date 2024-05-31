@@ -74,10 +74,10 @@ export default function PeopleScreen() {
         uuid: peopleData?.uuid
       })
     }
-  }, [peopleData])
+  }, [peopleData?.org_permalink])
 
   React.useEffect(() => {
-    if (peopleData?.uuid) {
+    if (peopleData?.orgDetails === true) {
       setPeopleDetails({
         Oraganization: peopleData?.legal_name,
         Orglinkedin: peopleData?.linkedin,
@@ -149,12 +149,12 @@ export default function PeopleScreen() {
   };
   const removeQuotes = (str) => {
     if (str.startsWith('"') && str.endsWith('"')) {
-        return str.slice(1, -1);
+      return str.slice(1, -1);
     }
     return str;
-};
-const userId = GetUserId();
-const userIdWithoutQuotes = removeQuotes(userId);
+  };
+  const userId = GetUserId();
+  const userIdWithoutQuotes = removeQuotes(userId);
   const handelApplyRecords = () => {
     if (!validateFields()) return;
     setLoading(true);
@@ -593,9 +593,9 @@ const userIdWithoutQuotes = removeQuotes(userId);
                 />
               </div>
             </div>
-            
+
             <div className="Pepole-flex-container">
-              
+
               <div className="People-child-container">
                 <label htmlFor="" className="PeopleScreen-lables">
                   Country
@@ -628,7 +628,7 @@ const userIdWithoutQuotes = removeQuotes(userId);
                   </Select>
                 </FormControl>
               </div>
-              
+
               <div className="People-child-container">
                 <label className="PeopleScreen-lables" htmlFor="">
                   State
@@ -713,7 +713,7 @@ const userIdWithoutQuotes = removeQuotes(userId);
                   value={PeopleDetails?.Orglinkedin}
                 />
               </div>
-            
+
               <div className="People-child-container">
                 <label className="PeopleScreen-lables" htmlFor="">
                   Position End date

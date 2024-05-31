@@ -319,7 +319,7 @@ import {
   APIUrlFour,
   GetUserId
 } from "../../../../../Utils/Utils";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from "@mui/material";
 import Loader from "../../../../Loader/Loader";
@@ -327,8 +327,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Textarea } from "@mui/joy";
 import { toast } from "react-toastify";
+import { PEOPLE_RECORDS } from "../../../../../Utils/Constants";
 let loaded = false;
 function Row({ row }) {
+  const navigate = useNavigate();
   const linkedInUrl = row?.linkedin ? row.linkedin : "Not Available";
   const [deleteData, setDeleteData] = React.useState('');
   const [ModalOpen, setModalOpen] = React.useState(false)
@@ -348,17 +350,22 @@ function Row({ row }) {
     }
     return true
   }
+  const removeQuotes = (str) => {
+    if (str.startsWith('"') && str.endsWith('"')) {
+      return str.slice(1, -1);
+    }
+    return str;
+  };
+  const userIdWithoutQuotes = removeQuotes(userId);
   const handleDeleteCase = () => {
     if (!validateFields()) return
     const data = {
-      // {
       records: [
         {
-          record_id: row.org_id,
-          user_id: userId
+          record_id: row?.uuid,
+          user_id: userIdWithoutQuotes
         }
       ]
-      // }
     };
     const option = {
       method: "POST",
@@ -381,37 +388,41 @@ function Row({ row }) {
         toast.error(err?.response?.data?.message);
       });
   }
+
+  const EditPeople = (row) => {
+    navigate(PEOPLE_RECORDS, { state: { data: row, isOrganizationScreen: window.location.pathname === '/OrgDetails' } })
+  }
   return (
     <React.Fragment>
-    <TableRow className="juyds" sx={{ "& > *": { borderBottom: "unset" } }}>
-      <>
-        <TableCell className="Decisions-row-empty" align="left">
-          <div className="Decision-maker-user-name-main-container">
-            <div
-              className={
-                row?.decision_maker === true
-                  ? "Decision-maker-user-name"
-                  : "Decision-maker-user-namenoborder"
-              }
-            >
-              <p className="letter-heading">{row?.first_name?.substring(0, 1) + row?.last_name?.substring(0, 1)}</p>
+      <TableRow className="juyds" sx={{ "& > *": { borderBottom: "unset" } }}>
+        <>
+          <TableCell className="Decisions-row-empty" align="left">
+            <div className="Decision-maker-user-name-main-container">
+              <div
+                className={
+                  row?.decision_maker === true
+                    ? "Decision-maker-user-name"
+                    : "Decision-maker-user-namenoborder"
+                }
+              >
+                <p className="letter-heading">{row?.first_name?.substring(0, 1) + row?.last_name?.substring(0, 1)}</p>
+              </div>
             </div>
-          </div>
-        </TableCell>
-        <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
-          <Tooltip title={row?.first_name + row.last_name}>
-            {row?.first_name
-              ? row.first_name + row.last_name.substring(0, 10) + (row.last_name.length > 10 ? "..." : "")
-              : "-"}
-          </Tooltip>
-          <Tooltip title={row?.primary_job_title}>
-            <p className="job-title-table"> {row?.primary_job_title
-              ? row.primary_job_title.substring(0, 10) +
-              (row.primary_job_title.length > 10 ? "..." : "")
-              : "-"}</p>
-          </Tooltip>
-        </TableCell>
-        {/* <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+          </TableCell>
+          <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+            <Tooltip title={row?.first_name + row.last_name}>
+              {row?.first_name
+                ? row.first_name + row.last_name.substring(0, 10) + (row.last_name.length > 10 ? "..." : "")
+                : "-"}
+            </Tooltip>
+            <Tooltip title={row?.primary_job_title}>
+              <p className="job-title-table"> {row?.primary_job_title
+                ? row.primary_job_title.substring(0, 10) +
+                (row.primary_job_title.length > 10 ? "..." : "")
+                : "-"}</p>
+            </Tooltip>
+          </TableCell>
+          {/* <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
           <Tooltip title={row?.primary_organization}>
             {row?.primary_organization
               ? row.primary_organization.substring(0, 10) +
@@ -419,7 +430,7 @@ function Row({ row }) {
               : "-"}
           </Tooltip>
         </TableCell> */}
-        {/* <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+          {/* <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
           <Tooltip title={row?.primary_job_title}>
             {row?.primary_job_title
               ? row.primary_job_title.substring(0, 10) +
@@ -427,64 +438,64 @@ function Row({ row }) {
               : "-"}
           </Tooltip>
         </TableCell> */}
-        <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
-          <Tooltip title={
-            linkedInUrl !== 'Not Available' ?
-              <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{linkedInUrl}</a>
-              : 'Not Available'
-          }>
-            <div
-              className="Set-dropdown-ofContactDetailList"
+          <TableCell align="left" className="table-cell-of-contact-details-dropdown-th-prospect" style={{ cursor: 'pointer' }}>
+            <Tooltip title={
+              linkedInUrl !== 'Not Available' ?
+                <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" className="linkedin-url-tooltip">{linkedInUrl}</a>
+                : 'Not Available'
+            }>
+              <div
+                className="Set-dropdown-ofContactDetailList"
               // style={{ position: "relative" }}
+              >
+                <p className="">
+                  {row?.linkedin
+                    ? row?.linkedin.length > 28
+                      ? row?.linkedin.substr(28, 28) ||
+                      row?.linkedin.length > 20 + "..."
+                      : row?.linkedin
+                    : "Not Available"}
+                </p>
+              </div>
+            </Tooltip>
+          </TableCell>
+          <TableCell align="left" className="cursor-pointer">
+            <Tooltip title={row?.email ? row?.email : "Not Available"}>
+              <div className="Suspect-table-data">
+                <h3 className="industry-sector-table">
+                  {row?.email
+                    ? row?.email.length > 26
+                      ? row?.email.substr(0, 26) + "..."
+                      : row?.email
+                    : "-"}
+                </h3>
+              </div>
+            </Tooltip>
+          </TableCell>
+          <TableCell align="left">
+            <Tooltip
+              title={row?.phone_number ? row?.phone_number : "Not Available"}
             >
-              <p className="">
-                {row?.linkedin
-                  ? row?.linkedin.length > 28
-                    ? row?.linkedin.substr(28, 28) ||
-                    row?.linkedin.length > 20 + "..."
-                    : row?.linkedin
-                  : "Not Available"}
-              </p>
-            </div>
-          </Tooltip>
-        </TableCell>
-        <TableCell align="left" className="cursor-pointer">
-          <Tooltip title={row?.email ? row?.email : "Not Available"}>
-            <div className="Suspect-table-data">
-              <h3 className="industry-sector-table">
-                {row?.email
-                  ? row?.email.length > 26
-                    ? row?.email.substr(0, 26) + "..."
-                    : row?.email
+              <div className="Suspect-table-data">
+                {row?.phone_number
+                  ? row?.phone_number.length > 14
+                    ? row?.phone_number.substr(0, 14) + "..."
+                    : row?.phone_number
                   : "-"}
-              </h3>
-            </div>
-          </Tooltip>
-        </TableCell>
-        <TableCell align="left">
-          <Tooltip
-            title={row?.phone_number ? row?.phone_number : "Not Available"}
-          >
-            <div className="Suspect-table-data">
-              {row?.phone_number
-                ? row?.phone_number.length > 14
-                  ? row?.phone_number.substr(0, 14) + "..."
-                  : row?.phone_number
-                : "-"}
-            </div>
-          </Tooltip>
-        </TableCell>
-        <TableCell className="table-cellhandleRightsidebar-prospect">
-          <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-            <Tooltip title="Edit">
-              <EditIcon className="action-icons-people-edit"/>
+              </div>
             </Tooltip>
-            <Tooltip title="Delete">
-              <DeleteIcon onClick={() => DeletePeople(row)} className="action-icons-people-delete" />
-            </Tooltip>
-          </div>
-        </TableCell>
-        {/* <TableCell
+          </TableCell>
+          <TableCell className="table-cellhandleRightsidebar-prospect">
+            <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+              <Tooltip title="Edit">
+                <EditIcon className="action-icons-people-edit" onClick={() => EditPeople(row)} />
+              </Tooltip>
+              <Tooltip title="Delete">
+                <DeleteIcon onClick={() => DeletePeople(row)} className="action-icons-people-delete" />
+              </Tooltip>
+            </div>
+          </TableCell>
+          {/* <TableCell
           align="left"
           className="table-cell-of-contact-details-dropdown-th-prospect"
         >
@@ -503,31 +514,31 @@ function Row({ row }) {
             {row?.source_description ? row.source_description : "-"}
           </Tooltip>
         </TableCell> */}
-      </>
-    </TableRow>
+        </>
+      </TableRow>
       <Dialog className="Delete-Confirmation"
-      open={ModalOpen}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle className="deleteD-ConfirmationOutter_class" id="alert-dialog-title">
-        {"Delete Confirmation "}
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          <label htmlFor=""> Reason <span className="Decisionmaker-Reasonteaxt-area-lable">*</span> </label>
-          <Textarea minRows={3} value={modalTeaxtArea} onChange={(e) => setModalTeaxtArea(e.target.value)} />
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button className="DecisionmakerModalButton" autoFocus onClick={handleClose}>
-          Cancel
-        </Button>
-        <Button className="CancelDelete-Confirmation" onClick={handleDeleteCase}>Delete</Button>
-      </DialogActions>
-    </Dialog>
-        </React.Fragment>
+        open={ModalOpen}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle className="deleteD-ConfirmationOutter_class" id="alert-dialog-title">
+          {"Delete Confirmation "}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <label htmlFor=""> Reason <span className="Decisionmaker-Reasonteaxt-area-lable">*</span> </label>
+            <Textarea minRows={3} value={modalTeaxtArea} onChange={(e) => setModalTeaxtArea(e.target.value)} />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button className="DecisionmakerModalButton" autoFocus onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button className="CancelDelete-Confirmation" onClick={handleDeleteCase}>Delete</Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 }
 Row.propTypes = {
@@ -565,13 +576,13 @@ export default function PeopleRecords({ rowData, organizationData }) {
   }, [orgData?.org_id, organizationData?.org_id]);
   const aiDecisionMakerTable = () => {
     setLoading(true);
-    const org_id = organizationData?.org_id || orgData.org_id;
+    const org_id = organizationData?.permalink || orgData?.permalink;
     const option = {
       method: "GET",
       headers: {
         "content-type": "plain/text",
       },
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&org_id=${org_id}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&org_permalink=${org_id}`,
     };
     axios(option)
       .then((e) => {
@@ -599,10 +610,10 @@ export default function PeopleRecords({ rowData, organizationData }) {
       });
   };
   React.useEffect(() => {
-    if (organizationData?.org_id || orgData.org_id) {
+    if (organizationData?.permalink || orgData?.permalink) {
       aiDecisionMakerTable();
     }
-  }, [organizationData?.org_id, orgData.org_id, skip]);
+  }, [organizationData?.permalink, orgData?.permalink, skip]);
   return (
     <>
       {loading ? <Loader /> : null}
@@ -640,7 +651,7 @@ export default function PeopleRecords({ rowData, organizationData }) {
                     <p className="People-phone-data"> Phone no</p>
                   </TableCell>
                   <TableCell align="left" className="People-linkdin-table-cell">
-                  Action
+                    Action
                   </TableCell>
                   {/* <TableCell align="left" className="">
                     Comments

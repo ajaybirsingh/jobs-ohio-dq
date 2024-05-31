@@ -42,12 +42,18 @@ export default function OrgTabsScreen({ organizationData }) {
     const navigate = useNavigate();
     const [value, setValue] = React.useState(0);
     const location = useLocation();
-    const orgData = organizationData || location?.state;
+    const orgData = organizationData || location?.state || {};
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-    const addPeople = (orgData) => {
-        navigate(PEOPLE_RECORDS, { state: orgData })
+    const addPeople = () => {
+        const orgData = organizationData || location?.state || {};
+        const updatedOrgData = {
+            ...orgData,
+            orgDetails: window.location.pathname === '/OrgDetails',
+        };
+
+        navigate(PEOPLE_RECORDS, { state: updatedOrgData })
     }
     return (
         <Box className="OrgTabs_main-box" sx={{ width: '100%' }}>
