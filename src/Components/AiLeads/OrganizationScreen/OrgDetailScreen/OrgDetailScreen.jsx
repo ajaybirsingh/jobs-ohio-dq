@@ -35,11 +35,8 @@ export default function OrgDetailsScreen({ organizationData }) {
   const navigate = useNavigate();
   const orgData = organizationData || location?.state;
   const [anchorEl, setAnchorEl] = React.useState(null);
-  console.log(orgData, "orgData");
   const formattedOrgCount = new Intl.NumberFormat().format(orgData?.last_funding_total);
-  console.log(formattedOrgCount, "formattedOrgCount");
   const EditOrg = (orgData) => {
-    console.log(orgData,'orgData40');
     navigate(ORGANIZATION_RECORDS, { state: {data: orgData, isOrgDetails: window.location.pathname === '/OrgDetails' }})
   }
   return (

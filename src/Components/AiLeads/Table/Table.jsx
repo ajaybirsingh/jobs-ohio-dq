@@ -41,6 +41,7 @@ function Row({
   onLoadApi,
   setHasMoreInner,
   setopenRowId,
+  setIsDeleted
 }) {
   const [hasMoreInnerTable, setHasMoreInnerTable] = useState(false);
   const navigate = useNavigate();
@@ -231,11 +232,10 @@ function Row({
   const ref = React.useRef(null);
   const isBranchLocationsDisabled = true;
   const EditOrgUser = (row) => {
-    navigate(ORGANIZATION_RECORDS, { state: {data: row, isOrgListing: window.location.pathname === '/organization' }})
+    navigate(ORGANIZATION_RECORDS, { state: { data: row, isOrgListing: window.location.pathname === '/organization' } })
   }
   const [modalTeaxtArea, setModalTeaxtArea] = React.useState("")
   const [deleteData, setDeleteData] = React.useState('');
-  console.log(deleteData, 'deleteData238');
   const [ModalOpen, setModalOpen] = useState(false)
   const handleClose = (row) => {
     setModalOpen(false);
@@ -253,7 +253,6 @@ function Row({
     }
     return true
   }
-  console.log(row, 'row255');
   const handleDeleteCase = () => {
     if (!validateFields()) return
     setLoading(true);
@@ -281,6 +280,7 @@ function Row({
           toast.success("Record Deleted Seccussfully");
           setModalTeaxtArea('');
           handleClose();
+          setIsDeleted(true);
         }
       })
       .catch((err) => {
@@ -461,6 +461,7 @@ export default function AiLeadsTable({
   const [expandHandlerAccept, setExpandHandlerAccept] = useState([]);
   const [pageInner, setPageInner] = React.useState(1);
   const [openRowId, setopenRowId] = useState("");
+  const [isDeleted, setIsDeleted] = useState(false);
 
   React.useEffect(() => {
     if (tableCommingData) {
@@ -481,6 +482,7 @@ export default function AiLeadsTable({
       .then((e) => {
         setLoading(false);
         SetOrganizationCount('orgCount', e?.data?.count);
+        setIsDeleted(false);
         const comingData = e?.data?.data;
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);
@@ -566,7 +568,7 @@ export default function AiLeadsTable({
         setPage(1);
       }
     }, 150);
-  }, [page]);
+  }, [page, isDeleted]);
 
   React.useEffect(() => {
     setCurrentLeadsLength(jsonData?.length);
@@ -749,6 +751,7 @@ export default function AiLeadsTable({
                         <Row
                           key={row.name}
                           row={row}
+                          setIsDeleted={setIsDeleted}
                           selected={isSelected}
                           onSelect={(selectedRow) => {
                             const localRows = [...selectedRows];

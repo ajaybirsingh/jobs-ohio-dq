@@ -204,6 +204,8 @@
     min-height: 5vh;
     max-height: 50vh !important;
     margin-right: 4px;
+    width: 160px;
+    overflow: hidden;
 }
 
 .AI-leade-checkbox-and-data-list-outter::-webkit-scrollbar {

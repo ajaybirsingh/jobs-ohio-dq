@@ -21,14 +21,14 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { useNavigate } from "react-router-dom";
 import { PEOPLE_RECORDS } from "../../Utils/Constants";
 import Textarea from '@mui/joy/Textarea';
-function Row({ row }) {
+function Row({ row, setIsDeleted }) {
   const [loading, setLoading] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [modalTeaxtArea, setModalTeaxtArea] = React.useState("")
   const linkedInUrl = row?.linkedin ? row?.linkedin : 'Not Available';
   const navigate = useNavigate();
   const EditPeople = (row) => {
-    navigate(PEOPLE_RECORDS, { state: row })
+    navigate(PEOPLE_RECORDS, { state: { data: row } })
   }
   const removeQuotes = (str) => {
     if (str.startsWith('"') && str.endsWith('"')) {
@@ -54,19 +54,17 @@ function Row({ row }) {
     return true
   }
 
-  const handleDeleteCase = () => {
+  const handleDeleteCase = (row) => {
     if (!validateFields()) return
 
     setLoading(true);
     const data = {
-      // {
       records: [
         {
-          record_id: "0",
+          record_id: row?.uuid,
           user_id: userIdWithoutQuotes
         }
       ]
-      // }
     };
 
     const option = {
@@ -82,6 +80,7 @@ function Row({ row }) {
       .then((e) => {
         setLoading(false);
         if (e?.status === 200) {
+          setIsDeleted(true);
           toast.success("Record Deleted Successfully");
           setModalTeaxtArea('');
           handleClose();
@@ -221,7 +220,7 @@ function Row({ row }) {
           <Button className="DecisionmakerModalButton" autoFocus onClick={handleClose}>
             Cancel
           </Button>
-          <Button className="CancelDelete-Confirmation" onClick={handleDeleteCase}  >Delete</Button>
+          <Button className="CancelDelete-Confirmation" onClick={() => handleDeleteCase(row)}  >Delete</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
@@ -262,6 +261,12 @@ export default function DecisionMakerTable({
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [isfetchData, setIsfetchData] = React.useState(false);
+  const [isDeleted, setIsDeleted] = React.useState(false);
+  // React.useEffect(() => {
+  //   if (isDeleted === true) {
+  //     setIsfetchData(true);
+  //   }
+  // }, [isDeleted])
   React.useEffect(() => {
     if (tableCommingData) {
       setDecisionMakerData(tableCommingData);
@@ -290,6 +295,7 @@ export default function DecisionMakerTable({
       .then((response) => {
         setLoading(false);
         SetPeopleCount('peoCount', response?.data?.count);
+        setIsDeleted(false);
         const comingData = response?.data?.data;
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);
@@ -379,6 +385,12 @@ export default function DecisionMakerTable({
       }
     }
   }, [skip, firstFilterData, applyFilter, isfetchData]);
+
+  React.useEffect(() => {
+    if (isDeleted) {
+      fetchData();
+    }
+  }, [isDeleted])
   React.useEffect(() => {
     if (istableDataFilter) {
       fetchDataReturnFilter();
@@ -441,6 +453,7 @@ export default function DecisionMakerTable({
                 <React.Fragment key={index}>
                   <Row
                     row={row}
+                    setIsDeleted={setIsDeleted}
                     selected={selectedRows.includes(row)}
                     onSelect={(firstName) => {
                       const selectedIndex = selectedRows.indexOf(firstName);

@@ -329,7 +329,7 @@ import { Textarea } from "@mui/joy";
 import { toast } from "react-toastify";
 import { PEOPLE_RECORDS } from "../../../../../Utils/Constants";
 let loaded = false;
-function Row({ row }) {
+function Row({ row, organizationData }) {
   const navigate = useNavigate();
   const linkedInUrl = row?.linkedin ? row.linkedin : "Not Available";
   const [deleteData, setDeleteData] = React.useState('');
@@ -390,7 +390,11 @@ function Row({ row }) {
   }
 
   const EditPeople = (row) => {
-    navigate(PEOPLE_RECORDS, { state: { data: row, isOrganizationScreen: window.location.pathname === '/OrgDetails' } })
+    const orgPeopleData = {
+      ...row,
+      orgData: organizationData
+    };
+    navigate(PEOPLE_RECORDS, { state: { data: orgPeopleData, isOrganizationScreen: window.location.pathname === '/OrgDetails' } })
   }
   return (
     <React.Fragment>
@@ -409,7 +413,7 @@ function Row({ row }) {
               </div>
             </div>
           </TableCell>
-          <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+          {/* <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
             <Tooltip title={row?.first_name + row.last_name}>
               {row?.first_name
                 ? row.first_name + row.last_name.substring(0, 10) + (row.last_name.length > 10 ? "..." : "")
@@ -419,6 +423,19 @@ function Row({ row }) {
               <p className="job-title-table"> {row?.primary_job_title
                 ? row.primary_job_title.substring(0, 10) +
                 (row.primary_job_title.length > 10 ? "..." : "")
+                : "-"}</p>
+            </Tooltip>
+          </TableCell> */}
+          <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+            <Tooltip title={row?.first_name + row.last_name}>
+              {row?.first_name
+                ? row.first_name + row.last_name.substring(0, 15) + (row.last_name.length > 15 ? "..." : "")
+                : "-"}
+            </Tooltip>
+            <Tooltip title={row?.primary_job_title}>
+              <p className="job-title-table"> {row?.primary_job_title
+                ? row.primary_job_title.substring(0, 25) +
+                (row.primary_job_title.length > 25 ? "..." : "")
                 : "-"}</p>
             </Tooltip>
           </TableCell>
@@ -666,6 +683,7 @@ export default function PeopleRecords({ rowData, organizationData }) {
                   <React.Fragment key={index}>
                     <Row
                       row={row}
+                      organizationData={organizationData}
                       selected={selectedRows.includes(row.first_name)}
                       onSelect={(firstName) => {
                         const selectedIndex = selectedRows.indexOf(firstName);

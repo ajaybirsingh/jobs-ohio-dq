@@ -53,7 +53,7 @@ export default function OrgTabsScreen({ organizationData }) {
             orgDetails: window.location.pathname === '/OrgDetails',
         };
 
-        navigate(PEOPLE_RECORDS, { state: updatedOrgData })
+        navigate(PEOPLE_RECORDS, { state: { data: updatedOrgData } })
     }
     return (
         <Box className="OrgTabs_main-box" sx={{ width: '100%' }}>

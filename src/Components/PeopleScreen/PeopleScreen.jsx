@@ -19,19 +19,16 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useLocation, useNavigate } from "react-router-dom";
 import { APIUrlFour, APIUrlOne, GetUserId } from "../../Utils/Utils";
 import CloseIcon from '@mui/icons-material/Close';
-import { AI_DECISION_MAKER } from "../../Utils/Constants";
+import { AI_DECISION_MAKER, ORG_DETAILS } from "../../Utils/Constants";
 import moment from "moment/moment";
 import dayjs from "dayjs";
 export default function PeopleScreen() {
   const location = useLocation();
-  console.log(location, 'location27');
   const navigate = useNavigate();
-  const peopleData = location?.state;
+  const peopleData = location?.state?.data;
   const PrefilledData = location?.state?.data;
-  console.log(PrefilledData,"PrefilledData111111");
-  console.log(peopleData, 'peopleData30');
+  const isOrgDetails = location?.state?.isOrganizationScreen;
   const [showSearchdata, setshowSearchdata] = React.useState(false);
-  console.log(showSearchdata,"showSearchdata");
   const [responseData, setResponseData] = React.useState(null);
   const [selectedOrganization, setSelectedOrganization] = React.useState('');
   const [actionData, setActionData] = React.useState([]);
@@ -55,9 +52,7 @@ export default function PeopleScreen() {
     UserId: "",
     uuid: ""
   });
-  console.log(PeopleDetails, 'PeopleDetails55');
   const [dropDownData, setDropDownData] = React.useState([]);
-  console.log(dropDownData,"dropDownData1111");
   const formatedDate = moment(peopleData?.position_end_date).format("YYYY-MM-DD");
   React.useEffect(() => {
     if (peopleData?.first_name) {
@@ -81,7 +76,7 @@ export default function PeopleScreen() {
         uuid: peopleData?.uuid
       })
     }
-  }, [peopleData?.org_permalink ])
+  }, [peopleData])
 
 
   React.useEffect(() => {
@@ -330,7 +325,11 @@ export default function PeopleScreen() {
             PositionEndDate: "",
             Status: "",
           });
-          navigate(AI_DECISION_MAKER);
+          if (isOrgDetails) {
+            navigate(ORG_DETAILS, { state: PrefilledData?.orgData })
+          } else {
+            navigate(AI_DECISION_MAKER);
+          }
         }
       })
       .catch((err) => {
@@ -382,23 +381,53 @@ export default function PeopleScreen() {
   React.useEffect(() => {
     setshowSearchdata(false);
     let timer;
-    if (PeopleDetails.Oraganization?.length > 2) {
+    if (PeopleDetails?.Oraganization?.length > 2 && responseData === null) {
       timer = setTimeout(() => {
         OrgSearch();
-      }, 1000);
+      }, 800);
       setshowSearchdata(false)
+    }
+    if (PeopleDetails?.Oraganization?.length === 0) {
+      setResponseData(null);
     }
     return () => clearTimeout(timer);
   }, [PeopleDetails.Oraganization]);
+  // React.useEffect(() => {
+  //   setshowSearchdata(false);
+  //   let timer;
+  //   if (PeopleDetails.Oraganization?.length > 2) {
+  //     timer = setTimeout(() => {
+  //       OrgSearch();
+  //     }, 1000);
+  //     setshowSearchdata(false)
+  //   }
+  //   return () => clearTimeout(timer);
+  // }, [PeopleDetails.Oraganization]);
+  // const handelselectdata = (item) => {
+  //   setSelectedOrganization(item);
+  //   setshowSearchdata(false)
+  //   setPeopleDetails(prevState => ({
+  //     ...prevState,
+  //     Oraganization: item?.org_name || ""
+  //   }));
+  //   setshowSearchdata(false)
+  // };
   const handelselectdata = (item) => {
     setSelectedOrganization(item);
-    setshowSearchdata(false)
     setPeopleDetails(prevState => ({
       ...prevState,
       Oraganization: item?.org_name || ""
     }));
-    setshowSearchdata(false)
-  };
+    setshowSearchdata(false);
+    // setIsSelected(true);s
+  }
+  React.useEffect(() => {
+    if (responseData?.length <= 1 || PrefilledData) {
+      setshowSearchdata(false);
+    } if (responseData?.length > 1) {
+      setshowSearchdata(true)
+    }
+  }, [responseData])
 
   const handelEmtyData = () => {
     setPeopleDetails(prevState => ({
@@ -452,14 +481,13 @@ export default function PeopleScreen() {
     DropDownsData();
   }, [])
   const states = PeopleDetails?.Country === 'United States' ? dropDownData?.state : dropDownData?.ca_states;
-  console.log(states,"states");
   return (
     <>
       {loading ? <Loader /> : null}
       <section className="PeopleScreen-main-container">
         <div className="Peoplescreen-heading">
           <h3>People Records </h3>
-          <p>You are welcome to People Records the JOI AI Team</p>
+          {/* <p>You are welcome to People Records the JOI AI Team</p> */}
         </div>
         <div className="People-screencontainer-outter">
           <div className="Pepole-container">
@@ -565,7 +593,7 @@ export default function PeopleScreen() {
               </div>
             </div>
             <div className="Pepole-flex-container">
-              <div className="SetCoustom-drop-down">
+              {/* <div className="SetCoustom-drop-down">
 
                 <div className="People-child-container-forOrganization">
                   <label htmlFor="" className="PeopleScreen-lables">
@@ -612,6 +640,54 @@ export default function PeopleScreen() {
                     )}
                   </div>
                 )}
+              </div> */}
+              <div className="SetCoustom-drop-down">
+                <div className="People-child-container-forOrganization">
+                  <label htmlFor="" className="PeopleScreen-lables">
+                    Organization
+                  </label>
+                  <span className="PeopleMandatoryfields">*</span>
+                  <LabelInput
+                    onChange={(e) => {
+                      const inputvalue = e?.target?.value;
+                      setPeopleDetails({
+                        ...PeopleDetails,
+                        Oraganization: inputvalue,
+                      });
+                    }}
+                    value={PeopleDetails?.Oraganization}
+                  />
+                  <div className="handelEmtyData_icon" onClick={handelEmtyData}>
+                    {PeopleDetails.Oraganization && (
+                      <CloseIcon className='showicons-search' />
+                    )}
+                  </div>
+                </div>
+                {showSearchdata && (
+                  <div className={responseData && responseData?.length ? "Dropdown-forPeople-screen" : ""}
+                  >
+                    {responseData?.length > 0 ? (
+                      responseData?.map((item) => {
+                        return (
+                          <div className='outterAutocompletedropdown' key={item.id}>
+                            <div
+                              onClick={() => handelselectdata(item)} className='useralldata'
+                            >
+                              {item?.org_name}
+                            </div>
+                            <div className='separatorline'></div>
+                          </div>
+                        )
+                      }
+                      )
+                    ) : (
+                      <div>
+                        {showSearchdata && <div className='Not-Available-Drop-Down'>Not Available</div>}
+                      </div>
+                    )}
+                  </div>
+                )}
+
               </div>
               <div className="uploderinput">
                 <label className="PeopleScreen-lables" htmlFor="">
@@ -766,7 +842,7 @@ export default function PeopleScreen() {
                   />
                 </LocalizationProvider>
 
-                
+
               </div>
             </div>
             <div className="Pepole-flex-container">

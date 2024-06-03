@@ -14,7 +14,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import HeaderSearch from "../Header/Search/Search";
 import AIIcon from "../../Assets/AIIcon.svg";
 import AlleadsSelected from "../../Assets/AlleadsSelected.svg";
@@ -35,6 +35,7 @@ import {
   JOI_TRAINING,
   ORGANIZATION,
   ORG_DETAILS,
+  PEOPLE_RECORDS,
 } from "../../Utils/Constants";
 import { useOktaAuth } from "@okta/okta-react";
 import { APIUrlFour, APIUrlOne, GetOktaAuthData, GetUserId } from "../../Utils/Utils";
@@ -151,6 +152,9 @@ export default function Sidebar({
 }) {
   const navigate = useNavigate();
   const getAuthData = GetOktaAuthData();
+  const location = useLocation();
+  const stateData = location?.state?.data;
+  const checkOrgDetails = location?.state?.data?.orgDetails;
   const [open, setOpen] = React.useState(true);
   const { oktaAuth } = useOktaAuth();
   const [headerSearchData, setheaderSearchData] = React.useState("");
@@ -158,12 +162,12 @@ export default function Sidebar({
   const [loading, setLoading] = React.useState(false);
   const removeQuotes = (str) => {
     if (str.startsWith('"') && str.endsWith('"')) {
-        return str.slice(1, -1);
+      return str.slice(1, -1);
     }
     return str;
-};
-const userId = GetUserId();
-const userIdWithoutQuotes = removeQuotes(userId);
+  };
+  const userId = GetUserId();
+  const userIdWithoutQuotes = removeQuotes(userId);
   const [leadsProfileData, setLeadsProfileData] = React.useState([]);
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
   const [showSearchdata, setshowSearchdata] = React.useState(false);
@@ -234,6 +238,14 @@ const userIdWithoutQuotes = removeQuotes(userId);
     localStorage.clear();
     navigate('/')
   }
+  const ClickToBack = () => {
+    if (checkOrgDetails) {
+      navigate(ORG_DETAILS, { state: stateData })
+    }
+    else {
+      navigate(ORGANIZATION)
+    }
+  }
   return (
     <>
       <CssBaseline />
@@ -259,7 +271,22 @@ const userIdWithoutQuotes = removeQuotes(userId);
                     </ListItem>
                   </List>
                 </div>
-              ) : null}
+              ) : window.location.pathname === PEOPLE_RECORDS ?
+                <div>
+                  <List>
+                    <ListItem className="arrowbutton-item-list">
+                      <ListItemButton
+                        className="backarrow-list-button"
+                        // onClick={() => navigate(ORGANIZATION)}
+                        onClick={() => ClickToBack()}
+                      >
+                        <div className="backarrow-header-main">
+                          <img src={backarrow} alt="" />
+                        </div>
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
+                </div> : null}
 
               <HeaderSearch
                 showSearchdata={showSearchdata}
@@ -270,35 +297,51 @@ const userIdWithoutQuotes = removeQuotes(userId);
               />
             </DrawerHeader>
 
-          ) : (<DrawerHeader className="header-main">
-            {window.location.pathname === ORG_DETAILS ? (
-              <div>
-                <List>
-                  <ListItem className="arrowbutton-item-list">
-                    <ListItemButton
-                      className="backarrow-list-button"
-                      onClick={() => navigate(ORGANIZATION)}
-                    >
-                      <div className="backarrow-header-main">
-                        <img src={backarrow} alt="" />
-                      </div>
-                    </ListItemButton>
-                  </ListItem>
-                </List>
-              </div>
-            ) : null}
+          ) : (
+            <DrawerHeader className="header-main">
+              {window.location.pathname === ORG_DETAILS ? (
+                <div>
+                  <List>
+                    <ListItem className="arrowbutton-item-list">
+                      <ListItemButton
+                        className="backarrow-list-button"
+                        onClick={() => navigate(ORGANIZATION)}
+                      >
+                        <div className="backarrow-header-main">
+                          <img src={backarrow} alt="" />
+                        </div>
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
+                </div>
+              ) : window.location.pathname === PEOPLE_RECORDS ?
+                <div>
+                  <List>
+                    <ListItem className="arrowbutton-item-list">
+                      <ListItemButton
+                        className="backarrow-list-button"
+                        // onClick={() => navigate(ORGANIZATION)}
+                        onClick={() => ClickToBack()}
+                      >
+                        <div className="backarrow-header-main">
+                          <img src={backarrow} alt="" />
+                        </div>
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
+                </div> : null}
 
-            <HeaderSearch
-              showSearchdata={showSearchdata}
-              headerSearchData={headerSearchData}
-              setheaderSearchData={setheaderSearchData}
-              responseData={responseData}
-              handlesearch={handlesearch}
-            />
+              <HeaderSearch
+                showSearchdata={showSearchdata}
+                headerSearchData={headerSearchData}
+                setheaderSearchData={setheaderSearchData}
+                responseData={responseData}
+                handlesearch={handlesearch}
+              />
 
 
 
-          </DrawerHeader>
+            </DrawerHeader>
 
 
 
@@ -339,7 +382,7 @@ const userIdWithoutQuotes = removeQuotes(userId);
               alignItems: "center",
             }}
           >
-            <Link to={'/'}>
+            <Link to={ORGANIZATION}>
               <img
                 src={JobsLogo}
                 alt="logo"

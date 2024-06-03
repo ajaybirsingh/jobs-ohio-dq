@@ -15,11 +15,8 @@ import { APIUrlFour, APIUrlOne, GetUserId } from "../../../Utils/Utils";
 import { ORGANIZATION, ORG_DETAILS } from "../../../Utils/Constants";
 const Organization = () => {
     const location = useLocation();
-    console.log(location, 'location18');
     const OrganizationData = location?.state?.data;
-    console.log(OrganizationData, 'OrganizationData20');
     const isOrgScreencome = location?.state?.isOrgListing;
-    console.log(isOrgScreencome,'isOrgScreencome22',location);
     const navigate = useNavigate();
     const [Organization, setOrganization] = React.useState({
         Name: "",
@@ -42,7 +39,6 @@ const Organization = () => {
         comments: "",
         uuid: ""
     });
-    console.log(Organization, 'Organization41');
     const removeQuotes = (str) => {
         if (str.startsWith('"') && str.endsWith('"')) {
             return str.slice(1, -1);
@@ -297,7 +293,6 @@ const Organization = () => {
             <section className="AddOrganization-main-container">
                 <div className="AddOrganization-heading">
                     <h3> Add Organization </h3>
-                    <p>You are welcome to Add Organization the JOI AI Team</p>
                 </div>
                 <div className="AddOrganization-container-outter">
                     <div className="AddOrganization-container">

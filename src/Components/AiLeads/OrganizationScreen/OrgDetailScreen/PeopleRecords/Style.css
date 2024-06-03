@@ -256,6 +256,7 @@
 }
 .People-Phone-no-row{
   text-align: center !important;
+  width: 15%;
 }
 .People-email-data {
   width: 100px;
@@ -286,5 +287,5 @@
   width: 1%;
 }
 .People-Name-row{
-  width: 1%;
+  width: 20%;
 }
