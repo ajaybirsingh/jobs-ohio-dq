@@ -24,9 +24,14 @@ import moment from "moment/moment";
 import dayjs from "dayjs";
 export default function PeopleScreen() {
   const location = useLocation();
+  console.log(location, 'location27');
   const navigate = useNavigate();
   const peopleData = location?.state;
+  const PrefilledData = location?.state?.data;
+  console.log(PrefilledData,"PrefilledData111111");
+  console.log(peopleData, 'peopleData30');
   const [showSearchdata, setshowSearchdata] = React.useState(false);
+  console.log(showSearchdata,"showSearchdata");
   const [responseData, setResponseData] = React.useState(null);
   const [selectedOrganization, setSelectedOrganization] = React.useState('');
   const [actionData, setActionData] = React.useState([]);
@@ -50,7 +55,9 @@ export default function PeopleScreen() {
     UserId: "",
     uuid: ""
   });
+  console.log(PeopleDetails, 'PeopleDetails55');
   const [dropDownData, setDropDownData] = React.useState([]);
+  console.log(dropDownData,"dropDownData1111");
   const formatedDate = moment(peopleData?.position_end_date).format("YYYY-MM-DD");
   React.useEffect(() => {
     if (peopleData?.first_name) {
@@ -74,7 +81,32 @@ export default function PeopleScreen() {
         uuid: peopleData?.uuid
       })
     }
-  }, [peopleData?.org_permalink])
+  }, [peopleData?.org_permalink ])
+
+
+  React.useEffect(() => {
+    if (PrefilledData?.first_name) {
+      setPeopleDetails({
+        firstName: PrefilledData?.first_name,
+        lastName: PrefilledData?.last_name,
+        email: PrefilledData?.email,
+        PhoneNo: PrefilledData?.phone_no,
+        Linkedin: PrefilledData?.linkedin,
+        JobTitle: PrefilledData?.primary_job_title,
+        Oraganization: PrefilledData?.primary_organization,
+        SourceDescription: PrefilledData?.source_description,
+        City: PrefilledData?.city,
+        State: PrefilledData?.state,
+        Country: PrefilledData?.country,
+        Zip: PrefilledData?.zip_code,
+        Orglinkedin: PrefilledData?.organization_linkedin_username,
+        PositionEndDate: formatedDate,
+        Comments: PrefilledData?.comments,
+        Status: PrefilledData?.validation_status,
+        uuid: PrefilledData?.uuid
+      })
+    }
+  }, [peopleData])
 
   React.useEffect(() => {
     if (peopleData?.orgDetails === true) {
@@ -155,6 +187,7 @@ export default function PeopleScreen() {
   };
   const userId = GetUserId();
   const userIdWithoutQuotes = removeQuotes(userId);
+
   const handelApplyRecords = () => {
     if (!validateFields()) return;
     setLoading(true);
@@ -342,10 +375,12 @@ export default function PeopleScreen() {
       })
       .catch((error) => {
         setLoading(false)
+        setshowSearchdata(false);
         toast.error(error.response.data.message);
       });
   };
   React.useEffect(() => {
+    setshowSearchdata(false);
     let timer;
     if (PeopleDetails.Oraganization?.length > 2) {
       timer = setTimeout(() => {
@@ -417,6 +452,7 @@ export default function PeopleScreen() {
     DropDownsData();
   }, [])
   const states = PeopleDetails?.Country === 'United States' ? dropDownData?.state : dropDownData?.ca_states;
+  console.log(states,"states");
   return (
     <>
       {loading ? <Loader /> : null}
@@ -611,7 +647,7 @@ export default function PeopleScreen() {
                         Country: inputvalue,
                       });
                     }}
-                    value={PeopleDetails?.Country}
+                    value={PeopleDetails.Country}
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
                   >
@@ -729,6 +765,8 @@ export default function PeopleScreen() {
                     )}
                   />
                 </LocalizationProvider>
+
+                
               </div>
             </div>
             <div className="Pepole-flex-container">

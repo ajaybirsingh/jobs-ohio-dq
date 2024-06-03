@@ -235,6 +235,7 @@ function Row({
   }
   const [modalTeaxtArea, setModalTeaxtArea] = React.useState("")
   const [deleteData, setDeleteData] = React.useState('');
+  console.log(deleteData, 'deleteData238');
   const [ModalOpen, setModalOpen] = useState(false)
   const handleClose = (row) => {
     setModalOpen(false);
@@ -252,6 +253,7 @@ function Row({
     }
     return true
   }
+  console.log(row, 'row255');
   const handleDeleteCase = () => {
     if (!validateFields()) return
     setLoading(true);

@@ -15,8 +15,11 @@ import { APIUrlFour, APIUrlOne, GetUserId } from "../../../Utils/Utils";
 import { ORGANIZATION, ORG_DETAILS } from "../../../Utils/Constants";
 const Organization = () => {
     const location = useLocation();
+    console.log(location, 'location18');
     const OrganizationData = location?.state?.data;
+    console.log(OrganizationData, 'OrganizationData20');
     const isOrgScreencome = location?.state?.isOrgListing;
+    console.log(isOrgScreencome,'isOrgScreencome22',location);
     const navigate = useNavigate();
     const [Organization, setOrganization] = React.useState({
         Name: "",
@@ -39,6 +42,7 @@ const Organization = () => {
         comments: "",
         uuid: ""
     });
+    console.log(Organization, 'Organization41');
     const removeQuotes = (str) => {
         if (str.startsWith('"') && str.endsWith('"')) {
             return str.slice(1, -1);
