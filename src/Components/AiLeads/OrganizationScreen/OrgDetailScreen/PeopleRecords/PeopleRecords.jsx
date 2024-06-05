@@ -626,11 +626,17 @@ export default function PeopleRecords({ rowData, organizationData }) {
         setLoading(false);
       });
   };
+  // React.useEffect(() => {
+  //   if (organizationData?.permalink || orgData?.permalink) {
+  //     aiDecisionMakerTable();
+  //   }
+  // }, [organizationData?.permalink, orgData?.permalink, skip]);
+
   React.useEffect(() => {
-    if (organizationData?.permalink || orgData?.permalink) {
+    if (organizationData?.permalink) {
       aiDecisionMakerTable();
     }
-  }, [organizationData?.permalink, orgData?.permalink, skip]);
+  }, [organizationData?.permalink, skip]);
   return (
     <>
       {loading ? <Loader /> : null}
