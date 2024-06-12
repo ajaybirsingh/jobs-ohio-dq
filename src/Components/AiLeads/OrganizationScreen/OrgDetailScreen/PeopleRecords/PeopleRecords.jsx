@@ -426,7 +426,9 @@ function Row({ row, organizationData }) {
                 : "-"}</p>
             </Tooltip>
           </TableCell> */}
-          <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+
+
+          {/* <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
             <Tooltip title={row?.first_name + row.last_name}>
               {row?.first_name
                 ? row.first_name + row.last_name.substring(0, 15) + (row.last_name.length > 15 ? "..." : "")
@@ -438,7 +440,23 @@ function Row({ row, organizationData }) {
                 (row.primary_job_title.length > 25 ? "..." : "")
                 : "-"}</p>
             </Tooltip>
+          </TableCell> */}
+
+          <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
+            <Tooltip title={row?.first_name + " " + row?.last_name}>
+              {row?.first_name
+                ? row.first_name + " " + row.last_name.substring(0, 15) + (row.last_name.length > 15 ? "..." : "")
+                : "-"}
+            </Tooltip>
+            <Tooltip title={row?.primary_job_title}>
+              <p className="job-title-table">
+                {row?.primary_job_title
+                  ? row.primary_job_title.substring(0, 25) + (row.primary_job_title.length > 25 ? "..." : "")
+                  : "-"}
+              </p>
+            </Tooltip>
           </TableCell>
+
           {/* <TableCell className="Decision-maker-userTeblesell cursor-pointer" align="left">
           <Tooltip title={row?.primary_organization}>
             {row?.primary_organization
@@ -491,13 +509,13 @@ function Row({ row, organizationData }) {
           </TableCell>
           <TableCell align="left">
             <Tooltip
-              title={row?.phone_number ? row?.phone_number : "Not Available"}
+              title={row?.phone_no ? row?.phone_no : "Not Available"}
             >
               <div className="Suspect-table-data">
-                {row?.phone_number
-                  ? row?.phone_number.length > 14
-                    ? row?.phone_number.substr(0, 14) + "..."
-                    : row?.phone_number
+                {row?.phone_no
+                  ? row?.phone_no.length > 14
+                    ? row?.phone_no.substr(0, 14) + "..."
+                    : row?.phone_no
                   : "-"}
               </div>
             </Tooltip>

@@ -13,6 +13,8 @@ import Loader from "../../Loader/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { APIUrlFour, APIUrlOne, GetUserId } from "../../../Utils/Utils";
 import { ORGANIZATION, ORG_DETAILS } from "../../../Utils/Constants";
+import Country from "../../../Components/Json/Location/Locations.json";
+import Category from "./Categories/Categories";
 const Organization = () => {
     const location = useLocation();
     const OrganizationData = location?.state?.data;
@@ -39,6 +41,7 @@ const Organization = () => {
         comments: "",
         uuid: ""
     });
+    const countryData = Country;
     const removeQuotes = (str) => {
         if (str.startsWith('"') && str.endsWith('"')) {
             return str.slice(1, -1);
@@ -54,6 +57,10 @@ const Organization = () => {
     const validations = () => {
         if (Organization.Name === "") {
             toast.error("Please Enter Name ")
+            return false
+        }
+        if (!Organization?.linkedin || Organization?.linkedin === '') {
+            toast.error("Please Enter Linkedin")
             return false
         }
         if (Organization.website_url === "") {
@@ -416,7 +423,7 @@ const Organization = () => {
                             </div>
                             <div className="AddOrganization-child-container">
                                 <label className="PeopleScreen-lables" htmlFor="">
-                                    Linkedin
+                                    Linkedin <span className="OrganizationMandatoryfields">*</span>
                                 </label>
                                 <LabelInput
                                     onChange={(e) => {
@@ -497,7 +504,7 @@ const Organization = () => {
                                     Categories
                                 </label>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
-                                    <Select
+                                    {/* <Select
                                         multiple
                                         placeholder="Select Categories"
                                         className="AddOrg-dropdown"
@@ -522,7 +529,30 @@ const Organization = () => {
                                                 {item}
                                             </MenuItem>
                                         ))}
-                                    </Select>
+                                    </Select> */}
+                                    {/* <Category
+                                        onChange={(e) => {
+                                            const selectedValues = e.target.value;
+                                            const inputvalue = selectedValues.join(", ");
+                                            setOrganization({
+                                                ...Organization,
+                                                categories: inputvalue,
+                                            });
+                                        }}
+                                        value={Organization.categories ? Organization.categories.split(", ") : []}
+                                        options={dropDownData?.categories}
+                                    /> */}
+                                    <Category
+                                        onChange={(selectedValues) => {
+                                            const inputvalue = selectedValues.join(", ");
+                                            setOrganization({
+                                                ...Organization,
+                                                categories: inputvalue,
+                                            });
+                                        }}
+                                        value={Organization.categories ? Organization.categories.split(", ") : []}
+                                        options={dropDownData.categories}
+                                    />
                                 </FormControl>
 
                             </div>
@@ -566,10 +596,10 @@ const Organization = () => {
                                         <MenuItem disabled value="" className="disable-menu-action">
                                             <em className="SelectAction-css"> Select Country</em>
                                         </MenuItem>
-                                        {dropDownData?.country?.map((item, index) => {
+                                        {countryData?.map((item, index) => {
                                             return (
-                                                <MenuItem key={index} value={item}>
-                                                    {item}
+                                                <MenuItem key={index} value={item?.name}>
+                                                    {item?.name}
                                                 </MenuItem>
                                             );
                                         })}

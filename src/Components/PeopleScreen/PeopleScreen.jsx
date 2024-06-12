@@ -22,10 +22,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import { AI_DECISION_MAKER, ORG_DETAILS } from "../../Utils/Constants";
 import moment from "moment/moment";
 import dayjs from "dayjs";
+import country from "../../Components/Json/Location/Locations.json";
 export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
   const peopleData = location?.state?.data;
+  const countryData = country;
   const PrefilledData = location?.state?.data;
   const isOrgDetails = location?.state?.isOrganizationScreen;
   const [showSearchdata, setshowSearchdata] = React.useState(false);
@@ -50,7 +52,8 @@ export default function PeopleScreen() {
     PositionEndDate: "",
     Status: "",
     UserId: "",
-    uuid: ""
+    uuid: "",
+    Permalink: ""
   });
   const [dropDownData, setDropDownData] = React.useState([]);
   const formatedDate = moment(peopleData?.position_end_date).format("YYYY-MM-DD");
@@ -73,7 +76,8 @@ export default function PeopleScreen() {
         PositionEndDate: formatedDate,
         Comments: peopleData?.comments,
         Status: peopleData?.validation_status,
-        uuid: peopleData?.uuid
+        uuid: peopleData?.uuid,
+        Permalink: peopleData?.org_permalink
       })
     }
   }, [peopleData])
@@ -98,7 +102,8 @@ export default function PeopleScreen() {
         PositionEndDate: formatedDate,
         Comments: PrefilledData?.comments,
         Status: PrefilledData?.validation_status,
-        uuid: PrefilledData?.uuid
+        uuid: PrefilledData?.uuid,
+        Permalink: peopleData?.org_permalink
       })
     }
   }, [peopleData])
@@ -106,9 +111,10 @@ export default function PeopleScreen() {
   React.useEffect(() => {
     if (peopleData?.orgDetails === true) {
       setPeopleDetails({
-        Oraganization: peopleData?.legal_name,
+        Oraganization: peopleData?.legal_name || peopleData?.name,
         Orglinkedin: peopleData?.linkedin,
-        uuid: peopleData?.uuid
+        uuid: peopleData?.uuid,
+        Permalink: peopleData?.permalink
       })
     }
   }, [peopleData])
@@ -196,24 +202,25 @@ export default function PeopleScreen() {
           linkedin: PeopleDetails?.Linkedin,
           primary_job_title: PeopleDetails?.JobTitle,
           primary_organization: selectedOrganization?.org_name || PeopleDetails?.Oraganization,
-          organization_linkedin_username: PeopleDetails?.Orglinkedin,
+          organization_linkedin_username: PeopleDetails?.Orglinkedin ? PeopleDetails?.Orglinkedin : null,
           person_id: null,
-          org_permalink: "",
-          middle_name: "",
-          email: PeopleDetails?.email,
-          phone_no: PeopleDetails?.PhoneNo,
-          city: PeopleDetails?.City,
-          state: PeopleDetails?.State,
-          country: PeopleDetails?.Country,
-          zip_code: PeopleDetails?.Zip,
-          position_end_date: PeopleDetails?.PositionEndDate,
-          comments: PeopleDetails?.Comments,
-          source: "",
-          source_description: PeopleDetails?.SourceDescription,
-          validation_status: PeopleDetails?.Status,
+          org_permalink: PeopleDetails?.Permalink ? PeopleDetails?.Permalink : null,
+          middle_name: null,
+          email: PeopleDetails?.email ? PeopleDetails?.email : null,
+          phone_no: PeopleDetails?.PhoneNo ? PeopleDetails?.PhoneNo : null,
+          city: PeopleDetails?.City ? PeopleDetails?.City : null,
+          state: PeopleDetails?.State ? PeopleDetails?.State : null,
+          country: PeopleDetails?.Country ? PeopleDetails?.Country : null,
+          zip_code: PeopleDetails?.Zip ? PeopleDetails?.Zip : null,
+          position_end_date: PeopleDetails?.PositionEndDate ? PeopleDetails?.PositionEndDate : null,
+          comments: PeopleDetails?.Comments ? PeopleDetails?.Comments : null,
+          source: null,
+          source_description: PeopleDetails?.SourceDescription ? PeopleDetails?.SourceDescription : null,
+          validation_status: PeopleDetails?.Status ? PeopleDetails?.Status : null,
           action: "",
           user_id: userIdWithoutQuotes,
-          updated_at: new Date().toISOString().slice(0, 10)
+          updated_at: new Date().toISOString().slice(0, 10),
+          position_start_date: null
         }
       ]
     }
@@ -274,7 +281,7 @@ export default function PeopleScreen() {
           primary_organization: PeopleDetails?.Oraganization,
           organization_linkedin_username: PeopleDetails?.Orglinkedin ? PeopleDetails?.Orglinkedin : "",
           person_id: peopleData?.person_id,
-          org_permalink: "",
+          org_permalink: PeopleDetails?.Permalink ? PeopleDetails?.Permalink : null,
           middle_name: "",
           email: PeopleDetails?.email,
           phone_no: PeopleDetails?.PhoneNo,
@@ -289,7 +296,8 @@ export default function PeopleScreen() {
           validation_status: PeopleDetails?.Status,
           action: "",
           user_id: userIdWithoutQuotes,
-          updated_at: new Date().toISOString().slice(0, 10)
+          updated_at: new Date().toISOString().slice(0, 10),
+          position_start_date: null
         }
       ]
     }
@@ -730,10 +738,10 @@ export default function PeopleScreen() {
                     <MenuItem disabled value="" className="disable-menu-action">
                       <em className="SelectAction-css"> Select Country</em>
                     </MenuItem>
-                    {dropDownData?.country?.map((item, index) => {
+                    {countryData?.map((item, index) => {
                       return (
-                        <MenuItem key={index} value={item}>
-                          {item}
+                        <MenuItem key={index} value={item?.name}>
+                          {item?.name}
                         </MenuItem>
                       );
                     })}
@@ -835,7 +843,7 @@ export default function PeopleScreen() {
                     className="Position-end-date"
 
                     onChange={dateFromHandler}
-                    value={dayjs(PeopleDetails?.PositionEndDate)}
+                    value={PeopleDetails?.PositionEndDate ? dayjs(PeopleDetails?.PositionEndDate) : ''}
                     renderInput={(params) => (
                       <TextField placeholder="" {...params} />
                     )}
