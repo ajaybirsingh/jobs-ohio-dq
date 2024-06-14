@@ -27,6 +27,7 @@ export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
   const peopleData = location?.state?.data;
+  console.log(peopleData, 'peopleData30');
   const countryData = country;
   const PrefilledData = location?.state?.data;
   const isOrgDetails = location?.state?.isOrganizationScreen;
@@ -429,13 +430,13 @@ export default function PeopleScreen() {
     setshowSearchdata(false);
     // setIsSelected(true);s
   }
-  React.useEffect(() => {
-    if (responseData?.length <= 1 || PrefilledData) {
-      setshowSearchdata(false);
-    } if (responseData?.length > 1) {
-      setshowSearchdata(true)
-    }
-  }, [responseData])
+  // React.useEffect(() => {
+  //   if (responseData?.length <= 1 || PrefilledData) {
+  //     setshowSearchdata(false);
+  //   } if (responseData?.length > 1) {
+  //     setshowSearchdata(true)
+  //   }
+  // }, [responseData])
 
   const handelEmtyData = () => {
     setPeopleDetails(prevState => ({

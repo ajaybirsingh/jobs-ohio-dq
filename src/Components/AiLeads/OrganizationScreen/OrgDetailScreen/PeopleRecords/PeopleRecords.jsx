@@ -617,7 +617,7 @@ export default function PeopleRecords({ rowData, organizationData }) {
       headers: {
         "content-type": "plain/text",
       },
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&org_permalink=${org_id}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&org_permalink=${org_id}&org_id=${orgData?.org_id}`,
     };
     axios(option)
       .then((e) => {

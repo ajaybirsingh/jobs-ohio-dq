@@ -89,7 +89,7 @@ const Organization = () => {
                     legal_name: Organization.LegalName,
                     city: Organization.city,
                     phone_number: Organization.phoneNumber,
-                    org_id: null,
+                    org_id: '',
                     permalink: Organization.orgpermalink,
                     comments: Organization.comments,
                     source: Organization.source,
