@@ -60,7 +60,7 @@ function App() {
         />
         <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
           <Routes>
-            <Route path={LOGIN} element={<Login />} />
+            <Route path={LOGIN} element={<Login />} />  
             <Route path={ORGANIZATION} element={<AILeads />} />
             <Route path={AI_DECISION_MAKER} element={<DecisionMaker />} />
             <Route path={PEOPLE_RECORDS} element={<PeopleRecords />} />

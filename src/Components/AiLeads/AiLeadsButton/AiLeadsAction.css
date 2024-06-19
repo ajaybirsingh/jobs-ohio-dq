@@ -111,3 +111,105 @@
   letter-spacing: 0px;
   text-align: left;
 }
+
+.setProspects-Search-filter {
+  display: flex;
+  gap: 15px;
+  width: 50%;
+}
+
+.Ai-Prospect-Serach-data {
+  border: 1px solid #bcbdc2;
+  background-color: #f4f5f9 !important;
+  border-radius: 5px;
+  padding: 2px 12px !important;
+  height: 44px;
+  box-shadow: none !important;
+  width: 55% !important;
+}
+
+.setProspects-Search-filter {
+  display: flex;
+  gap: 15px;
+  width: 50%;
+}
+
+.cross-icon-people-search {
+  font-size: 17px !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.Autocompletedropdown-for-prospect {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  /* padding: 10px; */
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  overflow: hidden;
+  left: 0;
+  right: 0;
+  max-height: 48vh;
+  min-height: 0vh !important;
+  overflow-y: scroll;
+  cursor: pointer;
+}
+
+.Ai-prospect-filterlist-data :hover {
+  background-color: #f4f5f9;
+}
+
+.Ai-prospect-filterlist-data {
+  padding: 2px 6px;
+  font-size: 15px !important;
+}
+
+.Ai-Prospect-Serach-data {
+  position: relative;
+}
+
+.useralldata-forai-propect {
+  text-transform: capitalize;
+  font-size: 13px;
+  cursor: pointer;
+  width: 380px;
+  padding: 5px 12px;
+  min-height: 0vh !important;
+}
+
+.NodaataAvailable {
+  text-transform: capitalize;
+  font-size: 13px;
+  cursor: pointer;
+  width: 380px;
+  padding: 5px 12px;
+  min-height: 0vh !important;
+}
+
+.noodata {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  background-color: white;
+  /* padding: 10px; */
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  overflow: hidden;
+  left: 0;
+  min-height: 0vh !important;
+  right: 0;
+  max-height: 48vh;
+  min-height: 0vh !important;
+  overflow-y: scroll;
+}
+.separatorline {
+  background-color: #b9b9b9;
+  height: 0.5px;
+  width: 100%;
+}

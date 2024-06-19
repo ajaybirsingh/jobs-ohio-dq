@@ -23,11 +23,12 @@ import { AI_DECISION_MAKER, ORG_DETAILS } from "../../Utils/Constants";
 import moment from "moment/moment";
 import dayjs from "dayjs";
 import country from "../../Components/Json/Location/Locations.json";
+import statesData from "../../Components/Json/Location/AllStates.json"
 export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
   const peopleData = location?.state?.data;
-  console.log(peopleData, 'peopleData30');
+  const AllstatesData = statesData;
   const countryData = country;
   const PrefilledData = location?.state?.data;
   const isOrgDetails = location?.state?.isOrganizationScreen;
@@ -35,6 +36,10 @@ export default function PeopleScreen() {
   const [responseData, setResponseData] = React.useState(null);
   const [selectedOrganization, setSelectedOrganization] = React.useState('');
   const [actionData, setActionData] = React.useState([]);
+  const [FilteredData,setFilteredData]=React.useState([])
+
+
+
   const [PeopleDetails, setPeopleDetails] = React.useState({
     firstName: "",
     lastName: "",
@@ -56,6 +61,12 @@ export default function PeopleScreen() {
     uuid: "",
     Permalink: ""
   });
+  React.useEffect(() => {
+    const filter = AllstatesData?.find((item) => item?.Name === PeopleDetails.Country);
+    setFilteredData(filter?.stateName);
+  }, [AllstatesData, PeopleDetails.Country]);
+
+  
   const [dropDownData, setDropDownData] = React.useState([]);
   const formatedDate = moment(peopleData?.position_end_date).format("YYYY-MM-DD");
   React.useEffect(() => {
@@ -109,16 +120,18 @@ export default function PeopleScreen() {
     }
   }, [peopleData])
 
+  // need to share this useEffect
   React.useEffect(() => {
     if (peopleData?.orgDetails === true) {
       setPeopleDetails({
-        Oraganization: peopleData?.legal_name || peopleData?.name,
+        Oraganization: peopleData?.name || peopleData?.name,
         Orglinkedin: peopleData?.linkedin,
         uuid: peopleData?.uuid,
         Permalink: peopleData?.permalink
       })
     }
   }, [peopleData])
+  
 
   const [loading, setLoading] = React.useState();
   const style = {
@@ -175,6 +188,10 @@ export default function PeopleScreen() {
       toast.error("Please Select Organization");
       return false;
     }
+    if (!PeopleDetails.Orglinkedin) {
+      toast.error("Please Enter Orglinkedin");
+      return false;
+    }
     if (!PeopleDetails?.Status) {
       toast.error("Please Select Status");
       return false
@@ -209,7 +226,7 @@ export default function PeopleScreen() {
           middle_name: null,
           email: PeopleDetails?.email ? PeopleDetails?.email : null,
           phone_no: PeopleDetails?.PhoneNo ? PeopleDetails?.PhoneNo : null,
-          city: PeopleDetails?.City ? PeopleDetails?.City : null,
+          city: PeopleDetails?.City ? PeopleDetails?.City : null, 
           state: PeopleDetails?.State ? PeopleDetails?.State : null,
           country: PeopleDetails?.Country ? PeopleDetails?.Country : null,
           zip_code: PeopleDetails?.Zip ? PeopleDetails?.Zip : null,
@@ -380,8 +397,9 @@ export default function PeopleScreen() {
         } else {
           setshowSearchdata(false);
         }
+    
       })
-      .catch((error) => {
+      .catch((error) => { 
         setLoading(false)
         setshowSearchdata(false);
         toast.error(error.response.data.message);
@@ -390,6 +408,7 @@ export default function PeopleScreen() {
   React.useEffect(() => {
     setshowSearchdata(false);
     let timer;
+  
     if (PeopleDetails?.Oraganization?.length > 2 && responseData === null) {
       timer = setTimeout(() => {
         OrgSearch();
@@ -398,7 +417,7 @@ export default function PeopleScreen() {
     }
     if (PeopleDetails?.Oraganization?.length === 0) {
       setResponseData(null);
-    }
+   }
     return () => clearTimeout(timer);
   }, [PeopleDetails.Oraganization]);
   // React.useEffect(() => {
@@ -682,10 +701,10 @@ export default function PeopleScreen() {
                             <div
                               onClick={() => handelselectdata(item)} className='useralldata'
                             >
-                              {item?.org_name}
+                              {item?.org_name}  
                             </div>
                             <div className='separatorline'></div>
-                          </div>
+                          </div>  
                         )
                       }
                       )
@@ -773,13 +792,15 @@ export default function PeopleScreen() {
                       <em className="SelectAction-css"> Select State</em>
                     </MenuItem>
 
-                    {states?.map((item, index) => {
+         
+                    {FilteredData?.map((item, index) => {
                       return (
                         <MenuItem key={index} value={item}>
                           {item}
                         </MenuItem>
                       );
                     })}
+
                   </Select>
                 </FormControl>
               </div>
@@ -823,6 +844,7 @@ export default function PeopleScreen() {
                 <label htmlFor="" className="PeopleScreen-lables">
                   Org linkedin
                 </label>
+                <span className="PeopleMandatoryfields">*</span>
                 <LabelInput
                   onChange={(e) => {
                     const inputvalue = e?.target?.value;

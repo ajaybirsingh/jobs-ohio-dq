@@ -6,7 +6,7 @@ import DecisionMakerTable from "../../Components/DecisionMaker/DecisionMakerTabl
 import DecisionmakersFilter from "../../Components/DecisionMaker/DecisionFilter/Index";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { APIUrlFour } from "../../Utils/Utils";
+import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
 import Loader from "../../Components/Loader/Loader";
 
 const DecisionMaker = () => {
@@ -25,6 +25,13 @@ const DecisionMaker = () => {
   const [hasMore, setHasMore] = useState(false);
   const [statsCountDecisionMaker, setStatsCountDecisionMaker] = useState(0);
   const [applyFilter, setIsApplyFilter] = useState(false);
+
+  const [PeopleData, setPeopleData] = useState([]);
+  const [FilterData, setFilterData] = useState([]);
+  const [showSearchdata, setshowSearchdata] = React.useState(false);
+  const [previousData, setpreviousData] = useState(false)
+
+
   const validateFilters = () => {
     if (!selectedData?.length && !showData?.length && !lastdata?.length
     ) {
@@ -134,6 +141,9 @@ const DecisionMaker = () => {
         toast.error(err?.response?.data?.message);
       });
   };
+
+
+
   return (
     <>
       {
@@ -146,7 +156,19 @@ const DecisionMaker = () => {
             setIsSalesForceTrigger={setIsSalesForceTrigger}
             isSalesForceTrigger={isSalesForceTrigger}
             setIsDecisionMakerExcel={setIsDecisionMakerExcel}
-            statsCountDecisionMaker={statsCountDecisionMaker} />
+            statsCountDecisionMaker={statsCountDecisionMaker}
+
+            setFilterData={setFilterData}
+            FilterData={FilterData}
+            PeopleData={PeopleData}
+            setPeopleData={setPeopleData}
+            setpreviousData={setpreviousData}
+            showSearchdata={showSearchdata}
+            setshowSearchdata={setshowSearchdata}
+            setLoading={setLoading}
+            setDecisionMakerData={setDecisionMakerData}
+            setTableCommingData={setTableCommingData}
+          />
           <DecisionmakersFilter
             tableCommingData={tableCommingData}
             setTableCommingData={setTableCommingData}
@@ -181,6 +203,9 @@ const DecisionMaker = () => {
             firstFilterData={firstFilterData}
             setIsApplyFilter={setIsApplyFilter}
             applyFilter={applyFilter}
+
+            previousData={previousData}
+            FilterData={FilterData}
 
           />
         </div>

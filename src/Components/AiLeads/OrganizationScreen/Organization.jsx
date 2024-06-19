@@ -15,11 +15,16 @@ import { APIUrlFour, APIUrlOne, GetUserId } from "../../../Utils/Utils";
 import { ORGANIZATION, ORG_DETAILS } from "../../../Utils/Constants";
 import Country from "../../../Components/Json/Location/Locations.json";
 import Category from "./Categories/Categories";
+import statesData from "../../../Components/Json/Location/AllStates.json"
+
 const Organization = () => {
     const location = useLocation();
     const OrganizationData = location?.state?.data;
+    const AllstatesData = statesData;
     const isOrgScreencome = location?.state?.isOrgListing;
     const navigate = useNavigate();
+    const [FilteredData,setFilteredData]=React.useState([])
+
     const [Organization, setOrganization] = React.useState({
         Name: "",
         LegalName: "",
@@ -53,7 +58,11 @@ const Organization = () => {
     const [loading, setLoading] = React.useState();
     const [actionData, setActionData] = useState([]);
     const [dropDownData, setDropDownData] = useState([]);
-
+    React.useEffect(() => {
+        const filter = AllstatesData?.find((item) => item?.Name === Organization?.country);
+        setFilteredData(filter?.stateName);
+      }, [AllstatesData, Organization?.country]);
+    
     const validations = () => {
         if (Organization.Name === "") {
             toast.error("Please Enter Name ")
@@ -69,7 +78,7 @@ const Organization = () => {
         }
         return true
     }
-
+// need to share this api josn
     const handelAddOrg = () => {
         if (!validations()) return
         const data =
@@ -89,7 +98,7 @@ const Organization = () => {
                     legal_name: Organization.LegalName,
                     city: Organization.city,
                     phone_number: Organization.phoneNumber,
-                    org_id: '',
+                    org_id: null,
                     permalink: Organization.orgpermalink,
                     comments: Organization.comments,
                     source: Organization.source,
@@ -629,14 +638,13 @@ const Organization = () => {
                                         <MenuItem disabled value="" className="disable-menu-action">
                                             <em className="SelectAction-css"> Select State</em>
                                         </MenuItem>
-
-                                        {states?.map((item, index) => {
-                                            return (
-                                                <MenuItem key={index} value={item}>
-                                                    {item}
-                                                </MenuItem>
-                                            );
-                                        })}
+                                        {FilteredData?.map((item, index) => {
+                      return (
+                        <MenuItem key={index} value={item}>
+                          {item}
+                        </MenuItem>
+                      );
+                    })}
                                     </Select>
                                 </FormControl>
                             </div>

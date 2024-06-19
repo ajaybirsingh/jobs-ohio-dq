@@ -186,6 +186,16 @@ function Row({ row, setIsDeleted }) {
               </div>
             </Tooltip>
           </TableCell>
+
+          <TableCell align="left">
+            <Tooltip title={row?.validation_status ? row?.validation_status : 'Not Available'}>
+              <div className="Suspect-table-data">
+                {row?.validation_status
+                  ? row?.validation_status
+                  : "Not Available"}
+              </div>
+            </Tooltip>
+          </TableCell>
         </>
         <TableCell className="table-cellhandleRightsidebar-prospect">
           <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
@@ -245,7 +255,7 @@ export default function DecisionMakerTable({
   setSkip,
   skip,
   setIsApplyFilter,
-  applyFilter }) {
+  applyFilter  ,FilterData ,previousData}) {
   const exportToExcel = (data, filename) => {
     const filteredData = data.map(({ person_id, org_id, strengthData, ...rest }) => rest);
     const ws = XLSX.utils.json_to_sheet(filteredData);
@@ -262,11 +272,18 @@ export default function DecisionMakerTable({
   const [hasMore, setHasMore] = React.useState(false);
   const [isfetchData, setIsfetchData] = React.useState(false);
   const [isDeleted, setIsDeleted] = React.useState(false);
+  
   // React.useEffect(() => {
   //   if (isDeleted === true) {
   //     setIsfetchData(true);
   //   }
   // }, [isDeleted])
+
+  React.useEffect(() => {
+    if (FilterData?.person_id) {
+      setDecisionMakerData([FilterData])
+    }
+  }, [FilterData.person_id])
   React.useEffect(() => {
     if (tableCommingData) {
       setDecisionMakerData(tableCommingData);
@@ -290,7 +307,7 @@ export default function DecisionMakerTable({
         "content-type": "application/json",
       },
       url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
-    };
+    };  
     axios(option)
       .then((response) => {
         setLoading(false);
@@ -319,9 +336,9 @@ export default function DecisionMakerTable({
       headers: {
         "content-type": "application/json",
       },
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`, 
     };
-    axios(option)
+    axios(option) 
       .then((response) => {
         setLoading(false);
         const comingData = response?.data?.data;
@@ -390,7 +407,8 @@ export default function DecisionMakerTable({
     if (isDeleted) {
       fetchData();
     }
-  }, [isDeleted])
+  }, [isDeleted]) 
+
   React.useEffect(() => {
     if (istableDataFilter) {
       fetchDataReturnFilter();
@@ -442,7 +460,9 @@ export default function DecisionMakerTable({
                 <TableCell align="left" className="industry-row-tableStatus">
                   <p className="DecisionstableStrength-strength">Phone no.</p>
                 </TableCell>
-
+                <TableCell align="left" className="industry-row-tableStatus">
+                  <p className="DecisionstableStrength-strength">Status</p>
+                </TableCell>
                 <TableCell align="left" className="industry-row-tableStatus">
                   <p className="DecisionstableStrength-strength">Action</p>
                 </TableCell>

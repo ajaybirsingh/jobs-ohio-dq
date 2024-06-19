@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0acac7aa.css",
+    "main.js": "/static/js/main.6b5b4b45.js",
+    "static/js/453.7053c31c.chunk.js": "/static/js/453.7053c31c.chunk.js",
+    "static/media/Cloudfigma.svg": "/static/media/Cloudfigma.b8fd32f2f57b6ae5e72bfedaf988c43f.svg",
+    "static/media/office-building.png": "/static/media/office-building.0f27a3eee597d2073c06.png",
+    "static/media/JobsOhioLogo.jpeg": "/static/media/JobsOhioLogo.5d21cffb943c64560460.jpeg",
+    "static/media/AIIcon.svg": "/static/media/AIIcon.cf6dd4af9ebedf5df377ff8da8415a63.svg",
+    "static/media/AlleadsSelected.svg": "/static/media/AlleadsSelected.d4d828c2d4de28592ef9d1493d9fa923.svg",
+    "static/media/user.svg": "/static/media/user.ca9441a2cb36ada96769218fcdb2c316.svg",
+    "static/media/loction.svg": "/static/media/loction.56ac021c33f7e1f6f85d526b4b0266c9.svg",
+    "index.html": "/index.html",
+    "static/media/call.svg": "/static/media/call.68f0ff3ab45df6f21d2e04012587b8ec.svg",
+    "static/media/Globe.svg": "/static/media/Globe.386931eab040c7395bae84af47646bf3.svg",
+    "static/media/grow.svg": "/static/media/grow.b28d5b5928e80f70b0c99cc0afe8e7b2.svg",
+    "static/media/FilterOval.svg": "/static/media/FilterOval.70190ae97780bbddca09c51f243ae4e5.svg",
+    "static/media/Filtericon.svg": "/static/media/Filtericon.925ad8fa3500f3a09032e85cfd5dfccc.svg",
+    "static/media/backarrow.svg": "/static/media/backarrow.01ff87d574646516092b5ee684e00d24.svg",
+    "main.0acac7aa.css.map": "/static/css/main.0acac7aa.css.map",
+    "main.6b5b4b45.js.map": "/static/js/main.6b5b4b45.js.map",
+    "453.7053c31c.chunk.js.map": "/static/js/453.7053c31c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0acac7aa.css",
+    "static/js/main.6b5b4b45.js"
+  ]
+}
