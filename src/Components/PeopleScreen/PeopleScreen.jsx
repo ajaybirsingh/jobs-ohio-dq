@@ -28,18 +28,17 @@ export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
   const peopleData = location?.state?.data;
+  console.log(peopleData,'peopleData31');
   const AllstatesData = statesData;
   const countryData = country;
   const PrefilledData = location?.state?.data;
+  console.log(PrefilledData,'PrefilledData34');
   const isOrgDetails = location?.state?.isOrganizationScreen;
   const [showSearchdata, setshowSearchdata] = React.useState(false);
   const [responseData, setResponseData] = React.useState(null);
   const [selectedOrganization, setSelectedOrganization] = React.useState('');
   const [actionData, setActionData] = React.useState([]);
-  const [FilteredData,setFilteredData]=React.useState([])
-
-
-
+  const [FilteredData, setFilteredData] = React.useState([])
   const [PeopleDetails, setPeopleDetails] = React.useState({
     firstName: "",
     lastName: "",
@@ -48,6 +47,7 @@ export default function PeopleScreen() {
     Linkedin: "",
     JobTitle: "",
     Oraganization: "",
+    Orgid: "",
     SourceDescription: "",
     City: "",
     Comments: "",
@@ -66,7 +66,7 @@ export default function PeopleScreen() {
     setFilteredData(filter?.stateName);
   }, [AllstatesData, PeopleDetails.Country]);
 
-  
+
   const [dropDownData, setDropDownData] = React.useState([]);
   const formatedDate = moment(peopleData?.position_end_date).format("YYYY-MM-DD");
   React.useEffect(() => {
@@ -115,7 +115,9 @@ export default function PeopleScreen() {
         Comments: PrefilledData?.comments,
         Status: PrefilledData?.validation_status,
         uuid: PrefilledData?.uuid,
-        Permalink: peopleData?.org_permalink
+        Permalink: PrefilledData?.org_permalink,
+        Orgid: PrefilledData?.org_id
+
       })
     }
   }, [peopleData])
@@ -127,11 +129,12 @@ export default function PeopleScreen() {
         Oraganization: peopleData?.name || peopleData?.name,
         Orglinkedin: peopleData?.linkedin,
         uuid: peopleData?.uuid,
-        Permalink: peopleData?.permalink
+        Permalink: peopleData?.permalink,
+        Orgid: peopleData?.org_id
       })
     }
   }, [peopleData])
-  
+
 
   const [loading, setLoading] = React.useState();
   const style = {
@@ -226,7 +229,7 @@ export default function PeopleScreen() {
           middle_name: null,
           email: PeopleDetails?.email ? PeopleDetails?.email : null,
           phone_no: PeopleDetails?.PhoneNo ? PeopleDetails?.PhoneNo : null,
-          city: PeopleDetails?.City ? PeopleDetails?.City : null, 
+          city: PeopleDetails?.City ? PeopleDetails?.City : null,
           state: PeopleDetails?.State ? PeopleDetails?.State : null,
           country: PeopleDetails?.Country ? PeopleDetails?.Country : null,
           zip_code: PeopleDetails?.Zip ? PeopleDetails?.Zip : null,
@@ -238,7 +241,8 @@ export default function PeopleScreen() {
           action: "",
           user_id: userIdWithoutQuotes,
           updated_at: new Date().toISOString().slice(0, 10),
-          position_start_date: null
+          position_start_date: null,
+          org_id: PeopleDetails?.Orgid,
         }
       ]
     }
@@ -315,7 +319,8 @@ export default function PeopleScreen() {
           action: "",
           user_id: userIdWithoutQuotes,
           updated_at: new Date().toISOString().slice(0, 10),
-          position_start_date: null
+          position_start_date: null,
+          org_id: PeopleDetails?.Orgid,
         }
       ]
     }
@@ -397,9 +402,9 @@ export default function PeopleScreen() {
         } else {
           setshowSearchdata(false);
         }
-    
+
       })
-      .catch((error) => { 
+      .catch((error) => {
         setLoading(false)
         setshowSearchdata(false);
         toast.error(error.response.data.message);
@@ -408,7 +413,7 @@ export default function PeopleScreen() {
   React.useEffect(() => {
     setshowSearchdata(false);
     let timer;
-  
+
     if (PeopleDetails?.Oraganization?.length > 2 && responseData === null) {
       timer = setTimeout(() => {
         OrgSearch();
@@ -417,7 +422,7 @@ export default function PeopleScreen() {
     }
     if (PeopleDetails?.Oraganization?.length === 0) {
       setResponseData(null);
-   }
+    }
     return () => clearTimeout(timer);
   }, [PeopleDetails.Oraganization]);
   // React.useEffect(() => {
@@ -444,7 +449,9 @@ export default function PeopleScreen() {
     setSelectedOrganization(item);
     setPeopleDetails(prevState => ({
       ...prevState,
-      Oraganization: item?.org_name || ""
+      Oraganization: item?.org_name || "",
+      Orgid: item?.org_id || "",
+      Orglinkedin: item?.linkedin || ''
     }));
     setshowSearchdata(false);
     // setIsSelected(true);s
@@ -460,7 +467,8 @@ export default function PeopleScreen() {
   const handelEmtyData = () => {
     setPeopleDetails(prevState => ({
       ...prevState,
-      Oraganization: ""
+      Oraganization: "",
+      Orglinkedin: ""
     }));
     setSelectedOrganization('');
   }
@@ -701,10 +709,10 @@ export default function PeopleScreen() {
                             <div
                               onClick={() => handelselectdata(item)} className='useralldata'
                             >
-                              {item?.org_name}  
+                              {item?.org_name}
                             </div>
                             <div className='separatorline'></div>
-                          </div>  
+                          </div>
                         )
                       }
                       )
@@ -792,7 +800,7 @@ export default function PeopleScreen() {
                       <em className="SelectAction-css"> Select State</em>
                     </MenuItem>
 
-         
+
                     {FilteredData?.map((item, index) => {
                       return (
                         <MenuItem key={index} value={item}>
@@ -854,6 +862,7 @@ export default function PeopleScreen() {
                     });
                   }}
                   value={PeopleDetails?.Orglinkedin}
+                  disabled={true}
                 />
               </div>
 

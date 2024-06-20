@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
 import Loader from "../../Components/Loader/Loader";
+import { useFetcher } from "react-router-dom";
 
 const DecisionMaker = () => {
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const DecisionMaker = () => {
   const [currentLeadsLength, setCurrentLeadsLength] = React.useState('');
   const [isSalesForceTrigger, setIsSalesForceTrigger] = useState(false);
   const [isDecisionMakerExcel, setIsDecisionMakerExcel] = useState(false);
-  const [selectedData, setSelectedData] = React.useState([]);
+  const [selectedData, setSelectedData] = React.useState(['pending']);
   const [showData, setShowData] = React.useState([]);
   const [lastdata, setlastdata] = React.useState([]);
   const [skip, setSkip] = React.useState(0);
@@ -30,7 +31,7 @@ const DecisionMaker = () => {
   const [FilterData, setFilterData] = useState([]);
   const [showSearchdata, setshowSearchdata] = React.useState(false);
   const [previousData, setpreviousData] = useState(false)
-
+  const [isDeleted, setIsDeleted] = React.useState(false);
 
   const validateFilters = () => {
     if (!selectedData?.length && !showData?.length && !lastdata?.length
@@ -143,7 +144,22 @@ const DecisionMaker = () => {
   };
 
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (skip === 0 && tableCommingData?.length === 0) {
+        duplicateHandlePass();
+      }
+    }, 150);
 
+    return () => clearTimeout(timer);
+
+  }, [tableCommingData])
+
+  useEffect(() => {
+    if (isDeleted) {
+      duplicateHandlePass();
+    }
+  }, [isDeleted])
   return (
     <>
       {
@@ -206,6 +222,9 @@ const DecisionMaker = () => {
 
             previousData={previousData}
             FilterData={FilterData}
+            setIsDeleted={setIsDeleted}
+            isDeleted={isDeleted}
+
 
           />
         </div>

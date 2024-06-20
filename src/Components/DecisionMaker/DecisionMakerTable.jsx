@@ -203,10 +203,12 @@ function Row({ row, setIsDeleted }) {
             <Tooltip title="Edit">
               <EditIcon className="action-icons-people-edit" onClick={() => EditPeople(row)} />
             </Tooltip>
+            {
+              row?.validation_status !== 'rejected' ? <Tooltip title="Delete">
+                <DeleteIcon onClick={() => DeletePeople(row)} className="action-icons-people-delete" />
+              </Tooltip> : null
+            }
 
-            <Tooltip title="Delete">
-              <DeleteIcon onClick={() => DeletePeople(row)} className="action-icons-people-delete" />
-            </Tooltip>
 
           </div>
         </TableCell>
@@ -255,7 +257,7 @@ export default function DecisionMakerTable({
   setSkip,
   skip,
   setIsApplyFilter,
-  applyFilter  ,FilterData ,previousData}) {
+  applyFilter, FilterData, previousData, selectedData, setIsDeleted, isDeleted }) {
   const exportToExcel = (data, filename) => {
     const filteredData = data.map(({ person_id, org_id, strengthData, ...rest }) => rest);
     const ws = XLSX.utils.json_to_sheet(filteredData);
@@ -271,8 +273,8 @@ export default function DecisionMakerTable({
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [isfetchData, setIsfetchData] = React.useState(false);
-  const [isDeleted, setIsDeleted] = React.useState(false);
-  
+
+
   // React.useEffect(() => {
   //   if (isDeleted === true) {
   //     setIsfetchData(true);
@@ -299,7 +301,9 @@ export default function DecisionMakerTable({
     }, 100)
   };
   const fetchData = () => {
-    if (tableCommingData.length !== skip) return;
+    if (!isDeleted) {
+      if (tableCommingData.length !== skip) return;
+    }
     setLoading(true);
     const option = {
       method: "GET",
@@ -307,7 +311,7 @@ export default function DecisionMakerTable({
         "content-type": "application/json",
       },
       url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
-    };  
+    };
     axios(option)
       .then((response) => {
         setLoading(false);
@@ -336,9 +340,9 @@ export default function DecisionMakerTable({
       headers: {
         "content-type": "application/json",
       },
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`, 
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
     };
-    axios(option) 
+    axios(option)
       .then((response) => {
         setLoading(false);
         const comingData = response?.data?.data;
@@ -403,12 +407,11 @@ export default function DecisionMakerTable({
     }
   }, [skip, firstFilterData, applyFilter, isfetchData]);
 
-  React.useEffect(() => {
-    if (isDeleted) {
-      fetchData();
-    }
-  }, [isDeleted]) 
-
+  // React.useEffect(() => {
+  //   if (isDeleted) {
+  //     fetchData();
+  //   }
+  // }, [isDeleted])
   React.useEffect(() => {
     if (istableDataFilter) {
       fetchDataReturnFilter();

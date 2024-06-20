@@ -520,6 +520,16 @@ function Row({ row, organizationData }) {
               </div>
             </Tooltip>
           </TableCell>
+          <TableCell align="left">
+            <Tooltip title={row?.validation_status ? row?.validation_status : 'Not Available'}>
+              <div className="Suspect-table-data">
+                {row?.validation_status
+                  ? row?.validation_status
+                  : "Not Available"}
+              </div>
+            </Tooltip>
+          </TableCell>
+
           <TableCell className="table-cellhandleRightsidebar-prospect">
             <div className="table-cellhandleRightsidebar" style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
               <Tooltip title="Edit">
@@ -530,6 +540,7 @@ function Row({ row, organizationData }) {
               </Tooltip>
             </div>
           </TableCell>
+
           {/* <TableCell
           align="left"
           className="table-cell-of-contact-details-dropdown-th-prospect"
@@ -611,13 +622,13 @@ export default function PeopleRecords({ rowData, organizationData }) {
   }, [orgData?.org_id, organizationData?.org_id]);
   const aiDecisionMakerTable = () => {
     setLoading(true);
-    const org_id = organizationData?.permalink || orgData?.permalink;
+    const permalink = organizationData?.permalink || orgData?.permalink;
     const option = {
       method: "GET",
       headers: {
         "content-type": "plain/text",
       },
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&org_permalink=${org_id}&org_id=${orgData?.org_id}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&org_permalink=${permalink}${orgData?.org_id ? `&org_id=${orgData.org_id}` : ''}`
     };
     axios(option)
       .then((e) => {
@@ -691,6 +702,9 @@ export default function PeopleRecords({ rowData, organizationData }) {
                   >
                     <p className="People-phone-data"> Phone no</p>
                   </TableCell>
+                  <TableCell align="left" className="industry-row-tableStatus">
+                    <p className="DecisionstableStrength-strength">Status</p>
+                  </TableCell>
                   <TableCell align="left" className="People-linkdin-table-cell">
                     Action
                   </TableCell>
@@ -702,41 +716,85 @@ export default function PeopleRecords({ rowData, organizationData }) {
                   </TableCell> */}
                 </TableRow>
               </TableHead>
+              {/* <TableBody>
+                {decisionMakerData?.map((row, index) => {
+                  console.log(row, 'row721');
+                  return (
+                    <React.Fragment key={index}>
+                      <Row
+                        row={row}
+                        organizationData={organizationData}
+                        selected={selectedRows.includes(row.first_name)}
+                        onSelect={(firstName) => {
+                          const selectedIndex = selectedRows.indexOf(firstName);
+                          let newSelected = [];
+                          if (selectedIndex === -1) {
+                            newSelected = newSelected.concat(
+                              selectedRows,
+                              firstName
+                            );
+                          } else if (selectedIndex === 0) {
+                            newSelected = newSelected.concat(
+                              selectedRows.slice(1)
+                            );
+                          } else if (selectedIndex === selectedRows.length - 1) {
+                            newSelected = newSelected.concat(
+                              selectedRows.slice(0, -1)
+                            );
+                          } else if (selectedIndex > 0) {
+                            newSelected = newSelected.concat(
+                              selectedRows.slice(0, selectedIndex),
+                              selectedRows.slice(selectedIndex + 1)
+                            );
+                          }
+                          setSelectedRows(newSelected);
+                        }}
+                      />
+                    </React.Fragment>
+                  )
+                })}
+              </TableBody> */}
               <TableBody>
-                {decisionMakerData?.map((row, index) => (
-                  <React.Fragment key={index}>
-                    <Row
-                      row={row}
-                      organizationData={organizationData}
-                      selected={selectedRows.includes(row.first_name)}
-                      onSelect={(firstName) => {
-                        const selectedIndex = selectedRows.indexOf(firstName);
-                        let newSelected = [];
-                        if (selectedIndex === -1) {
-                          newSelected = newSelected.concat(
-                            selectedRows,
-                            firstName
-                          );
-                        } else if (selectedIndex === 0) {
-                          newSelected = newSelected.concat(
-                            selectedRows.slice(1)
-                          );
-                        } else if (selectedIndex === selectedRows.length - 1) {
-                          newSelected = newSelected.concat(
-                            selectedRows.slice(0, -1)
-                          );
-                        } else if (selectedIndex > 0) {
-                          newSelected = newSelected.concat(
-                            selectedRows.slice(0, selectedIndex),
-                            selectedRows.slice(selectedIndex + 1)
-                          );
-                        }
-                        setSelectedRows(newSelected);
-                      }}
-                    />
-                  </React.Fragment>
-                ))}
+                {decisionMakerData
+                  ?.filter(row => row.validation_status !== 'rejected')
+                  .map((row, index) => {
+                    console.log(row, 'row721');
+                    return (
+                      <React.Fragment key={index}>
+                        <Row
+                          row={row}
+                          organizationData={organizationData}
+                          selected={selectedRows.includes(row.first_name)}
+                          onSelect={(firstName) => {
+                            const selectedIndex = selectedRows.indexOf(firstName);
+                            let newSelected = [];
+                            if (selectedIndex === -1) {
+                              newSelected = newSelected.concat(
+                                selectedRows,
+                                firstName
+                              );
+                            } else if (selectedIndex === 0) {
+                              newSelected = newSelected.concat(
+                                selectedRows.slice(1)
+                              );
+                            } else if (selectedIndex === selectedRows.length - 1) {
+                              newSelected = newSelected.concat(
+                                selectedRows.slice(0, -1)
+                              );
+                            } else if (selectedIndex > 0) {
+                              newSelected = newSelected.concat(
+                                selectedRows.slice(0, selectedIndex),
+                                selectedRows.slice(selectedIndex + 1)
+                              );
+                            }
+                            setSelectedRows(newSelected);
+                          }}
+                        />
+                      </React.Fragment>
+                    )
+                  })}
               </TableBody>
+
             </Table>
           </TableContainer>
         ) : (

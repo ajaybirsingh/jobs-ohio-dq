@@ -44,16 +44,16 @@ export const isValidEmail = (email) => {
 // for api urls
 // http://172.214.83.217:8000
 export const APIUrlOne = () => {
-    return 'http://172.214.83.217:8000'
+    return 'http://48.217.82.161:8000'
 }
 export const APIUrlTwo = () => {
-    return 'http://172.214.83.217:8001'
+    return 'http://48.217.82.161:8001'
 }
 export const APIUrlThree = () => {
-    return 'http://172.214.83.217:8002'
+    return 'http://48.217.82.161:8002'
 }
 export const APIUrlFour = () => {
-    return 'http://172.214.83.217:8003'
+    return 'http://172.214.83.217:8000'
 }
 // for login user
 export const SetUserId = (item, value) => {
