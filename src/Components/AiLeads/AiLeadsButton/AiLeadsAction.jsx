@@ -13,8 +13,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { toast } from "react-toastify";
 import axios from "axios";
 
-export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigger, isSalesForceTrigger, setIsDecisionMakerExcel, statsCount, statsCountDecisionMaker ,
-  setFilterData,FilterData,PeopleData,setPeopleData,showSearchdata,setshowSearchdata,setLoading 
+export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigger, isSalesForceTrigger, setIsDecisionMakerExcel, statsCount, statsCountDecisionMaker,
+  setFilterData, FilterData, PeopleData, setPeopleData, showSearchdata, setshowSearchdata, setLoading
 }) {
   const navigate = useNavigate();
   const orgCount = GetOrganizationCount();
@@ -39,11 +39,11 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
     setSearchData(people_name);
     setshowSearchdata(false);
   };
-    const handleKeyPress = (event) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-      }
-    };
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  };
   const StyledMenu = styled((props) => (
     <Menu
       elevation={0}
@@ -148,96 +148,96 @@ export default function AiLeadsAction({ currentLeadsLength, setIsSalesForceTrigg
         "Leades-filter-drop-down-button-main-container"
       >        <div className="setProspects-Search-filter">
 
-        <div className="showing-leads-head">
-          {
-            currentLeadsLength && !statsCount && location === "/organization" ?
-              <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
-                <p>Out of {location === "/organization" || "/organization" ? formattedOrgCount || '-' : null}</p>
-              </> : null
-          }
-          {
-            statsCount ?
-              <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
-                <p>Out of {location === "/organization" || "/organization" ? statsCount : null}</p>
-              </> : null
-          }
-          {
-            currentLeadsLength && !statsCount && location === "/people" && !statsCountDecisionMaker ?
-              <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
-                <p>Out of {location === "/people" ? formattedPeopleCount || '-' : null}</p>
-              </> : null
-          }
-          {
-            statsCountDecisionMaker ?
-              <>
-                <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
-                <p>Out of {location === "/people" ? statsCountDecisionMaker || '-' : null}</p>
-              </> : null
-          }
+          <div className="showing-leads-head">
+            {
+              currentLeadsLength && !statsCount && location === "/organization" ?
+                <>
+                  <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
+                  <p>Out of {location === "/organization" || "/organization" ? formattedOrgCount?.toLocaleString() || '-' : null}</p>
+                </> : null
+            }
+            {
+              statsCount ?
+                <>
+                  <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
+                  <p>Out of {location === "/organization" || "/organization" ? statsCount?.toLocaleString() : null}</p>
+                </> : null
+            }
+            {
+              currentLeadsLength && !statsCount && location === "/people" && !statsCountDecisionMaker ?
+                <>
+                  <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
+                  <p>Out of {location === "/people" ? formattedPeopleCount?.toLocaleString() || '-' : null}</p>
+                </> : null
+            }
+            {
+              statsCountDecisionMaker ?
+                <>
+                  <h3>Showing {currentLeadsLength} {location === "/people" ? 'People ' : 'Organization'}</h3>
+                  <p>Out of {location === "/people" ? statsCountDecisionMaker?.toLocaleString() || '-' : null}</p>
+                </> : null
+            }
 
+          </div>
+          {location === AI_DECISION_MAKER && (
+
+            <Paper className='Ai-Prospect-Serach-data'
+              component="form"
+              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+            >
+              <SearchIcon className='searchicon-in-header' />
+              <InputBase
+                value={searchData}
+                onChange={(e) => {
+                  setSearchData(e?.target?.value);
+                }}
+                className='search-inner-text'
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="by people name"
+                inputProps={{ 'aria-label': 'Search google maps' }}
+                autoComplete="off"
+                onKeyDownCapture={handleKeyPress}
+              />
+              {/* <CloseIcon className="cross-icon-people-search" onClick={() => crossPeopleSearch()} /> */}
+              {searchData && (
+                <CloseIcon
+                  className="cross-icon-people-search"
+                  onClick={() => {
+                    crossPeopleSearch();
+                  }}
+                />
+              )}
+              {showSearchdata && (
+                <div className={!PeopleData.length ? "noodata" : "Autocompletedropdown-for-prospect"}>
+                  {PeopleData?.length > 0 ? (
+                    PeopleData?.map((item) => {
+                      return (
+                        <div key={item.id}>
+                          <div onClick={() => handelselectdata(item)} className='Ai-prospect-filterlist-data'>
+                            {item?.first_name ? `${item.first_name}` : ""}  {item?.last_name ? `${item.last_name}` : ""}
+                            {item.primary_organization ? `, ${item.primary_organization}` : ""}
+                            {item.primary_job_title ? `, ${item.primary_job_title}` : ""}   {item?.linkedin
+                              ? item?.linkedin.length > 28
+                                ? item?.linkedin.substr(28, 28) ||
+                                item?.linkedin.length > 20 + "..."
+                                : item?.linkedin
+                              : ""}
+                          </div>
+                          <div className='separatorline'></div>
+                        </div>
+                      )
+                    })
+                  ) : (
+                    searchData.length > 0 ? (
+                      <div className='useralldata-forai-propect'>{FilterData ? " Not Available" : null} </div>
+                    ) : null
+                  )}
+                </div>
+              )}
+            </Paper>
+
+          )}
         </div>
-        {location === AI_DECISION_MAKER && (
-                  
-                  <Paper className='Ai-Prospect-Serach-data'
-                    component="form"
-                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-                  >
-                    <SearchIcon className='searchicon-in-header' />
-                    <InputBase
-                      value={searchData}
-                      onChange={(e) => {
-                        setSearchData(e?.target?.value);
-                      }}
-                      className='search-inner-text'
-                      sx={{ ml: 1, flex: 1 }}
-                      placeholder="by people name"
-                      inputProps={{ 'aria-label': 'Search google maps' }}
-                      autoComplete="off"
-                      onKeyDownCapture={handleKeyPress}
-                    />
-                    {/* <CloseIcon className="cross-icon-people-search" onClick={() => crossPeopleSearch()} /> */}
-                    {searchData && (
-                      <CloseIcon
-                        className="cross-icon-people-search"
-                        onClick={() => {
-                          crossPeopleSearch();
-                        }}
-                      />
-                    )}
-                    {showSearchdata && (
-                      <div className={!PeopleData.length ? "noodata" : "Autocompletedropdown-for-prospect"}>
-                        {PeopleData?.length > 0 ? (
-                          PeopleData?.map((item) => {
-                            return (
-                              <div key={item.id}>
-                                <div onClick={() => handelselectdata(item)} className='Ai-prospect-filterlist-data'>
-                                  {item?.first_name ? `${item.first_name}` : ""}  {item?.last_name ? `${item.last_name}` : ""} 
-                                  {item.primary_organization ? `, ${item.primary_organization}` : ""}  
-                                   {item.primary_job_title ? `, ${item.primary_job_title}` : ""}   {item?.linkedin
-                                    ? item?.linkedin.length > 28
-                                    ? item?.linkedin.substr(28, 28) ||
-                                     item?.linkedin.length > 20 + "..."
-                                    : item?.linkedin
-                                    : ""}
-                                </div>
-                                <div className='separatorline'></div>
-                              </div>
-                            )
-                          })
-                        ) : (
-                          searchData.length > 0 ? (
-                            <div className='useralldata-forai-propect'>{FilterData ? " Not Available" : null} </div>
-                          ) : null
-                        )}
-                      </div>
-                    )}
-                  </Paper>
-                  
-                )}
-</div>
         {
           window?.location?.pathname === '/people' ?
 

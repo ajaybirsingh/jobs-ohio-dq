@@ -28,11 +28,11 @@ export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
   const peopleData = location?.state?.data;
-  console.log(peopleData,'peopleData31');
+  console.log(peopleData, 'peopleData31');
   const AllstatesData = statesData;
   const countryData = country;
   const PrefilledData = location?.state?.data;
-  console.log(PrefilledData,'PrefilledData34');
+  console.log(PrefilledData, 'PrefilledData34');
   const isOrgDetails = location?.state?.isOrganizationScreen;
   const [showSearchdata, setshowSearchdata] = React.useState(false);
   const [responseData, setResponseData] = React.useState(null);
@@ -242,7 +242,7 @@ export default function PeopleScreen() {
           user_id: userIdWithoutQuotes,
           updated_at: new Date().toISOString().slice(0, 10),
           position_start_date: null,
-          org_id: PeopleDetails?.Orgid,
+          org_id: PeopleDetails?.Orgid ? PeopleDetails?.Orgid : null,
         }
       ]
     }
@@ -320,7 +320,7 @@ export default function PeopleScreen() {
           user_id: userIdWithoutQuotes,
           updated_at: new Date().toISOString().slice(0, 10),
           position_start_date: null,
-          org_id: PeopleDetails?.Orgid,
+          org_id: PeopleDetails?.Orgid ? PeopleDetails?.Orgid : null,
         }
       ]
     }
@@ -451,7 +451,8 @@ export default function PeopleScreen() {
       ...prevState,
       Oraganization: item?.org_name || "",
       Orgid: item?.org_id || "",
-      Orglinkedin: item?.linkedin || ''
+      Orglinkedin: item?.linkedin || '',
+      Permalink: item?.permalink || ''
     }));
     setshowSearchdata(false);
     // setIsSelected(true);s
