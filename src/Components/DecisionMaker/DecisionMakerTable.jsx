@@ -257,7 +257,7 @@ export default function DecisionMakerTable({
   setSkip,
   skip,
   setIsApplyFilter,
-  applyFilter, FilterData, previousData, selectedData, setIsDeleted, isDeleted }) {
+  applyFilter, FilterData, previousData, selectedData, setIsDeleted, isDeleted,setTotalPages,totalPages,perPage }) {
   const exportToExcel = (data, filename) => {
     const filteredData = data.map(({ person_id, org_id, strengthData, ...rest }) => rest);
     const ws = XLSX.utils.json_to_sheet(filteredData);

@@ -441,6 +441,12 @@ export default function AiLeadsTable({
   isDecisionMakerExcel,
   isSalesForceTrigger,
   handleApply,
+  setTotalPages,
+  totalPages,
+  perPage,
+  setStatsCount,
+  setPage,
+  page
 }) {
   const exportToExcel = (data, filename) => {
     const filteredData = data.map(
@@ -456,7 +462,7 @@ export default function AiLeadsTable({
   const [jsonData, setJsonData] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [hasMoreInner, setHasMoreInner] = React.useState(false);
-  const [page, setPage] = React.useState(0);
+  // const [page, setPage] = React.useState(0);
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [expandHandlerAccept, setExpandHandlerAccept] = useState([]);
   const [pageInner, setPageInner] = React.useState(1);
@@ -481,8 +487,12 @@ export default function AiLeadsTable({
     axios(option)
       .then((e) => {
         setLoading(false);
-        SetOrganizationCount('orgCount', e?.data?.count);
+        // SetOrganizationCount('orgCount', e?.data?.count);
         setIsDeleted(false);
+        setStatsCount(e?.data?.count);
+        const recordDivide = e?.data?.count / perPage;
+        const formatedTotal = Math?.round(recordDivide);
+        setTotalPages(formatedTotal);
         const comingData = e?.data?.data;
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);
@@ -634,77 +644,85 @@ export default function AiLeadsTable({
       return e;
     });
   };
-  const pushToSalesForce = () => {
-    if (!validateSalesforce()) return;
+  // const pushToSalesForce = () => {
+  //   if (!validateSalesforce()) return;
+  //   setLoading(true);
+
+  //   const ms = {
+  //     updateData: {
+  //       data: selectedRows?.map((item) => ({
+  //         items: [item?.person_id, "Suspect"],
+  //       })),
+  //     },
+  //   };
+  //   const transformedData = selectedRows
+  //     ?.map((i) => {
+  //       const organizationInfo =
+  //         jsonData.find((org) => org?.org_id === i?.org_id) || {};
+  //       return { ...i, organizationInfo };
+  //     })
+  //     ?.map((item) => ({
+  //       attributes: {
+  //         type: "Lead",
+  //         referenceId: "rec" + item?.person_id,
+  //       },
+  //       LastName: item?.last_name,
+  //       FirstName: item?.first_name,
+  //       Salutation: null,
+  //       Title: item.primary_job_title,
+  //       Company: item.primary_organization,
+  //       City: item?.organizationInfo?.location_identifiers?.split(",")[0],
+  //       State: item?.organizationInfo?.location_identifiers?.split(",")[1],
+  //       Country: item?.organizationInfo?.country,
+  //       LeadSource: "JOI",
+  //       Status: "Suspect",
+  //     }));
+  //   const finalJson = { records: transformedData, ...ms };
+  //   const option = {
+  //     method: "POST",
+  //     headers: {
+  //       "access-control-allow-origin": "*",
+  //       "content-type": "application/json",
+  //     },
+  //     data: finalJson,
+  //     url: `${APIUrlThree()}/v1/add_suspects`,
+  //   };
+  //   axios(option)
+  //     .then(async (response) => {
+  //       setLoading(false);
+  //       if (response?.status === 200) {
+  //         toast.success("Record has been created");
+  //         const promiseRequest = selectedRows?.map((item) => {
+  //           return ExpandHandler(item?.org_id, 1);
+  //         });
+  //         const result = await Promise.all(promiseRequest);
+  //         setExpandHandlerAccept(...result);
+  //         setSelectedRows([]);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setLoading(false);
+  //       toast.error(err?.response?.data?.message);
+  //     });
+  // };
+
+  // React.useEffect(() => {
+  //   if (isSalesForceTrigger) {
+  //     pushToSalesForce();
+  //   }
+  // }, [isSalesForceTrigger]);
+
+  const loadMore = () => {
     setLoading(true);
-
-    const ms = {
-      updateData: {
-        data: selectedRows?.map((item) => ({
-          items: [item?.person_id, "Suspect"],
-        })),
-      },
-    };
-    const transformedData = selectedRows
-      ?.map((i) => {
-        const organizationInfo =
-          jsonData.find((org) => org?.org_id === i?.org_id) || {};
-        return { ...i, organizationInfo };
-      })
-      ?.map((item) => ({
-        attributes: {
-          type: "Lead",
-          referenceId: "rec" + item?.person_id,
-        },
-        LastName: item?.last_name,
-        FirstName: item?.first_name,
-        Salutation: null,
-        Title: item.primary_job_title,
-        Company: item.primary_organization,
-        City: item?.organizationInfo?.location_identifiers?.split(",")[0],
-        State: item?.organizationInfo?.location_identifiers?.split(",")[1],
-        Country: item?.organizationInfo?.country,
-        LeadSource: "JOI",
-        Status: "Suspect",
-      }));
-    const finalJson = { records: transformedData, ...ms };
-    const option = {
-      method: "POST",
-      headers: {
-        "access-control-allow-origin": "*",
-        "content-type": "application/json",
-      },
-      data: finalJson,
-      url: `${APIUrlThree()}/v1/add_suspects`,
-    };
-    axios(option)
-      .then(async (response) => {
-        setLoading(false);
-        if (response?.status === 200) {
-          toast.success("Record has been created");
-          const promiseRequest = selectedRows?.map((item) => {
-            return ExpandHandler(item?.org_id, 1);
-          });
-          const result = await Promise.all(promiseRequest);
-          setExpandHandlerAccept(...result);
-          setSelectedRows([]);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(err?.response?.data?.message);
-      });
+    setPage(page => page + 1);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
-
-  React.useEffect(() => {
-    if (isSalesForceTrigger) {
-      pushToSalesForce();
-    }
-  }, [isSalesForceTrigger]);
   return (
     <React.Fragment>
       {loading ? <Loader /> : null}
-      <InfiniteScroll
+      {/* <InfiniteScroll
         dataLength={jsonData.length}
         next={() => {
           if (hasMore) {
@@ -713,7 +731,7 @@ export default function AiLeadsTable({
           }
         }}
         hasMore={hasMore}
-      >
+      > */}
         {jsonData?.length ? (
           <>
             <TableContainer component={Paper} className="ai-leads-table-main">
@@ -813,6 +831,22 @@ export default function AiLeadsTable({
                 </TableBody>
               </Table>
             </TableContainer>
+
+            {
+            jsonData?.length >= 50 ?
+              <div className="loadmore-pagination-section">
+                {totalPages !== page && (
+                  <button
+                    className="btn-load-more button-loadmore-pagination"
+                    onClick={loadMore}
+                    disabled={loading}
+                  >
+                    {loading ? 'Loading...' : 'Load More'}
+                  </button>
+                )}
+              </div>
+              : null
+          }
           </>
         ) : (
           <div className="ai-leads-table-main">
@@ -823,7 +857,7 @@ export default function AiLeadsTable({
             </div>
           </div>
         )}
-      </InfiniteScroll>
+      {/* </InfiniteScroll> */}
     </React.Fragment>
   );
 }

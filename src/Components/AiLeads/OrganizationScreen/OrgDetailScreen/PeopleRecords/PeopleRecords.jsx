@@ -637,7 +637,6 @@ export default function PeopleRecords({ rowData, organizationData }) {
         setDecisionMakerDataCount(e?.data?.count);
         setLoading(false);
         const comingData = e?.data?.data;
-        console.log(comingData, 'comingData640');
         setRecordDeleted(false);
         if (comingData.length === 0) {
           setHasMore(false);

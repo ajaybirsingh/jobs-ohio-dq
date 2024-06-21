@@ -14,7 +14,7 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
   setShowData,
   setJscore, jScoredata, showlast, setShowlast,
   setStatsCount,
-  setPage
+  setPage,
 }) {
   const [selectedIndustry, setSelectedIndustry] = React.useState("");
   const [selectedRevenue, setSelectedRevenue] = React.useState("");

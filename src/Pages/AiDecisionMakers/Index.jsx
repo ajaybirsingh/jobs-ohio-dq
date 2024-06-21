@@ -32,7 +32,8 @@ const DecisionMaker = () => {
   const [showSearchdata, setshowSearchdata] = React.useState(false);
   const [previousData, setpreviousData] = useState(false)
   const [isDeleted, setIsDeleted] = React.useState(false);
-
+  const [totalPages,setTotalPages] = useState(1);
+  const perPage = 50;
   const validateFilters = () => {
     if (!selectedData?.length && !showData?.length && !lastdata?.length
     ) {
@@ -223,6 +224,10 @@ const DecisionMaker = () => {
             FilterData={FilterData}
             setIsDeleted={setIsDeleted}
             isDeleted={isDeleted}
+            setTotalPages={setTotalPages}
+            totalPages={totalPages}
+            perPage={perPage}
+
 
 
           />

@@ -53,7 +53,7 @@ export const APIUrlThree = () => {
     return 'http://172.212.85.63:8002'
 }
 export const APIUrlFour = () => {
-    return 'http://172.214.83.217:8000'
+    return 'http://48.217.82.161:8000'
 }
 // for login user
 export const SetUserId = (item, value) => {

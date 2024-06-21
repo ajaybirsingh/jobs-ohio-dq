@@ -25,6 +25,8 @@ const AILeads = () => {
   const [showlast, setShowlast] = React.useState([]);
   const [jScoredata, setJscore] = React.useState([]);
   const [statsCount, setStatsCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const perPage = 50;
   const validateFilters = () => {
     if (!selectedData?.length && !showlast?.length && !jScoredata?.length) {
       toast.error("Please Select Filters");
@@ -54,6 +56,9 @@ const AILeads = () => {
         const comingData = e?.data?.data;
         const statsCount = e?.data?.count;
         setStatsCount(statsCount);
+        const recordDivide = statsCount / perPage;
+        const formatedTotal = Math?.round(recordDivide);
+        setTotalPages(formatedTotal);
         setPage(1);
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);
@@ -106,7 +111,9 @@ const AILeads = () => {
         const comingData = e?.data?.data;
         const statsCount = e?.data?.count;
         setStatsCount(statsCount);
-
+        const recordDivide = statsCount / perPage;
+        const formatedTotal = Math?.round(recordDivide);
+        setTotalPages(formatedTotal);
         if (comingData.length % 50 !== 0 || comingData.length === 0) {
 
           setHasMore(false);
@@ -139,12 +146,14 @@ const AILeads = () => {
       }
     }, 150)
   }, [page])
+
+  
   return (
     <>
       <Layout>
         {loading ? <Loader /> : null}
         <div className="child-section-of-everypage  ">
-          <InfiniteScroll
+          {/* <InfiniteScroll
             dataLength={tableCommingData.length}
             next={() => {
 
@@ -155,7 +164,7 @@ const AILeads = () => {
 
             }}
             hasMore={hasMore}
-          />
+          /> */}
           <AiLeadsAction
             currentLeadsLength={currentLeadsLength}
             setIsDecisionMakerExcel={setIsDecisionMakerExcel}
@@ -179,6 +188,7 @@ const AILeads = () => {
             setIstableDataFilter={setIstableDataFilter}
             setStatsCount={setStatsCount}
             setPage={setPage}
+
           />
           <AiLeadsTable
             handleApply={handleApply}
@@ -190,6 +200,12 @@ const AILeads = () => {
             isSalesForceTrigger={isSalesForceTrigger}
             isDecisionMakerExcel={isDecisionMakerExcel}
             setIsDecisionMakerExcel={setIsDecisionMakerExcel}
+            setTotalPages={setTotalPages}
+            totalPages={totalPages}
+            perPage={perPage}
+            setStatsCount={setStatsCount}
+            setPage={setPage}
+            page={page}
           />
         </div>
       </Layout>

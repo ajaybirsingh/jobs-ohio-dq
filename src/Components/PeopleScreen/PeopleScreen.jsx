@@ -36,7 +36,9 @@ export default function PeopleScreen() {
   const [responseData, setResponseData] = React.useState(null);
   const [selectedOrganization, setSelectedOrganization] = React.useState('');
   const [actionData, setActionData] = React.useState([]);
-  const [FilteredData, setFilteredData] = React.useState([])
+  const [FilteredData, setFilteredData] = React.useState([]);
+  const [Allpermalik, setAllpermalik] = React.useState("");
+  const[SearchOrgInput,setSearchOrgInput]=React.useState(false)
   const [PeopleDetails, setPeopleDetails] = React.useState({
     firstName: "",
     lastName: "",
@@ -518,7 +520,35 @@ export default function PeopleScreen() {
   }
   React.useEffect(() => {
     DropDownsData();
-  }, [])
+  }, []);
+
+
+  React.useEffect(() => {
+    if (Allpermalik) {
+      setPeopleDetails({
+        ...PeopleDetails,
+        Permalink: Allpermalik?.permalink
+      })
+    }
+  }, [Allpermalik])
+
+  const showsearchInput = () => {
+    setPeopleDetails(prevState => ({
+      ...prevState,
+      Oraganization: "",
+      Permalink: ""
+    }));
+    setSearchOrgInput(true)
+  }
+
+  const handelchnage =(e)=>{
+    const inputvalue = e.target.value
+    setPeopleDetails({
+      ...PeopleDetails,
+      Oraganization: inputvalue,
+    });
+    setSearchOrgInput(true)
+  }
   const states = PeopleDetails?.Country === 'United States' ? dropDownData?.state : dropDownData?.ca_states;
   return (
     <>
@@ -680,7 +710,86 @@ export default function PeopleScreen() {
                   </div>
                 )}
               </div> */}
-              <div className="SetCoustom-drop-down">
+              <div className={!PrefilledData ? "hide-editcase" : "MAin-container-ofedit-case"}>
+                {/* Edit case  */}
+                {PrefilledData ?
+                  <div className="EditCase-OrgInputs">
+                    {SearchOrgInput ? (
+                      <div className="editcase2nd_input">
+                        <label htmlFor="" className="PeopleScreen-lables">
+                          Organization
+                        </label>
+                        <span className="PeopleMandatoryfields">*</span>
+                        <LabelInput
+                          onChange={(e) => {
+                            const inputvalue = e?.target?.value;
+                            setPeopleDetails({
+                              ...PeopleDetails,
+                              Oraganization: inputvalue,
+                            });
+                          }}
+                          value={PeopleDetails?.Oraganization}
+                        />
+                        <div className="handelEmtyData_icon" onClick={handelEmtyData}>
+                          {PeopleDetails.Oraganization && (
+                            <CloseIcon className="showicons-search" />
+                          )}
+                        </div>
+                        {showSearchdata && (
+                          <div
+                            className={
+                              responseData && responseData?.length
+                                ? "Dropdown-forPeople-screen"
+                                : ""
+                            }
+                          >
+                            {responseData?.length > 0 ? (
+                              responseData?.map((item) => (
+                                <div className="outterAutocompletedropdown" key={item.id}>
+                                  <div
+                                    onClick={() => handelselectdata(item)}
+                                    className="useralldata"
+                                  >
+                                    {item?.org_name}
+                                  </div>
+                                  <div className="separatorline"></div>
+                                </div>
+                              ))
+                            ) : (
+                              <div>
+                                {showSearchdata && (
+                                  <div className="Not-Available-Drop-Down">
+                                    Not Available
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                    ) : (
+                      <div className="editcase2nd_input">
+                        <label htmlFor="" className="PeopleScreen-lables">
+                          Organization
+                        </label>
+                        <span className="PeopleMandatoryfields">*</span>
+                        <LabelInput
+                          onChange={handelchnage}
+                          value={PeopleDetails.Oraganization}
+                        />
+                        <div className="handelEmtyData_icon" onClick={showsearchInput}>
+                          {PeopleDetails.Oraganization && (
+                            <CloseIcon className="showicons-search" />
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  : null}
+              </div>
+              {/* add case  */}
+              {!PrefilledData ?
                 <div className="People-child-container-forOrganization">
                   <label htmlFor="" className="PeopleScreen-lables">
                     Organization
@@ -698,36 +807,43 @@ export default function PeopleScreen() {
                   />
                   <div className="handelEmtyData_icon" onClick={handelEmtyData}>
                     {PeopleDetails.Oraganization && (
-                      <CloseIcon className='showicons-search' />
+                      <CloseIcon className="showicons-search" />
                     )}
                   </div>
-                </div>
-                {showSearchdata && (
-                  <div className={responseData && responseData?.length ? "Dropdown-forPeople-screen" : ""}
-                  >
-                    {responseData?.length > 0 ? (
-                      responseData?.map((item) => {
-                        return (
-                          <div className='outterAutocompletedropdown' key={item.id}>
+                  {showSearchdata && (
+                    <div
+                      className={
+                        responseData && responseData?.length
+                          ? "Dropdown-forPeople-screen"
+                          : ""
+                      }
+                    >
+                      {responseData?.length > 0 ? (
+                        responseData?.map((item) => (
+                          <div className="outterAutocompletedropdown" key={item.id}>
                             <div
-                              onClick={() => handelselectdata(item)} className='useralldata'
+                              onClick={() => handelselectdata(item)}
+                              className="useralldata"
                             >
                               {item?.org_name}
                             </div>
-                            <div className='separatorline'></div>
+                            <div className="separatorline"></div>
                           </div>
-                        )
-                      }
-                      )
-                    ) : (
-                      <div>
-                        {showSearchdata && <div className='Not-Available-Drop-Down'>Not Available</div>}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-              </div>
+                        ))
+                      ) : (
+                        <div>
+                          {showSearchdata && (
+                            <div className="Not-Available-Drop-Down">
+                              Not Available
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+                : null
+              }
               <div className="uploderinput">
                 <label className="PeopleScreen-lables" htmlFor="">
                   Source Description

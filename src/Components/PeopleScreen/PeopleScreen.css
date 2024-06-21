@@ -106,6 +106,13 @@
     font-size: inherit !important;
 }
 .People-child-container-forOrganization{
+    width: 50%;
+    position: relative;
+}
+.hide-editcase{
+    display: none;
+}
+.editcase2nd_input{
     width: 100%;
     position: relative;
 }
@@ -322,4 +329,10 @@ input[type=file]:hover~label i {
 .Position-end-date .css-1laqsz7-MuiInputAdornment-root button svg {
     width: 16px !important;
     height: 16px !important;
+}
+.EditCase-OrgInputs{
+    width: 100%;
+}
+.MAin-container-ofedit-case{
+    width: 50%;
 }
