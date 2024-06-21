@@ -329,7 +329,7 @@ import { Textarea } from "@mui/joy";
 import { toast } from "react-toastify";
 import { PEOPLE_RECORDS } from "../../../../../Utils/Constants";
 let loaded = false;
-function Row({ row, organizationData }) {
+function Row({ row, organizationData, setRecordDeleted }) {
   const navigate = useNavigate();
   const linkedInUrl = row?.linkedin ? row.linkedin : "Not Available";
   const [deleteData, setDeleteData] = React.useState('');
@@ -382,6 +382,7 @@ function Row({ row, organizationData }) {
           toast.success("Record Deleted Successfully");
           setModalTeaxtArea('');
           handleClose();
+          setRecordDeleted(true);
         }
       })
       .catch((err) => {
@@ -607,6 +608,7 @@ export default function PeopleRecords({ rowData, organizationData }) {
   const [decisionMakerDataCount, setDecisionMakerDataCount] = React.useState(
     []
   );
+  const [recordDeleted, setRecordDeleted] = React.useState(false);
   const fetchMoreData = () => {
     if (!decisionMakerData?.length) return;
     const hasMore = decisionMakerData?.length < rowData?.people_count || decisionMakerDataCount;
@@ -635,6 +637,8 @@ export default function PeopleRecords({ rowData, organizationData }) {
         setDecisionMakerDataCount(e?.data?.count);
         setLoading(false);
         const comingData = e?.data?.data;
+        console.log(comingData, 'comingData640');
+        setRecordDeleted(false);
         if (comingData.length === 0) {
           setHasMore(false);
         } else {
@@ -644,6 +648,13 @@ export default function PeopleRecords({ rowData, organizationData }) {
             setDecisionMakerData([...decisionMakerData, ...comingData]);
             return;
           }
+          // if (recordDeleted) {
+          //   console.log(comingData, 'comingData652')
+          //   // const data = comingData?.filter((i) => i?.validation_status !== 'rejected');
+          //   // console.log(data, 'data654');
+          //   // setDecisionMakerData(data);
+
+          // }
           if (comingData.length % 50 === 0)
             setTimeout(() => setHasMore(true), 1000);
           decisionMakerData.length === 0
@@ -666,6 +677,13 @@ export default function PeopleRecords({ rowData, organizationData }) {
       aiDecisionMakerTable();
     }
   }, [organizationData?.permalink, skip]);
+
+  React.useEffect(() => {
+    if (recordDeleted) {
+      // aiDecisionMakerTable();
+      window?.location?.reload();
+    }
+  }, [recordDeleted])
   return (
     <>
       {loading ? <Loader /> : null}
@@ -758,13 +776,13 @@ export default function PeopleRecords({ rowData, organizationData }) {
                 {decisionMakerData
                   ?.filter(row => row.validation_status !== 'rejected')
                   .map((row, index) => {
-                    console.log(row, 'row721');
                     return (
                       <React.Fragment key={index}>
                         <Row
                           row={row}
                           organizationData={organizationData}
                           selected={selectedRows.includes(row.first_name)}
+                          setRecordDeleted={setRecordDeleted}
                           onSelect={(firstName) => {
                             const selectedIndex = selectedRows.indexOf(firstName);
                             let newSelected = [];

@@ -173,7 +173,6 @@ const DecisionMaker = () => {
             isSalesForceTrigger={isSalesForceTrigger}
             setIsDecisionMakerExcel={setIsDecisionMakerExcel}
             statsCountDecisionMaker={statsCountDecisionMaker}
-
             setFilterData={setFilterData}
             FilterData={FilterData}
             PeopleData={PeopleData}

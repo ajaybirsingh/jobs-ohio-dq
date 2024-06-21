@@ -28,11 +28,9 @@ export default function PeopleScreen() {
   const location = useLocation();
   const navigate = useNavigate();
   const peopleData = location?.state?.data;
-  console.log(peopleData, 'peopleData31');
   const AllstatesData = statesData;
   const countryData = country;
   const PrefilledData = location?.state?.data;
-  console.log(PrefilledData, 'PrefilledData34');
   const isOrgDetails = location?.state?.isOrganizationScreen;
   const [showSearchdata, setshowSearchdata] = React.useState(false);
   const [responseData, setResponseData] = React.useState(null);
@@ -279,7 +277,11 @@ export default function PeopleScreen() {
             PositionEndDate: "",
             Status: "",
           });
-          navigate(AI_DECISION_MAKER);
+          if (peopleData?.orgDetails) {
+            navigate(ORG_DETAILS, { state: PrefilledData })
+          } else {
+            navigate(AI_DECISION_MAKER);
+          }
         }
       })
       .catch((err) => {
