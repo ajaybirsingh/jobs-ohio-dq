@@ -446,7 +446,8 @@ export default function AiLeadsTable({
   perPage,
   setStatsCount,
   setPage,
-  page
+  page,
+  setSelectedData
 }) {
   const exportToExcel = (data, filename) => {
     const filteredData = data.map(
@@ -482,7 +483,7 @@ export default function AiLeadsTable({
       headers: {
         "content-type": "plain/text",
       },
-      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=${(page - 1) * 50}&validation_filter=pending`,
+      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=${page ? page : 0}&validation_filter=pending`,
     };
     axios(option)
       .then((e) => {
@@ -524,12 +525,13 @@ export default function AiLeadsTable({
       headers: {
         "content-type": "plain/text",
       },
-      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=0`,
+      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=0&validation_filter=pending`,
     };
     axios(option)
       .then((e) => {
         setLoading(false);
         const comingData = e?.data?.data;
+        setSelectedData(['pending']);
         if (comingData.length === 0) {
           setHasMore(false);
         } else {
@@ -544,7 +546,7 @@ export default function AiLeadsTable({
           setHasMore(false);
         }
         setIstableDataFilter(false);
-        setPage(1);
+        setPage(0);
       })
       .catch(() => {
         setLoading(false);
@@ -553,7 +555,8 @@ export default function AiLeadsTable({
 
   React.useEffect(() => {
     if (istableDataFilter) {
-      resetDataRetrieve();
+      // resetDataRetrieve();
+      window?.location?.reload();
     }
     return;
     if (istableDataFilter) {
@@ -561,7 +564,6 @@ export default function AiLeadsTable({
       setJsonData([]);
       setHasMore(true);
       if (tableCommingData?.length) {
-        alert("00");
         handleApply();
       }
     }
@@ -569,14 +571,15 @@ export default function AiLeadsTable({
 
   React.useEffect(() => {
     setTimeout(() => {
-      if (page > 0) {
-        if (tableCommingData?.length) {
-        } else {
-          aiLeadsTable();
-        }
+      // if (page > 0) {
+      if (tableCommingData?.length) {
       } else {
-        setPage(1);
+        aiLeadsTable();
       }
+      // } 
+      // else {
+      // setPage(1);
+      // }
     }, 150);
   }, [page, isDeleted]);
 
@@ -714,7 +717,7 @@ export default function AiLeadsTable({
 
   const loadMore = () => {
     setLoading(true);
-    setPage(page => page + 1);
+    setPage(page => page + 50);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -732,107 +735,107 @@ export default function AiLeadsTable({
         }}
         hasMore={hasMore}
       > */}
-        {jsonData?.length ? (
-          <>
-            <TableContainer component={Paper} className="ai-leads-table-main">
-              <Table aria-label="collapsible table" className="ai-leads-table">
-                <TableHead>
-                  <TableRow className="table-row-ai-leads">
-                    <TableCell className="score-row-table">Name</TableCell>
-                    <TableCell align="left" className="company-row-table">
-                      Legal Name
-                    </TableCell>
-                    <TableCell align="left" className="employee-row-table">
-                      Revenue Range
-                    </TableCell>
-                    <TableCell align="left" className="annual-row-table">
-                      Num Employees
-                    </TableCell>
-                    <TableCell align="left" className="industry-row-table">
-                      <p className="sector-industry-inner-new">Linkedin</p>
-                    </TableCell>
-                    <TableCell align="left" className="industry-row-table">
-                      <p className="industry-row-Inner">Website Url</p>
-                    </TableCell>
-                    <TableCell align="left" className="industry-row-tableStatus">
-                      <p className="DecisionstableStrength-strength">Action</p>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {jsonData?.map((row, index) => {
-                    const isSelected = selectedRows?.find(
-                      (item) => item?.person_id === row?.person_id
-                    );
-                    return (
-                      <React.Fragment key={index}>
-                        <Row
-                          key={row.name}
-                          row={row}
-                          setIsDeleted={setIsDeleted}
-                          selected={isSelected}
-                          onSelect={(selectedRow) => {
-                            const localRows = [...selectedRows];
-                            const selectedIndex = localRows.findIndex(
-                              (row) => row?.person_id === selectedRow?.person_id
+      {jsonData?.length ? (
+        <>
+          <TableContainer component={Paper} className="ai-leads-table-main">
+            <Table aria-label="collapsible table" className="ai-leads-table">
+              <TableHead>
+                <TableRow className="table-row-ai-leads">
+                  <TableCell className="score-row-table">Name</TableCell>
+                  <TableCell align="left" className="company-row-table">
+                    Legal Name
+                  </TableCell>
+                  <TableCell align="left" className="employee-row-table">
+                    Revenue Range
+                  </TableCell>
+                  <TableCell align="left" className="annual-row-table">
+                    Num Employees
+                  </TableCell>
+                  <TableCell align="left" className="industry-row-table">
+                    <p className="sector-industry-inner-new">Linkedin</p>
+                  </TableCell>
+                  <TableCell align="left" className="industry-row-table">
+                    <p className="industry-row-Inner">Website Url</p>
+                  </TableCell>
+                  <TableCell align="left" className="industry-row-tableStatus">
+                    <p className="DecisionstableStrength-strength">Action</p>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {jsonData?.map((row, index) => {
+                  const isSelected = selectedRows?.find(
+                    (item) => item?.person_id === row?.person_id
+                  );
+                  return (
+                    <React.Fragment key={index}>
+                      <Row
+                        key={row.name}
+                        row={row}
+                        setIsDeleted={setIsDeleted}
+                        selected={isSelected}
+                        onSelect={(selectedRow) => {
+                          const localRows = [...selectedRows];
+                          const selectedIndex = localRows.findIndex(
+                            (row) => row?.person_id === selectedRow?.person_id
+                          );
+                          let newSelected = [];
+                          if (selectedIndex === -1) {
+                            newSelected = [selectedRow];
+                          } else if (selectedIndex === 0) {
+                            newSelected = newSelected.concat(
+                              localRows.slice(1)
                             );
-                            let newSelected = [];
-                            if (selectedIndex === -1) {
-                              newSelected = [selectedRow];
-                            } else if (selectedIndex === 0) {
-                              newSelected = newSelected.concat(
-                                localRows.slice(1)
+                          } else if (selectedIndex === localRows.length - 1) {
+                            newSelected = newSelected.concat(
+                              localRows.slice(0, -1)
+                            );
+                          } else if (selectedIndex > 0) {
+                            newSelected = localRows.filter(
+                              (child) =>
+                                child.person_id !== selectedRow.person_id
+                            );
+                          }
+                          const updatedOrganizations = newSelected.map(
+                            (name) => {
+                              const organization = jsonData.find(
+                                (org) => org?.org_id === name?.org_id
                               );
-                            } else if (selectedIndex === localRows.length - 1) {
-                              newSelected = newSelected.concat(
-                                localRows.slice(0, -1)
-                              );
-                            } else if (selectedIndex > 0) {
-                              newSelected = localRows.filter(
-                                (child) =>
-                                  child.person_id !== selectedRow.person_id
-                              );
+                              return {
+                                ...name,
+                                organizationInfo: organization,
+                              };
                             }
-                            const updatedOrganizations = newSelected.map(
-                              (name) => {
-                                const organization = jsonData.find(
-                                  (org) => org?.org_id === name?.org_id
-                                );
-                                return {
-                                  ...name,
-                                  organizationInfo: organization,
-                                };
-                              }
-                            );
-                            setSelectedRows(
-                              selectedIndex > -1
-                                ? updatedOrganizations
-                                : [...selectedRows, ...updatedOrganizations]
-                            );
-                          }}
-                          connectionStrength={row.connectionStrength}
-                          ExpandHandler={ExpandHandler}
-                          onLoadApi={onLoadApi}
-                          expandHandlerAccept={expandHandlerAccept}
-                          selectedRows={selectedRows}
-                          setSelectedRows={setSelectedRows}
-                          setPageInner={setPageInner}
-                          pageInner={pageInner}
-                          openRowId={openRowId}
-                          hasMoreInner={hasMoreInner}
-                          setExpandHandlerAccept={setExpandHandlerAccept}
-                          setHasMore={setHasMore}
-                          setopenRowId={setopenRowId}
-                          setHasMoreInner={setHasMoreInner}
-                        />
-                      </React.Fragment>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                          );
+                          setSelectedRows(
+                            selectedIndex > -1
+                              ? updatedOrganizations
+                              : [...selectedRows, ...updatedOrganizations]
+                          );
+                        }}
+                        connectionStrength={row.connectionStrength}
+                        ExpandHandler={ExpandHandler}
+                        onLoadApi={onLoadApi}
+                        expandHandlerAccept={expandHandlerAccept}
+                        selectedRows={selectedRows}
+                        setSelectedRows={setSelectedRows}
+                        setPageInner={setPageInner}
+                        pageInner={pageInner}
+                        openRowId={openRowId}
+                        hasMoreInner={hasMoreInner}
+                        setExpandHandlerAccept={setExpandHandlerAccept}
+                        setHasMore={setHasMore}
+                        setopenRowId={setopenRowId}
+                        setHasMoreInner={setHasMoreInner}
+                      />
+                    </React.Fragment>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-            {
+          {/* {
             jsonData?.length >= 50 ?
               <div className="loadmore-pagination-section">
                 {totalPages !== page && (
@@ -846,17 +849,32 @@ export default function AiLeadsTable({
                 )}
               </div>
               : null
-          }
-          </>
-        ) : (
-          <div className="ai-leads-table-main">
-            <div className="ai-leads-no-data-available-outter">
-              <div className="ai-leads-no-data-available">
-                No Data Available
+          } */}
+          {
+            jsonData?.length >= 50 ?
+              <div className="loadmore-pagination-section">
+                {(Math.ceil(page / 50) < totalPages) && (
+                  <button
+                    className="btn-load-more button-loadmore-pagination"
+                    onClick={loadMore}
+                    disabled={loading}
+                  >
+                    {loading ? 'Loading...' : 'Load More'}
+                  </button>
+                )}
               </div>
+              : null
+          }
+        </>
+      ) : (
+        <div className="ai-leads-table-main">
+          <div className="ai-leads-no-data-available-outter">
+            <div className="ai-leads-no-data-available">
+              No Data Available
             </div>
           </div>
-        )}
+        </div>
+      )}
       {/* </InfiniteScroll> */}
     </React.Fragment>
   );

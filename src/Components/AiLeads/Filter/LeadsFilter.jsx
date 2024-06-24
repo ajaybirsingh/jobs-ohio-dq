@@ -63,7 +63,7 @@ export default function LeadsFilter({ setTableCommingData, setIstableDataFilter,
     setShowlast([]);
     setJscore([]);
     if (selectedData?.length || showlast?.length || jScoredata?.length) {
-      setPage(1);
+      setPage(0);
       setTableCommingData([]);
       setIstableDataFilter(true);
       setStatsCount('');

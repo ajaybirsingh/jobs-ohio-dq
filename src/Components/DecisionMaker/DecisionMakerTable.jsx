@@ -257,7 +257,8 @@ export default function DecisionMakerTable({
   setSkip,
   skip,
   setIsApplyFilter,
-  applyFilter, FilterData, previousData, selectedData, setIsDeleted, isDeleted,setTotalPages,totalPages,perPage }) {
+  applyFilter, FilterData, previousData, selectedData, setIsDeleted, isDeleted, setTotalPages, totalPages, perPage, setLoading,
+  loading, setSelectedData, setStatsCountDecisionMaker }) {
   const exportToExcel = (data, filename) => {
     const filteredData = data.map(({ person_id, org_id, strengthData, ...rest }) => rest);
     const ws = XLSX.utils.json_to_sheet(filteredData);
@@ -266,14 +267,14 @@ export default function DecisionMakerTable({
     XLSX.writeFile(wb, `${filename}.xlsx`);
     setIsDecisionMakerExcel(false);
   };
-  const [loading, setLoading] = React.useState(false);
+  // const [loading, setLoading] = React.useState(false);
   const [decisionMakerData, setDecisionMakerData] = React.useState([]);
   const [checkDecisionMakerData, setcheckDecisionMakerData] = React.useState([]);
   const loggedInUserId = GetUserId();
   const [selectedRows, setSelectedRows] = React.useState([]);
   const [hasMore, setHasMore] = React.useState(false);
   const [isfetchData, setIsfetchData] = React.useState(false);
-
+  const [isResetData, setIsResetData] = React.useState(false);
 
   // React.useEffect(() => {
   //   if (isDeleted === true) {
@@ -300,38 +301,81 @@ export default function DecisionMakerTable({
       }
     }, 100)
   };
-  const fetchData = () => {
+  // const fetchData = () => {
+  //   if (!isDeleted) {
+  //     if (tableCommingData.length !== skip) return;
+  //   }
+  //   setLoading(true);
+  //   const option = {
+  //     method: "GET",
+  //     headers: {
+  //       "content-type": "application/json",
+  //     },
+  //     url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&validation_filter=${selectedData}`,
+  //   };
+  //   axios(option)
+  //     .then((response) => {
+  //       setLoading(false);
+  //       SetPeopleCount('peoCount', response?.data?.count);
+  //       setIsDeleted(false);
+  //       const comingData = response?.data?.data;
+  //       if (comingData.length === 0 || comingData.length % 50 !== 0) {
+  //         setHasMore(false);
+  //       } else {
+  //         setTimeout(() => {
+  //           setHasMore(true);
+  //         }, 1000);
+  //         setDecisionMakerData([...decisionMakerData, ...comingData]);
+  //         setTableCommingData([...decisionMakerData, ...comingData]);
+  //         setcheckDecisionMakerData(comingData);
+  //       }
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // };
+
+  const fetchData = async () => {
     if (!isDeleted) {
       if (tableCommingData.length !== skip) return;
     }
     setLoading(true);
+
     const option = {
       method: "GET",
       headers: {
         "content-type": "application/json",
       },
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&validation_filter=${selectedData}`,
     };
-    axios(option)
-      .then((response) => {
-        setLoading(false);
-        SetPeopleCount('peoCount', response?.data?.count);
-        setIsDeleted(false);
-        const comingData = response?.data?.data;
-        if (comingData.length === 0 || comingData.length % 50 !== 0) {
-          setHasMore(false);
-        } else {
-          setTimeout(() => {
-            setHasMore(true);
-          }, 1000);
-          setDecisionMakerData([...decisionMakerData, ...comingData]);
-          setTableCommingData([...decisionMakerData, ...comingData]);
-          setcheckDecisionMakerData(comingData);
-        }
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+
+    try {
+      const response = await axios(option);
+      setLoading(false);
+      // SetPeopleCount('peoCount', response?.data?.count);
+      const statsCount = response?.data?.count;
+      setStatsCountDecisionMaker(statsCount);
+      const recordDivide = statsCount / perPage;
+      const formatedTotal = Math?.round(recordDivide);
+      setTotalPages(formatedTotal);
+      setIsDeleted(false);
+      setIsResetData(false);
+      const comingData = response?.data?.data;
+
+      if (comingData.length === 0 || comingData.length % 50 !== 0) {
+        setHasMore(false);
+      } else {
+        setTimeout(() => {
+          setHasMore(true);
+        }, 1000);
+        setDecisionMakerData((prevData) => [...prevData, ...comingData]);
+        setTableCommingData((prevData) => [...prevData, ...comingData]);
+        setcheckDecisionMakerData(comingData);
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error("Error fetching data:", error);
+    }
   };
   const fetchDataReturnFilter = () => {
     setLoading(true);
@@ -340,7 +384,7 @@ export default function DecisionMakerTable({
       headers: {
         "content-type": "application/json",
       },
-      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}`,
+      url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=0&validation_filter=pending`,
     };
     axios(option)
       .then((response) => {
@@ -352,43 +396,46 @@ export default function DecisionMakerTable({
           setDecisionMakerData(comingData);
           setTableCommingData(comingData);
           setIstableDataFilter(false);
+          setSelectedData(['pending']);
+          setIsResetData(true);
+          setSkip(0);
         }
       })
       .catch(() => {
         setLoading(false);
       });
   };
-  const getStrength = async () => {
-    if (!tableCommingData?.length) return;
-    setLoading(true);
-    const tuples = tableCommingData.map(item => ({
-      items: [Number(loggedInUserId), item.person_id]
-    }));
-    const data = { tuples };
-    const options = {
-      method: "POST",
-      headers: {
-        "access-control-allow-origin": "*",
-        "content-type": "application/json",
-      },
-      data: data,
-      url: `${APIUrlTwo()}/v1/conn_strength`,
-    };
-    try {
-      const response = await axios(options);
-      const strengthData = response?.data
-      const updatedData = tableCommingData?.map((item, index) => ({
-        ...item,
-        strengthData: strengthData[index]
-      }));
-      setDecisionMakerData(updatedData);
-    } catch (error) {
-      setLoading(false);
-      toast.error(error?.response?.data?.message);
-    } finally {
-      setLoading(false);
-    }
-  }
+  // const getStrength = async () => {
+  //   if (!tableCommingData?.length) return;
+  //   setLoading(true);
+  //   const tuples = tableCommingData.map(item => ({
+  //     items: [Number(loggedInUserId), item.person_id]
+  //   }));
+  //   const data = { tuples };
+  //   const options = {
+  //     method: "POST",
+  //     headers: {
+  //       "access-control-allow-origin": "*",
+  //       "content-type": "application/json",
+  //     },
+  //     data: data,
+  //     url: `${APIUrlTwo()}/v1/conn_strength`,
+  //   };
+  //   try {
+  //     const response = await axios(options);
+  //     const strengthData = response?.data
+  //     const updatedData = tableCommingData?.map((item, index) => ({
+  //       ...item,
+  //       strengthData: strengthData[index]
+  //     }));
+  //     setDecisionMakerData(updatedData);
+  //   } catch (error) {
+  //     setLoading(false);
+  //     toast.error(error?.response?.data?.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
   // React.useEffect(() => {
   //   if (checkDecisionMakerData || tableCommingData) {
   //     getStrength();
@@ -414,7 +461,8 @@ export default function DecisionMakerTable({
   // }, [isDeleted])
   React.useEffect(() => {
     if (istableDataFilter) {
-      fetchDataReturnFilter();
+      window?.location?.reload();
+      // fetchDataReturnFilter();
     }
   }, [istableDataFilter]);
   React.useEffect(() => {
@@ -427,89 +475,123 @@ export default function DecisionMakerTable({
       exportToExcel(decisionMakerData, 'decisionmaker_exported_data');
     }
   }, [isDecisionMakerExcel])
+
+  // const loadMore = () => {
+  //   setLoading(true);
+  //   setSkip(skip => skip + 50);
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1000);
+  // };
+  const loadMore = () => {
+    setLoading(true);
+    setSkip((prevSkip) => prevSkip + 50);
+  };
+
+  // React.useEffect(() => {
+  //   if (skip && isResetData) {
+  //     fetchData();
+  //     setIsfetchData(true);
+  //   }
+  // }, [skip, isResetData])
   return (
     <>
       {loading ? <Loader /> : null}
-      <InfiniteScroll
+      {/* <InfiniteScroll
         dataLength={tableCommingData.length}
         next={fetchMoreData}
         hasMore={hasMore}
         scrollableTarget="DecisionMaker-table-main"
-      >
-        <TableContainer component={Paper} className="DecisionMaker-table-main">
-          <Table aria-label="collapsible table" className="DecisionMaker-table">
-            <TableHead>
-              <TableRow className="table-row-ai-leads">
-                <TableCell className="Decisions-row-tableName-prospect">
-                </TableCell>
-                <TableCell className="Decisions-row-tableName">
-                  <p className="prospect-Name-and-Title-propect">Name & Title</p>
-                </TableCell>
-                <TableCell align="left" className="employee-row-tableCompany">
-                  <p className="DecisionstableStrength-companynew">Organization</p>
-                </TableCell>
-                <TableCell
-                  align="left"
-                  className="prospects-row-tableDetails-cd">
-                  <p className="Com-details-prospect">Linkedin</p>
-                </TableCell>
+      > */}
+      <TableContainer component={Paper} className="DecisionMaker-table-main">
+        <Table aria-label="collapsible table" className="DecisionMaker-table">
+          <TableHead>
+            <TableRow className="table-row-ai-leads">
+              <TableCell className="Decisions-row-tableName-prospect">
+              </TableCell>
+              <TableCell className="Decisions-row-tableName">
+                <p className="prospect-Name-and-Title-propect">Name & Title</p>
+              </TableCell>
+              <TableCell align="left" className="employee-row-tableCompany">
+                <p className="DecisionstableStrength-companynew">Organization</p>
+              </TableCell>
+              <TableCell
+                align="left"
+                className="prospects-row-tableDetails-cd">
+                <p className="Com-details-prospect">Linkedin</p>
+              </TableCell>
 
-                {/* email */}
-                <TableCell align="left" className="industry-row-tableStatus">
-                  <p className="DecisionstableStrength-strength">Email</p>
-                </TableCell>
+              {/* email */}
+              <TableCell align="left" className="industry-row-tableStatus">
+                <p className="DecisionstableStrength-strength">Email</p>
+              </TableCell>
 
-                {/* phone no. */}
-                <TableCell align="left" className="industry-row-tableStatus">
-                  <p className="DecisionstableStrength-strength">Phone no.</p>
-                </TableCell>
-                <TableCell align="left" className="industry-row-tableStatus">
-                  <p className="DecisionstableStrength-strength">Status</p>
-                </TableCell>
-                <TableCell align="left" className="industry-row-tableStatus">
-                  <p className="DecisionstableStrength-strength">Action</p>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {decisionMakerData?.map((row, index) => (
-                <React.Fragment key={index}>
-                  <Row
-                    row={row}
-                    setIsDeleted={setIsDeleted}
-                    selected={selectedRows.includes(row)}
-                    onSelect={(firstName) => {
-                      const selectedIndex = selectedRows.indexOf(firstName);
-                      let newSelected = [];
-                      if (selectedIndex === -1) {
-                        newSelected = newSelected.concat(
-                          selectedRows,
-                          firstName
-                        );
-                      } else if (selectedIndex === 0) {
-                        newSelected = newSelected.concat(
-                          selectedRows.slice(1)
-                        );
-                      } else if (selectedIndex === selectedRows.length - 1) {
-                        newSelected = newSelected.concat(
-                          selectedRows.slice(0, -1)
-                        );
-                      } else if (selectedIndex > 0) {
-                        newSelected = newSelected.concat(
-                          selectedRows.slice(0, selectedIndex),
-                          selectedRows.slice(selectedIndex + 1)
-                        );
-                      }
-                      setSelectedRows(newSelected);
-                    }}
-                    connectionStrength={row.connectionStrength}
-                  />
-                </React.Fragment>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </InfiniteScroll>
+              {/* phone no. */}
+              <TableCell align="left" className="industry-row-tableStatus">
+                <p className="DecisionstableStrength-strength">Phone no.</p>
+              </TableCell>
+              <TableCell align="left" className="industry-row-tableStatus">
+                <p className="DecisionstableStrength-strength">Status</p>
+              </TableCell>
+              <TableCell align="left" className="industry-row-tableStatus">
+                <p className="DecisionstableStrength-strength">Action</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {decisionMakerData?.map((row, index) => (
+              <React.Fragment key={index}>
+                <Row
+                  row={row}
+                  setIsDeleted={setIsDeleted}
+                  selected={selectedRows.includes(row)}
+                  onSelect={(firstName) => {
+                    const selectedIndex = selectedRows.indexOf(firstName);
+                    let newSelected = [];
+                    if (selectedIndex === -1) {
+                      newSelected = newSelected.concat(
+                        selectedRows,
+                        firstName
+                      );
+                    } else if (selectedIndex === 0) {
+                      newSelected = newSelected.concat(
+                        selectedRows.slice(1)
+                      );
+                    } else if (selectedIndex === selectedRows.length - 1) {
+                      newSelected = newSelected.concat(
+                        selectedRows.slice(0, -1)
+                      );
+                    } else if (selectedIndex > 0) {
+                      newSelected = newSelected.concat(
+                        selectedRows.slice(0, selectedIndex),
+                        selectedRows.slice(selectedIndex + 1)
+                      );
+                    }
+                    setSelectedRows(newSelected);
+                  }}
+                  connectionStrength={row.connectionStrength}
+                />
+              </React.Fragment>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {
+        decisionMakerData?.length >= 50 ?
+          <div className="loadmore-pagination-section">
+            {totalPages !== skip && (
+              <button
+                className="btn-load-more button-loadmore-pagination"
+                onClick={loadMore}
+                disabled={loading}
+              >
+                {loading ? 'Loading...' : 'Load More'}
+              </button>
+            )}
+          </div> : null
+      }
+
+      {/* </InfiniteScroll> */}
     </>
   );
 }

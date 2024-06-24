@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { APIUrlFour, APIUrlOne } from "../../Utils/Utils";
 import Loader from "../../Components/Loader/Loader";
-import { useFetcher } from "react-router-dom";
 
 const DecisionMaker = () => {
   const [loading, setLoading] = useState(false);
@@ -26,13 +25,13 @@ const DecisionMaker = () => {
   const [hasMore, setHasMore] = useState(false);
   const [statsCountDecisionMaker, setStatsCountDecisionMaker] = useState(0);
   const [applyFilter, setIsApplyFilter] = useState(false);
-
   const [PeopleData, setPeopleData] = useState([]);
   const [FilterData, setFilterData] = useState([]);
   const [showSearchdata, setshowSearchdata] = React.useState(false);
   const [previousData, setpreviousData] = useState(false)
   const [isDeleted, setIsDeleted] = React.useState(false);
-  const [totalPages,setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [duplicateRecords, setDuplicateRecords] = useState(false);
   const perPage = 50;
   const validateFilters = () => {
     if (!selectedData?.length && !showData?.length && !lastdata?.length
@@ -69,11 +68,16 @@ const DecisionMaker = () => {
     };
     axios(option)
       .then((e) => {
-        setTimeout(() => setLoading(false), 100)
+        // setTimeout(() => 
+        //   setLoading(false), 100)
+        setLoading(false);
         if (e?.status === 200) {
           const comingData = e?.data?.data;
           const statsCount = e?.data?.count;
           setStatsCountDecisionMaker(statsCount);
+          const recordDivide = statsCount / perPage;
+          const formatedTotal = Math?.round(recordDivide);
+          setTotalPages(formatedTotal);
           setFirstFilterData(comingData);
           if (comingData.length === 0 || comingData.length % 50 !== 0) {
             setHasMore(false);
@@ -97,15 +101,67 @@ const DecisionMaker = () => {
       });
   };
 
-  const handlePassSubmit = (e) => {
+  // const handlePassSubmit = (e) => {
+  //   if (!validateFilters()) return;
+  //   if (statsCountDecisionMaker <= tableCommingData.length) return;
+  //   setHasMore(false);
+  //   setLoading(true);
+  //   const data = {};
+  //   data.categories = selectedData;
+  //   data.decision_maker = showData?.[0];
+  //   data.josf_status = lastdata?.[0]
+  //   const option = {
+  //     method: "GET",
+  //     headers: {
+  //       "access-control-allow-origin": "*",
+  //       "content-type": "application/json",
+  //     },
+  //     url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&validation_filter=${selectedData}`,
+  //     data: JSON.stringify(data),
+  //   };
+  //   axios(option)
+  //     .then((e) => {
+
+  //       if (e?.status === 200) {
+  //         setLoading(false);
+  //         const comingData = e?.data?.data;
+  //         const statsCount = e?.data?.count;
+  //         setStatsCountDecisionMaker(statsCount);
+  //         if (comingData.length === 0 || comingData.length % 50 !== 0) {
+  //           setHasMore(false);
+  //         } else {
+  //           setTimeout(() => {
+  //             setHasMore(true);
+  //           }, 1000);
+  //         }
+  //         if (skip > 1) {
+  //           setTableCommingData(prevdata => [...prevdata, ...comingData,]);
+  //         } else {
+  //           setTableCommingData(comingData);
+  //         }
+
+  //         toast.success(e?.data?.message);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setLoading(false);
+  //       toast.error(err?.response?.data?.message);
+  //     });
+  // };
+
+  const handlePassSubmit = async (e) => {
     if (!validateFilters()) return;
     if (statsCountDecisionMaker <= tableCommingData.length) return;
+
     setHasMore(false);
     setLoading(true);
-    const data = {};
-    data.categories = selectedData;
-    data.decision_maker = showData?.[0];
-    data.josf_status = lastdata?.[0]
+
+    const data = {
+      categories: selectedData,
+      decision_maker: showData?.[0],
+      josf_status: lastdata?.[0],
+    };
+
     const option = {
       method: "GET",
       headers: {
@@ -115,46 +171,54 @@ const DecisionMaker = () => {
       url: `${APIUrlFour()}/v1/people_validation?limit=50&skip=${skip ? skip : 0}&validation_filter=${selectedData}`,
       data: JSON.stringify(data),
     };
-    axios(option)
-      .then((e) => {
-        setTimeout(() => setLoading(false), 100)
-        if (e?.status === 200) {
-          const comingData = e?.data?.data;
-          const statsCount = e?.data?.count;
-          setStatsCountDecisionMaker(statsCount);
-          if (comingData.length === 0 || comingData.length % 50 !== 0) {
-            setHasMore(false);
-          } else {
-            setTimeout(() => {
-              setHasMore(true);
-            }, 1000);
-          }
-          if (skip > 1) {
-            setTableCommingData(prevdata => [...prevdata, ...comingData,])
-          } else {
-            setTableCommingData(comingData);
-          }
 
-          toast.success(e?.data?.message);
-        }
-      })
-      .catch((err) => {
+    try {
+      const response = await axios(option);
+
+      if (response?.status === 200) {
         setLoading(false);
-        toast.error(err?.response?.data?.message);
-      });
+
+        const comingData = response?.data?.data;
+        const statsCount = response?.data?.count;
+        const recordDivide = statsCount / perPage;
+        const formatedTotal = Math?.round(recordDivide);
+        setTotalPages(formatedTotal);
+        setStatsCountDecisionMaker(statsCount);
+
+        if (comingData.length === 0 || comingData.length % 50 !== 0) {
+          setHasMore(false);
+        } else {
+          setTimeout(() => {
+            setHasMore(true);
+          }, 1000);
+        }
+
+        if (skip > 1) {
+          setTableCommingData((prevData) => [...prevData, ...comingData]);
+        } else {
+          setTableCommingData(comingData);
+        }
+
+        toast.success(response?.data?.message);
+      }
+    } catch (error) {
+      setLoading(false);
+      toast.error(error?.response?.data?.message);
+    }
   };
 
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (skip === 0 && tableCommingData?.length === 0) {
-        duplicateHandlePass();
-      }
-    }, 150);
 
-    return () => clearTimeout(timer);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (skip === 0 && tableCommingData?.length === 0 && !duplicateRecords) {
+  //       duplicateHandlePass();
+  //     }
+  //   }, 150);
 
-  }, [tableCommingData])
+  //   return () => clearTimeout(timer);
+
+  // }, [tableCommingData, !duplicateRecords])
 
   useEffect(() => {
     if (isDeleted) {
@@ -219,7 +283,6 @@ const DecisionMaker = () => {
             firstFilterData={firstFilterData}
             setIsApplyFilter={setIsApplyFilter}
             applyFilter={applyFilter}
-
             previousData={previousData}
             FilterData={FilterData}
             setIsDeleted={setIsDeleted}
@@ -227,9 +290,11 @@ const DecisionMaker = () => {
             setTotalPages={setTotalPages}
             totalPages={totalPages}
             perPage={perPage}
-
-
-
+            setLoading={setLoading}
+            loading={loading}
+            setSelectedData={setSelectedData}
+            setFirstFilterData={setFirstFilterData}
+            setStatsCountDecisionMaker={setStatsCountDecisionMaker}
           />
         </div>
       </Layout>

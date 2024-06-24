@@ -20,7 +20,7 @@ const AILeads = () => {
   const [currentLeadsLength, setCurrentLeadsLength] = React.useState('');
   const [isDecisionMakerExcel, setIsDecisionMakerExcel] = useState(false);
   const [isSalesForceTrigger, setIsSalesForceTrigger] = useState(false);
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
   const [showData, setShowData] = React.useState([]);
   const [showlast, setShowlast] = React.useState([]);
   const [jScoredata, setJscore] = React.useState([]);
@@ -59,7 +59,7 @@ const AILeads = () => {
         const recordDivide = statsCount / perPage;
         const formatedTotal = Math?.round(recordDivide);
         setTotalPages(formatedTotal);
-        setPage(1);
+        setPage(0);
         if (comingData.length === 0 || comingData.length % 50 !== 0) {
           setHasMore(false);
         } else {
@@ -101,7 +101,7 @@ const AILeads = () => {
         "access-control-allow-origin": "*",
         "content-type": "application/json",
       },
-      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=${(page - 1) * 50}&validation_filter=${selectedData}`,
+      url: `${APIUrlFour()}/v1/org_validation?limit=50&skip=${page ? page : 0}&validation_filter=${selectedData}`,
 
       data: JSON.stringify(data),
     };
@@ -206,6 +206,7 @@ const AILeads = () => {
             setStatsCount={setStatsCount}
             setPage={setPage}
             page={page}
+            setSelectedData={setSelectedData}
           />
         </div>
       </Layout>
